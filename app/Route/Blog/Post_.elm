@@ -126,10 +126,11 @@ processHtml =
                 children
 
         showSpan : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showSpan class  id children =
+        showSpan class id children =
             Html.span
-                [ Attribute.class (Maybe.withDefault "" class) 
-                , Attribute.id (Maybe.withDefault "" id)]
+                [ Attribute.class (Maybe.withDefault "" class)
+                , Attribute.id (Maybe.withDefault "" id)
+                ]
                 children
 
         showIframe : String -> Maybe String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
@@ -246,6 +247,7 @@ processHtml =
                     [ Attribute.id (Maybe.withDefault "" id) ]
             in
             Html.tr (classAttribute ++ idAttribute) children
+
         showTableData : Maybe String -> Maybe String -> List (Html msg) -> Html msg
         showTableData class id children =
             let
@@ -255,7 +257,7 @@ processHtml =
                 idAttribute =
                     [ Attribute.id (Maybe.withDefault "" id) ]
             in
-            Html.td (classAttribute ++ idAttribute) children    
+            Html.td (classAttribute ++ idAttribute) children
     in
     Markdown.Html.oneOf
         [ Markdown.Html.tag "div"
@@ -268,7 +270,7 @@ processHtml =
             |> Markdown.Html.withOptionalAttribute "class"
             |> Markdown.Html.withOptionalAttribute "id"
         , Markdown.Html.tag "b" (\children -> Html.b [] children)
-        , Markdown.Html.tag "em" (\class children -> Html.em [Attribute.class (Maybe.withDefault "" class)] children) |> Markdown.Html.withOptionalAttribute "class"
+        , Markdown.Html.tag "em" (\class children -> Html.em [ Attribute.class (Maybe.withDefault "" class) ] children) |> Markdown.Html.withOptionalAttribute "class"
         , Markdown.Html.tag "p" (\children -> Html.p [] children)
         , Markdown.Html.tag "blockquote" showBlockquote |> Markdown.Html.withOptionalAttribute "class"
         , Markdown.Html.tag "script" (\children -> Html.div [] children)
@@ -314,18 +316,18 @@ processHtml =
         , Markdown.Html.tag "tr"
             showTableRow
             |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"    
+            |> Markdown.Html.withOptionalAttribute "id"
         , Markdown.Html.tag "td"
             showTableData
             |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id" 
-        , Markdown.Html.tag "i" (Html.i [] )    
-        , Markdown.Html.tag "strong" (Html.strong [] )  
-        , Markdown.Html.tag "br" (Html.br [] )  
-        , Markdown.Html.tag "li" (\id children -> (Html.li [Attribute.id (Maybe.withDefault "" id)] children )) |> Markdown.Html.withOptionalAttribute "id" 
-        , Markdown.Html.tag "ol" (Html.ol [] ) 
-        , Markdown.Html.tag "ul" (Html.ul [] )
-        , Markdown.Html.tag "code" (Html.code [] ) 
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "i" (Html.i [])
+        , Markdown.Html.tag "strong" (Html.strong [])
+        , Markdown.Html.tag "br" (Html.br [])
+        , Markdown.Html.tag "li" (\id children -> Html.li [ Attribute.id (Maybe.withDefault "" id) ] children) |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "ol" (Html.ol [])
+        , Markdown.Html.tag "ul" (Html.ul [])
+        , Markdown.Html.tag "code" (Html.code [])
         ]
 
 

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../personal-site"
+		},
+		{
+			"path": "../30-days-of-elm"
+		}
+	],
+	"settings": {}
+}
