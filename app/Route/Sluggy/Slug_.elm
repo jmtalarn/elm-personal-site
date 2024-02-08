@@ -1,4 +1,4 @@
-module Route.Blog.Slug_ exposing (ActionData, Data, Model, Msg, route)
+module Route.Sluggy.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import FatalError exposing (FatalError)
@@ -81,6 +81,6 @@ view :
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app sharedModel =
-    { title = "Placeholder - Blog.Slug_"
-    , body = [ Html.text "You're on the page Blog.Slug_" ]
+    { title = "Placeholder - Sluggy.Slug_"
+    , body = [ Html.text "You're on the page Sluggy.Slug_" ]
     }
