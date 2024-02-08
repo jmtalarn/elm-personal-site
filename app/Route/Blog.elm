@@ -7,6 +7,7 @@ import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html
+import Json.Decode as Decode exposing (Decoder)
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Route
@@ -14,7 +15,7 @@ import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import UrlPath
 import View exposing (View)
-import Json.Decode as Decode exposing (Decoder)
+
 
 type alias Model =
     {}
@@ -27,14 +28,16 @@ type alias Msg =
 type alias RouteParams =
     {}
 
+
 type alias BlogPost =
     { body : String
     , slug : String
     , title : String
     }
 
-type alias Data = List BlogPost
 
+type alias Data =
+    List BlogPost
 
 
 type alias ActionData =
@@ -51,8 +54,8 @@ route =
 
 
 data : BackendTask FatalError Data
-data  = blogPosts
-
+data =
+    blogPosts
 
 
 blogPostDecoder : String -> Decoder BlogPost
@@ -61,12 +64,14 @@ blogPostDecoder body =
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
 
+
 blogPosts : BackendTask FatalError (List BlogPost)
 blogPosts =
     blogPostsGlob
         |> BackendTask.map (List.map (\blogPost -> BackendTask.File.bodyWithFrontmatter blogPostDecoder blogPost.filePath))
         |> BackendTask.resolve
         |> BackendTask.allowFatal
+
 
 blogPostsGlob : BackendTask error (List { fileName : String, filePath : String })
 blogPostsGlob =
@@ -81,6 +86,7 @@ blogPostsGlob =
         |> Glob.capture Glob.wildcard
         |> Glob.match (Glob.literal ".md")
         |> Glob.toBackendTask
+
 
 head :
     App Data ActionData RouteParams
@@ -101,7 +107,7 @@ head app =
         }
         |> Seo.website
 
- 
+
 view :
     App Data ActionData RouteParams
     -> Shared.Model
@@ -109,6 +115,7 @@ view :
 view app shared =
     { title = "elm-pages is running"
     , body =
-        [ Html.h1 [] [ Html.text "This is the blog index" ],
-          Html.ul [] (List.map (\{title, slug } -> Html.li [] [ Route.Blog__Post_ { post = slug}  |> Route.link [] [ Html.text title ] ]  ) app.data) ]
+        [ Html.h1 [] [ Html.text "This is the blog index" ]
+        , Html.ul [] (List.map (\{ title, slug } -> Html.li [] [ Route.Blog__Post_ { post = slug } |> Route.link [] [ Html.text title ] ]) app.data)
+        ]
     }
