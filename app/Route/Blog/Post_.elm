@@ -328,6 +328,7 @@ processHtml =
         , Markdown.Html.tag "ol" (Html.ol [])
         , Markdown.Html.tag "ul" (Html.ul [])
         , Markdown.Html.tag "code" (Html.code [])
+        , Markdown.Html.img "img" (Html.img )
         ]
 
 
