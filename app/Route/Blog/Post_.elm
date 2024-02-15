@@ -1,6 +1,5 @@
 module Route.Blog.Post_ exposing (ActionData, Data, Model, Msg, route)
 
-import Array
 import BackendTask exposing (BackendTask)
 import BackendTask.File
 import BackendTask.Glob as Glob
@@ -18,6 +17,7 @@ import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
+import Util.HTMLRender exposing (..)
 import View exposing (View)
 
 
@@ -103,162 +103,8 @@ blogPostDecoder body =
         (Decode.field "title" Decode.string)
 
 
-processStyleAttribute : String -> List (Html.Attribute msg)
-processStyleAttribute styleString =
-    let
-        lines =
-            String.split ";" styleString |> List.map String.trim |> List.map (\value -> Array.fromList (String.split ":" value |> List.map String.trim))
-    in
-    List.map (\pair -> Attribute.style (Maybe.withDefault "" (Array.get 0 pair)) (Maybe.withDefault "" (Array.get 1 pair))) lines
-
-
 processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
 processHtml =
-    let
-        showDiv : Maybe String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showDiv class style id children =
-            Html.div
-                ([ Attribute.class (Maybe.withDefault "" class)
-                 , Attribute.id (Maybe.withDefault "" id)
-                 ]
-                    ++ processStyleAttribute (Maybe.withDefault "" style)
-                )
-                children
-
-        showSpan : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showSpan class id children =
-            Html.span
-                [ Attribute.class (Maybe.withDefault "" class)
-                , Attribute.id (Maybe.withDefault "" id)
-                ]
-                children
-
-        showIframe : String -> Maybe String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showIframe src width height allow _ =
-            Html.iframe
-                (Attribute.src src
-                    :: (case allow of
-                            Just value ->
-                                [ Attribute.attribute "allow" value ]
-
-                            Nothing ->
-                                []
-                       )
-                    ++ (case width of
-                            Just a_width ->
-                                [ Attribute.width <| Maybe.withDefault 100 <| String.toInt a_width ]
-
-                            Nothing ->
-                                []
-                       )
-                    ++ (case height of
-                            Just a_height ->
-                                [ Attribute.height <| Maybe.withDefault 100 <| String.toInt a_height ]
-
-                            Nothing ->
-                                []
-                       )
-                )
-                []
-
-        showLink : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showLink href id children =
-            Html.a
-                ([]
-                    ++ (case href of
-                            Just hrefValue ->
-                                [ Attribute.href hrefValue ]
-
-                            Nothing ->
-                                []
-                       )
-                    ++ (case id of
-                            Just idValue ->
-                                [ Attribute.id idValue ]
-
-                            Nothing ->
-                                []
-                       )
-                )
-                children
-
-        showBlockquote : Maybe String -> List (Html msg) -> Html msg
-        showBlockquote class children =
-            Html.blockquote [ Attribute.class (Maybe.withDefault "" class) ] children
-
-        showHeading : Int -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showHeading level class id children =
-            let
-                classAttribute =
-                    [ Attribute.class (Maybe.withDefault "" class) ]
-
-                idAttribute =
-                    [ Attribute.id (Maybe.withDefault "" id) ]
-            in
-            case level of
-                1 ->
-                    Html.h1 (classAttribute ++ idAttribute) children
-
-                2 ->
-                    Html.h2 (classAttribute ++ idAttribute) children
-
-                3 ->
-                    Html.h3 (classAttribute ++ idAttribute) children
-
-                4 ->
-                    Html.h4 (classAttribute ++ idAttribute) children
-
-                5 ->
-                    Html.h5 (classAttribute ++ idAttribute) children
-
-                _ ->
-                    Html.h6 (classAttribute ++ idAttribute) children
-
-        --showTable:  table th tr td
-        showTable : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showTable class id children =
-            let
-                classAttribute =
-                    [ Attribute.class (Maybe.withDefault "" class) ]
-
-                idAttribute =
-                    [ Attribute.id (Maybe.withDefault "" id) ]
-            in
-            Html.table (classAttribute ++ idAttribute) children
-
-        showTableHeader : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showTableHeader class id children =
-            let
-                classAttribute =
-                    [ Attribute.class (Maybe.withDefault "" class) ]
-
-                idAttribute =
-                    [ Attribute.id (Maybe.withDefault "" id) ]
-            in
-            Html.th (classAttribute ++ idAttribute) children
-
-        showTableRow : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showTableRow class id children =
-            let
-                classAttribute =
-                    [ Attribute.class (Maybe.withDefault "" class) ]
-
-                idAttribute =
-                    [ Attribute.id (Maybe.withDefault "" id) ]
-            in
-            Html.tr (classAttribute ++ idAttribute) children
-
-        showTableData : Maybe String -> Maybe String -> List (Html msg) -> Html msg
-        showTableData class id children =
-            let
-                classAttribute =
-                    [ Attribute.class (Maybe.withDefault "" class) ]
-
-                idAttribute =
-                    [ Attribute.id (Maybe.withDefault "" id) ]
-            in
-            Html.td (classAttribute ++ idAttribute) children
-    in
     Markdown.Html.oneOf
         [ Markdown.Html.tag "div"
             showDiv
@@ -274,13 +120,17 @@ processHtml =
         , Markdown.Html.tag "p" (\children -> Html.p [] children)
         , Markdown.Html.tag "blockquote" showBlockquote |> Markdown.Html.withOptionalAttribute "class"
         , Markdown.Html.tag "script" (\children -> Html.div [] children)
-        , Markdown.Html.tag "a" showLink |> Markdown.Html.withOptionalAttribute "href" |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "a" showLink |> Markdown.Html.withOptionalAttribute "href" |> Markdown.Html.withOptionalAttribute "id" |> Markdown.Html.withOptionalAttribute "target" |> Markdown.Html.withOptionalAttribute "rel"
         , Markdown.Html.tag "iframe"
             showIframe
             |> Markdown.Html.withAttribute "src"
             |> Markdown.Html.withOptionalAttribute "width"
             |> Markdown.Html.withOptionalAttribute "height"
             |> Markdown.Html.withOptionalAttribute "allow"
+            |> Markdown.Html.withOptionalAttribute "scrolling"
+            |> Markdown.Html.withOptionalAttribute "frameborder"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "title"
         , Markdown.Html.tag "h1"
             (showHeading 1)
             |> Markdown.Html.withOptionalAttribute "class"
@@ -309,18 +159,34 @@ processHtml =
             showTable
             |> Markdown.Html.withOptionalAttribute "class"
             |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "thead"
+            showTableHead
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "tbody"
+            showTableBody
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
         , Markdown.Html.tag "th"
             showTableHeader
             |> Markdown.Html.withOptionalAttribute "class"
             |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "colspan"
         , Markdown.Html.tag "tr"
             showTableRow
             |> Markdown.Html.withOptionalAttribute "class"
             |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
         , Markdown.Html.tag "td"
             showTableData
             |> Markdown.Html.withOptionalAttribute "class"
             |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "colspan"
         , Markdown.Html.tag "i" (Html.i [])
         , Markdown.Html.tag "strong" (Html.strong [])
         , Markdown.Html.tag "br" (Html.br [])
@@ -328,7 +194,22 @@ processHtml =
         , Markdown.Html.tag "ol" (Html.ol [])
         , Markdown.Html.tag "ul" (Html.ul [])
         , Markdown.Html.tag "code" (Html.code [])
-        , Markdown.Html.img "img" (Html.img )
+        , Markdown.Html.tag "img" showImage
+            |> Markdown.Html.withOptionalAttribute "alt"
+            |> Markdown.Html.withOptionalAttribute "title"
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withAttribute "src"
+        , Markdown.Html.tag "dl" showDefinitionList
+        , Markdown.Html.tag "dd" showDefinitionDescription
+        , Markdown.Html.tag "dt" showDefinitionTerm |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "figure" (Html.figure [])
+        , Markdown.Html.tag "figcaption" (Html.figcaption [])
+        , Markdown.Html.tag "hr" (Html.hr [])
+        , Markdown.Html.tag "label" (Html.label [])
+        , Markdown.Html.tag "easy-like-score" showEasyLikeScore
+            |> Markdown.Html.withAttribute "likeness"
+            |> Markdown.Html.withAttribute "easiness"
         ]
 
 

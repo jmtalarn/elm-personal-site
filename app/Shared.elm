@@ -7,9 +7,9 @@ import Html exposing (Html)
 import Html.Events
 import Pages.Flags
 import Pages.PageUrl exposing (PageUrl)
-import UrlPath exposing (UrlPath)
 import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
+import UrlPath exposing (UrlPath)
 import View exposing (View)
 
 
@@ -104,6 +104,7 @@ view sharedData page model toMsg pageView =
                         "Open Menu"
                     )
                 ]
+            , Route.Blog |> Route.link [] [ Html.text "Blog Index" ]
             , if model.showMenu then
                 Html.ul []
                     [ Html.li [] [ Html.text "Menu item 1" ]

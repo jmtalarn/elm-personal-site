@@ -4,19 +4,19 @@ date: 2018-11-13T12:50:12
 type: post
 slug: theming-stylesheets-with-css-variables
 cover: /images/featured/css-variables.png
-category: ['Web development']
+category: ["Web development"]
 tags:
-  [
-    'variables',
-    'web',
-    'html',
-    'css',
-    'stylesheets',
-    'javascript',
-    'sass',
-    'less',
-    'css3',
-  ]
+    [
+        "variables",
+        "web",
+        "html",
+        "css",
+        "stylesheets",
+        "javascript",
+        "sass",
+        "less",
+        "css3",
+    ]
 author: jmtalarn
 ---
 
@@ -49,9 +49,9 @@ A practical way to use it is making them accessible over all your stylesheet so 
 
 ```css
 :root {
-  --your-color-variable-1: coral;
-  --your-color-variable-2: blue;
-  --your-border-default-setting: 1px solid black;
+	--your-color-variable-1: coral;
+	--your-color-variable-2: blue;
+	--your-border-default-setting: 1px solid black;
 }
 ```
 
@@ -62,8 +62,8 @@ As easy as this:
 
 ```css
 .your-classname {
-  color: var(--your-color-variable-1, 'coral');
-  border: var(--your-border-default-setting);
+	color: var(--your-color-variable-1, "coral");
+	border: var(--your-border-default-setting);
 }
 ```
 
@@ -75,27 +75,33 @@ After you set your variables you can manipulate it as you would do with the css 
 You can go by the style property of an element and use the <code>getPropertyValue</code> on that property to get the value as a String.
 
 ```javascript
-element.style.getPropertyValue('--your-color-variable-1')
+element.style.getPropertyValue("--your-color-variable-1");
 ```
 
 Also, you can get the computed style for an element using the <code>getComputedStyle</code> function available on the global <code>window</code> object and also use the <code>getPropertyValue</code> on the style object retrieved.
 
 ```javascript
-getComputedStyle(element).getPropertyValue('--your-color-variable-1')
+getComputedStyle(element).getPropertyValue("--your-color-variable-1");
 ```
 
 To set a CSS variable via Javascript you can use the setProperty method for the style object:
 
 ```javascript
-element.style.setProperty('--your-color-variable-1', '#ff0000')
+element.style.setProperty("--your-color-variable-1", "#ff0000");
 ```
 
 You should remember the value will apply on cascade so only will affect those elements in the scope of that declaration.
 
 You can check the following embedded Codepen to see an example of how the values are changed via Javacript and the value applied on cascade:
 
-<p data-height="720" data-theme-id="light" data-slug-hash="ERLRyO" data-default-tab="result" data-user="jmtalarn" data-pen-title="CSS Variables" class="codepen">See the Pen <a href="https://codepen.io/jmtalarn/pen/ERLRyO/">CSS Variables</a> by Joan Maria Talarn Espelta (<a href="https://codepen.io/jmtalarn">@jmtalarn</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<!-- <p data-height="720" data-theme-id="light" data-slug-hash="ERLRyO" data-default-tab="result" data-user="jmtalarn" data-pen-title="CSS Variables" class="codepen">See the Pen <a href="https://codepen.io/jmtalarn/pen/ERLRyO/">CSS Variables</a> by Joan Maria Talarn Espelta (<a href="https://codepen.io/jmtalarn">@jmtalarn</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script> -->
+
+<iframe height="300" style="width: 100%;" scrolling="no" title="CSS Variables" src="https://codepen.io/jmtalarn/embed/ERLRyO?default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/jmtalarn/pen/ERLRyO">
+  CSS Variables</a> by Joan Maria Talarn Espelta (<a href="https://codepen.io/jmtalarn">@jmtalarn</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
 
 <h3>Theming your stylesheets</h3>
 Once you know the basics of the CSS variables (AKA CSS Custom properties) you can use it as a powerful tool to declare CSS themes, without the need of complex stylesheet manipulation. You only need to identify recurrent properties you use in your CSS stylesheets, or those properties susceptibles to be changed depending on 
@@ -106,16 +112,16 @@ After that a simple Javascript call to change the css variables on the root of t
 The values for your document root can be got from the computed style over your document body.
 
 ```javascript
-const rootStyles = window.getComputedStyle(document.body)
-let titleColor = rootStyles.getPropertyValue('--title-color').trim()
+const rootStyles = window.getComputedStyle(document.body);
+let titleColor = rootStyles.getPropertyValue("--title-color").trim();
 
-let subtitleColor = rootStyles.getPropertyValue('--subtitle-color').trim()
+let subtitleColor = rootStyles.getPropertyValue("--subtitle-color").trim();
 ```
 
 And after that you can set it as you want in a similar way as described before:
 
 ```javascript
-const cssVar = '--title-color'
-const newCssValue = 'pink' //or any other value you need to set
-document.documentElement.style.setProperty(cssVar, newCssValue)
+const cssVar = "--title-color";
+const newCssValue = "pink"; //or any other value you need to set
+document.documentElement.style.setProperty(cssVar, newCssValue);
 ```
