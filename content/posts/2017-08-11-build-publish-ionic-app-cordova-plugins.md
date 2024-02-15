@@ -4,23 +4,24 @@ date: 2017-08-11T18:49:17
 type: post
 slug: build-publish-ionic-app-cordova-plugins
 cover: /images/featured/Cordova_Alaska_aerial_view.jpg
-category: ['App development', 'Web development']
+category: ["App development", "Web development"]
 tags:
-  [
-    'android',
-    'angularjs',
-    'app',
-    'cordova',
-    'firebase',
-    'html',
-    'ionic',
-    'nodejs',
-    'strikethru',
-  ]
+    [
+        "android",
+        "angularjs",
+        "app",
+        "cordova",
+        "firebase",
+        "html",
+        "ionic",
+        "nodejs",
+        "strikethru",
+    ]
 author: jmtalarn
 ---
 
 Ionic provide you a framework to quickly implement with your web development skills a nice native application. Although, not everything is provided in the framework and if you want to get native features working with your application you will need to add some Cordova plugins to your project.
+
 <!--more-->
 <div style="display: flex; align-items: center; justify-content: center;">
   <img class="size-thumbnail" src="../images/q5Jmvu10tV-150x150.png" alt="" width="150" height="150" />
@@ -74,7 +75,7 @@ ionic cordova plugin add cordova-plugin-crosswalk-webview --save
 <blockquote><p><strong>TL;DR</strong> If you have the keytool command installed you can get it by running this command pointing to your project keystore.</p>
 
 ```bash
-keytool -exportcert -alias androiddebugkey -keystore <var>path-to-debug-or-production-keystore</var> -list -v
+keytool -exportcert -alias androiddebugkey -keystore path-to-debug-or-production-keystore -list -v
 ```
 
 </blockquote>

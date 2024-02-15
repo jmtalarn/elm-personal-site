@@ -4,26 +4,27 @@ date: 2020-04-06T13:10:19
 type: post
 slug: one-source-of-truth-for-all-Redux-javascript-components
 cover: /images/featured/one-ring-to-run-them-all.png
-category: ['Web development']
+category: ["Web development"]
 tags:
-  [
-    'web',
-    'react',
-    'reactjs',
-    'vue',
-    'vuejs',
-    'javascript',
-    'elm',
-    'svelte',
-    'angular',
-    'angularjs',
-    'web components',
-    'components',
-    'Redux',
-    'webpack',
-  ]
+    [
+        "web",
+        "react",
+        "reactjs",
+        "vue",
+        "vuejs",
+        "javascript",
+        "elm",
+        "svelte",
+        "angular",
+        "angularjs",
+        "web components",
+        "components",
+        "Redux",
+        "webpack",
+    ]
 author: jmtalarn
 ---
+
 This is an example of how different components implemented with different frontend frameworks or libraries can share the same _Redux_ store.
 
 ### Different frameworks and libraries in same project
@@ -56,36 +57,11 @@ Javascript is the language for the web and anything that can be implemented in a
 #### Implementation
 
 The component writes the convenient HTML in the component container and binds the actions increment and decrement directly to the onclick events of the buttons accordingly. The connect function adds a subcriber to the store changes and passes it to a render method which is in charge of change the content of the counter. Easy and simple to implement.
- 
+
 #### Valoration
-<component />
 
-<div class="valoration">
-  I'm really used to work with the language as I'm working with React and Node.js in my day to day job. Redux is a simple javacript library and the connection with the state and the actions is quite straightforward.
- <div class="score">
-    <label>
-    Easiness
-      <div class="easiness score-box" data-value="5">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="5">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-
-</div>
+> I'm really used to work with the language as I'm working with React and Node.js in my day to day job. Redux is a simple javacript library and the connection with the state and the actions is quite straightforward.
+> <easy-like-score easiness="5" likeness="5" />
 
 ---
 
@@ -102,31 +78,8 @@ Implementing the component is quite straightforward. Also each time a property p
 
 #### Valoration
 
-<div class="valoration">
-  I am used to React library and I really like it the filosofy of the Component composition of it. Also React has a library to connect to Redux so the connection was really easy to implement.
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="4">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="5">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> I am used to React library and I really like it the filosofy of the Component composition of it. Also React has a library to connect to Redux so the connection was really easy to implement.
+> <easy-like-score easiness="4" likeness="5" />
 
 ---
 
@@ -144,32 +97,8 @@ The Redux binding is done as easy is done in React components with a wrapped com
 
 #### Valoration
 
-<div class="valoration">
-  This was my first approach to implement anything with Vue. As I saw there are many ways to create the component and I found one that fitted quite well with the project. You can create a component in just one file where you can place the markup template, styling and internal code.
-
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="4">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="4">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> This was my first approach to implement anything with Vue. As I saw there are many ways to create the component and I found one that fitted quite well with the project. You can create a component in just one file where you can place the markup template, styling and internal code.
+> <easy-like-score easiness="4" likeness="4" />
 
 ---
 
@@ -185,31 +114,8 @@ Elm lives in its own world inside the web page but it has mechanisms to "comunic
 
 #### Valoration
 
-<div class="valoration">
-  I really love 💚 Elm. I would like to switch to this language if not completetly but enough to be my main job as developer. The compiler is so helpful and not just for Syntax errors, but suggests you what you can do to solve it... continuously... until it compiles. That, instead of increase the learning curve, makes the work of develop with this language pleasant. Also, as there are no colateral effects if it compiles, means it works. Testing is implicit in the development.
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="4">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="5">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> I really love 💚 Elm. I would like to switch to this language if not completetly but enough to be my main job as developer. The compiler is so helpful and not just for Syntax errors, but suggests you what you can do to solve it... continuously... until it compiles. That, instead of increase the learning curve, makes the work of develop with this language pleasant. Also, as there are no colateral effects if it compiles, means it works. Testing is implicit in the development.
+> <easy-like-score easiness="4" likeness="5" />
 
 ---
 
@@ -226,31 +132,8 @@ Creating a component is done by creating a Javascript class extending an HTMLEle
 
 #### Valoration
 
-<div class="valoration">
-  Until it's not a completely supported standard there are more easy/effective ways to create web components. It was not hard to implement and bind but eventhough I think is a standard that is getting more acceptance to develop shared and common library componets between projects.
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="4">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="3">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> Until it's not a completely supported standard there are more easy/effective ways to create web components. It was not hard to implement and bind but eventhough I think is a standard that is getting more acceptance to develop shared and common library componets between projects.
+> <easy-like-score easiness="4" likeness="3" />
 
 ---
 
@@ -267,31 +150,8 @@ Svelte requires to add a loader also in Webpack config. This will load the compo
 
 #### Valoration
 
-<div class="valoration">
-  It was my first approach to this library and I wasn't disapointed. Easy to implement and great documentation supporting it. Maybe it will have a great future in the web components development scene.
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="4">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="4">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> It was my first approach to this library and I wasn't disapointed. Easy to implement and great documentation supporting it. Maybe it will have a great future in the web components development scene.
+> <easy-like-score easiness="4" likeness="4" />
 
 ---
 
@@ -308,31 +168,8 @@ First, Angular uses Typescript so I had to add support to it to the webpack proj
 
 #### Valoration
 
-<div class="valoration">
-  As Angular is a whole framework and everything is easier if you use Angular CLI from the scratch to create, build and bootstrap of a whole application. As my intention was to introduce it into an existing project it took me quite a bit to make it work. Also even I used a third-party library to connect it to Redux it was not easy as it was in other components.
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="2">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-        <i class="fal fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="1">
-        <i class="fas fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> As Angular is a whole framework and everything is easier if you use Angular CLI from the scratch to create, build and bootstrap of a whole application. As my intention was to introduce it into an existing project it took me quite a bit to make it work. Also even I used a third-party library to connect it to Redux it was not easy as it was in other components.
+> <easy-like-score easiness="2" likeness="1" />
 
 ---
 
@@ -349,38 +186,15 @@ I created the template of the component in a separate file loaded in the connect
 
 #### Valoration
 
-<div class="valoration">
-  AngularJs was the first framework I used working intensively in the frontend but I almost forgot everything :D and after retaking the concepts of the framework I can tell there are easier ways to work for the web frontend. It was not so hard to implement it but still, the way to connect it and make it work with the shared state is not of my taste at all.
-  <div class="score">
-    <label>
-    Easiness 
-      <div class="easiness score-box" data-value="2">
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fal fa-star"></i> 
-        <i class="fal fa-star"></i> 
-        <i class="fal fa-star"></i> 
-      </div>
-    </label>
-    <label>
-    Likeness
-      <div class="likeness score-box" data-value="2">
-        <i class="fas fa-heart"></i> 
-        <i class="fas fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-        <i class="fal fa-heart"></i> 
-      </div>
-    </label>
-  </div>
-</div>
+> AngularJs was the first framework I used working intensively in the frontend but I almost forgot everything :D and after retaking the concepts of the framework I can tell there are easier ways to work for the web frontend. It was not so hard to implement it but still, the way to connect it and make it work with the shared state is not of my taste at all.
+> <easy-like-score easiness="2" likeness="2" />
 
 ---
 
 ### Links
 
-- [Github repo link](https://github.com/jmtalarn/standalone-store)
-- [Live demo](https://jmtalarn.github.io/standalone-store/)
+-   [Github repo link](https://github.com/jmtalarn/standalone-store)
+-   [Live demo](https://jmtalarn.github.io/standalone-store/)
 
 [logo_javascript]: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MzAg%0D%0ANjMwIj4KPHJlY3Qgd2lkdGg9IjYzMCIgaGVpZ2h0PSI2MzAiIGZpbGw9IiNmN2RmMWUiLz4KPHBh%0D%0AdGggZD0ibTQyMy4yIDQ5Mi4xOWMxMi42OSAyMC43MiAyOS4yIDM1Ljk1IDU4LjQgMzUuOTUgMjQu%0D%0ANTMgMCA0MC4yLTEyLjI2IDQwLjItMjkuMiAwLTIwLjMtMTYuMS0yNy40OS00My4xLTM5LjNsLTE0%0D%0ALjgtNi4zNWMtNDIuNzItMTguMi03MS4xLTQxLTcxLjEtODkuMiAwLTQ0LjQgMzMuODMtNzguMiA4%0D%0ANi43LTc4LjIgMzcuNjQgMCA2NC43IDEzLjEgODQuMiA0Ny40bC00Ni4xIDI5LjZjLTEwLjE1LTE4%0D%0ALjItMjEuMS0yNS4zNy0zOC4xLTI1LjM3LTE3LjM0IDAtMjguMzMgMTEtMjguMzMgMjUuMzcgMCAx%0D%0ANy43NiAxMSAyNC45NSAzNi40IDM1Ljk1bDE0LjggNi4zNGM1MC4zIDIxLjU3IDc4LjcgNDMuNTYg%0D%0ANzguNyA5MyAwIDUzLjMtNDEuODcgODIuNS05OC4xIDgyLjUtNTQuOTggMC05MC41LTI2LjItMTA3%0D%0ALjg4LTYwLjU0em0tMjA5LjEzIDUuMTNjOS4zIDE2LjUgMTcuNzYgMzAuNDUgMzguMSAzMC40NSAx%0D%0AOS40NSAwIDMxLjcyLTcuNjEgMzEuNzItMzcuMnYtMjAxLjNoNTkuMnYyMDIuMWMwIDYxLjMtMzUu%0D%0AOTQgODkuMi04OC40IDg5LjItNDcuNCAwLTc0Ljg1LTI0LjUzLTg4LjgxLTU0LjA3NXoiLz4KPC9z%0D%0Admc+
 [logo_react]: data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDk1IiBoZWlnaHQ9IjQ0MCIgdmlld0JveD0iMCAwIDQ5NSA0NDAiIA0KCXht%0D%0AbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQoJPHBhdGggaWQ9InN2Z18yIiBkPSJt%0D%0ANDkzLjMsMjIwLjVjMCwtMzIuNSAtNDAuNywtNjMuMyAtMTAzLjEsLTgyLjRjMTQuNCwtNjMuNiA4%0D%0ALC0xMTQuMiAtMjAuMiwtMTMwLjRjLTYuNSwtMy44IC0xNC4xLC01LjYgLTIyLjQsLTUuNmwwLDIy%0D%0ALjNjNC42LDAgOC4zLDAuOSAxMS40LDIuNmMxMy42LDcuOCAxOS41LDM3LjUgMTQuOSw3NS43Yy0x%0D%0ALjEsOS40IC0yLjksMTkuMyAtNS4xLDI5LjRjLTE5LjYsLTQuOCAtNDEsLTguNSAtNjMuNSwtMTAu%0D%0AOWMtMTMuNSwtMTguNSAtMjcuNSwtMzUuMyAtNDEuNiwtNTBjMzIuNiwtMzAuMyA2My4yLC00Ni45%0D%0AIDg0LC00Ni45bDAsLTIyLjNjMCwwIDAsMCAwLDBjLTI3LjUsMCAtNjMuNSwxOS42IC05OS45LDUz%0D%0ALjZjLTM2LjQsLTMzLjggLTcyLjQsLTUzLjIgLTk5LjksLTUzLjJsMCwyMi4zYzIwLjcsMCA1MS40%0D%0ALDE2LjUgODQsNDYuNmMtMTQsMTQuNyAtMjgsMzEuNCAtNDEuMyw0OS45Yy0yMi42LDIuNCAtNDQs%0D%0ANi4xIC02My42LDExYy0yLjMsLTEwIC00LC0xOS43IC01LjIsLTI5Yy00LjcsLTM4LjIgMS4xLC02%0D%0ANy45IDE0LjYsLTc1LjhjMywtMS44IDYuOSwtMi42IDExLjUsLTIuNmwwLC0yMi4zYzAsMCAwLDAg%0D%0AMCwwYy04LjQsMCAtMTYsMS44IC0yMi42LDUuNmMtMjguMSwxNi4yIC0zNC40LDY2LjcgLTE5Ljks%0D%0AMTMwLjFjLTYyLjIsMTkuMiAtMTAyLjcsNDkuOSAtMTAyLjcsODIuM2MwLDMyLjUgNDAuNyw2My4z%0D%0AIDEwMy4xLDgyLjRjLTE0LjQsNjMuNiAtOCwxMTQuMiAyMC4yLDEzMC40YzYuNSwzLjggMTQuMSw1%0D%0ALjYgMjIuNSw1LjZjMjcuNSwwIDYzLjUsLTE5LjYgOTkuOSwtNTMuNmMzNi40LDMzLjggNzIuNCw1%0D%0AMy4yIDk5LjksNTMuMmM4LjQsMCAxNiwtMS44IDIyLjYsLTUuNmMyOC4xLC0xNi4yIDM0LjQsLTY2%0D%0ALjcgMTkuOSwtMTMwLjFjNjIsLTE5LjEgMTAyLjUsLTQ5LjkgMTAyLjUsLTgyLjN6bS0xMzAuMiwt%0D%0ANjYuN2MtMy43LDEyLjkgLTguMywyNi4yIC0xMy41LDM5LjVjLTQuMSwtOCAtOC40LC0xNiAtMTMu%0D%0AMSwtMjRjLTQuNiwtOCAtOS41LC0xNS44IC0xNC40LC0yMy40YzE0LjIsMi4xIDI3LjksNC43IDQx%0D%0ALDcuOXptLTQ1LjgsMTA2LjVjLTcuOCwxMy41IC0xNS44LDI2LjMgLTI0LjEsMzguMmMtMTQuOSwx%0D%0ALjMgLTMwLDIgLTQ1LjIsMmMtMTUuMSwwIC0zMC4yLC0wLjcgLTQ1LC0xLjljLTguMywtMTEuOSAt%0D%0AMTYuNCwtMjQuNiAtMjQuMiwtMzhjLTcuNiwtMTMuMSAtMTQuNSwtMjYuNCAtMjAuOCwtMzkuOGM2%0D%0ALjIsLTEzLjQgMTMuMiwtMjYuOCAyMC43LC0zOS45YzcuOCwtMTMuNSAxNS44LC0yNi4zIDI0LjEs%0D%0ALTM4LjJjMTQuOSwtMS4zIDMwLC0yIDQ1LjIsLTJjMTUuMSwwIDMwLjIsMC43IDQ1LDEuOWM4LjMs%0D%0AMTEuOSAxNi40LDI0LjYgMjQuMiwzOGM3LjYsMTMuMSAxNC41LDI2LjQgMjAuOCwzOS44Yy02LjMs%0D%0AMTMuNCAtMTMuMiwyNi44IC0yMC43LDM5Ljl6bTMyLjMsLTEzYzUuNCwxMy40IDEwLDI2LjggMTMu%0D%0AOCwzOS44Yy0xMy4xLDMuMiAtMjYuOSw1LjkgLTQxLjIsOGM0LjksLTcuNyA5LjgsLTE1LjYgMTQu%0D%0ANCwtMjMuN2M0LjYsLTggOC45LC0xNi4xIDEzLC0yNC4xem0tMTAxLjQsMTA2LjdjLTkuMywtOS42%0D%0AIC0xOC42LC0yMC4zIC0yNy44LC0zMmM5LDAuNCAxOC4yLDAuNyAyNy41LDAuN2M5LjQsMCAxOC43%0D%0ALC0wLjIgMjcuOCwtMC43Yy05LDExLjcgLTE4LjMsMjIuNCAtMjcuNSwzMnptLTc0LjQsLTU4Ljlj%0D%0ALTE0LjIsLTIuMSAtMjcuOSwtNC43IC00MSwtNy45YzMuNywtMTIuOSA4LjMsLTI2LjIgMTMuNSwt%0D%0AMzkuNWM0LjEsOCA4LjQsMTYgMTMuMSwyNGM0LjcsOCA5LjUsMTUuOCAxNC40LDIzLjR6bTczLjks%0D%0ALTIwOC4xYzkuMyw5LjYgMTguNiwyMC4zIDI3LjgsMzJjLTksLTAuNCAtMTguMiwtMC43IC0yNy41%0D%0ALC0wLjdjLTkuNCwwIC0xOC43LDAuMiAtMjcuOCwwLjdjOSwtMTEuNyAxOC4zLC0yMi40IDI3LjUs%0D%0ALTMyem0tNzQsNTguOWMtNC45LDcuNyAtOS44LDE1LjYgLTE0LjQsMjMuN2MtNC42LDggLTguOSwx%0D%0ANiAtMTMsMjRjLTUuNCwtMTMuNCAtMTAsLTI2LjggLTEzLjgsLTM5LjhjMTMuMSwtMy4xIDI2Ljks%0D%0ALTUuOCA0MS4yLC03Ljl6bS05MC41LDEyNS4yYy0zNS40LC0xNS4xIC01OC4zLC0zNC45IC01OC4z%0D%0ALC01MC42YzAsLTE1LjcgMjIuOSwtMzUuNiA1OC4zLC01MC42YzguNiwtMy43IDE4LC03IDI3Ljcs%0D%0ALTEwLjFjNS43LDE5LjYgMTMuMiw0MCAyMi41LDYwLjljLTkuMiwyMC44IC0xNi42LDQxLjEgLTIy%0D%0ALjIsNjAuNmMtOS45LC0zLjEgLTE5LjMsLTYuNSAtMjgsLTEwLjJ6bTUzLjgsMTQyLjljLTEzLjYs%0D%0ALTcuOCAtMTkuNSwtMzcuNSAtMTQuOSwtNzUuN2MxLjEsLTkuNCAyLjksLTE5LjMgNS4xLC0yOS40%0D%0AYzE5LjYsNC44IDQxLDguNSA2My41LDEwLjljMTMuNSwxOC41IDI3LjUsMzUuMyA0MS42LDUwYy0z%0D%0AMi42LDMwLjMgLTYzLjIsNDYuOSAtODQsNDYuOWMtNC41LC0wLjEgLTguMywtMSAtMTEuMywtMi43%0D%0Aem0yMzcuMiwtNzYuMmM0LjcsMzguMiAtMS4xLDY3LjkgLTE0LjYsNzUuOGMtMywxLjggLTYuOSwy%0D%0ALjYgLTExLjUsMi42Yy0yMC43LDAgLTUxLjQsLTE2LjUgLTg0LC00Ni42YzE0LC0xNC43IDI4LC0z%0D%0AMS40IDQxLjMsLTQ5LjljMjIuNiwtMi40IDQ0LC02LjEgNjMuNiwtMTFjMi4zLDEwLjEgNC4xLDE5%0D%0ALjggNS4yLDI5LjF6bTM4LjUsLTY2LjdjLTguNiwzLjcgLTE4LDcgLTI3LjcsMTAuMWMtNS43LC0x%0D%0AOS42IC0xMy4yLC00MCAtMjIuNSwtNjAuOWM5LjIsLTIwLjggMTYuNiwtNDEuMSAyMi4yLC02MC42%0D%0AYzkuOSwzLjEgMTkuMyw2LjUgMjguMSwxMC4yYzM1LjQsMTUuMSA1OC4zLDM0LjkgNTguMyw1MC42%0D%0AYy0wLjEsMTUuNyAtMjMsMzUuNiAtNTguNCw1MC42eiIgZmlsbD0iIzYxREFGQiIvPg0KCTxwb2x5%0D%0AZ29uIGlkPSJzdmdfMyIgcG9pbnRzPSIxNDcuNzk5OTg3NzkyOTY4NzUsMi40MDAwMDE1MjU4Nzg5%0D%0AMDYyIDE0Ny43OTk5ODc3OTI5Njg3NSwyLjQwMDAwMTUyNTg3ODkwNjIgMTQ3Ljc5OTk4Nzc5Mjk2%0D%0AODc1LDIuNDAwMDAxNTI1ODc4OTA2MiAiIGZpbGw9IiM2MURBRkIiLz4NCgk8Y2lyY2xlIGlkPSJz%0D%0AdmdfNCIgcj0iNDUuNyIgY3k9IjIyMC41IiBjeD0iMjQ3LjkiIGZpbGw9IiM2MURBRkIiLz4NCgk8%0D%0AcG9seWdvbiBpZD0ic3ZnXzUiIHBvaW50cz0iMzQ3LjUsMi4wOTk5OTg0NzQxMjEwOTM4IDM0Ny41%0D%0ALDIuMDk5OTk4NDc0MTIxMDkzOCAzNDcuNSwyLjA5OTk5ODQ3NDEyMTA5MzggIiBmaWxsPSIjNjFE%0D%0AQUZCIi8+DQoNCjwvc3ZnPg0K

@@ -4,8 +4,8 @@ date: 2017-09-22T23:38:28
 type: post
 slug: migrate-blog-from-wordpress-to-jekyll
 cover: /images/featured/wordpress-jekyll.png
-category: ['Web development', 'Blogging']
-tags: ['wordpress', 'blog', 'blogging', 'static web sites', 'jekyll']
+category: ["Web development", "Blogging"]
+tags: ["wordpress", "blog", "blogging", "static web sites", "jekyll"]
 author: jmtalarn
 ---
 
@@ -77,7 +77,6 @@ Then I exported using the included export tool from the Wordpress administration
 After that I installed some gems to get a script able to do the importation
 
 ```bash
-
 sudo gem install jekyll-import hpricot open_uri_redirections
 ```
 
@@ -85,7 +84,6 @@ The important piece is _jekyll-import_ in charge to import all the data included
 This is the script that run the work.
 
 ```bash
-
 $ ruby -rubygems -e 'require "jekyll-import";
     JekyllImport::Importers::WordpressDotCom.run({
       "source" => "wordpress.xml",
