@@ -225,6 +225,7 @@ customHtmlRenderer : Renderer (Html msg)
 customHtmlRenderer =
     { defaultHtmlRenderer
         | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing src []
+        , blockQuote = \content -> showBlockquote Nothing content
         , codeBlock = codeBlock
         , html = processHtml
     }
