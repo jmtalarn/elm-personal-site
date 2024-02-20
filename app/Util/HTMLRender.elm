@@ -125,7 +125,34 @@ showLink href id target rel children =
 
 showBlockquote : Maybe String -> List (Html msg) -> Html msg
 showBlockquote class children =
-    Html.blockquote [ Attribute.class (Maybe.withDefault "" class) ] children
+    Html.blockquote
+        [ Attribute.class (Maybe.withDefault "" class)
+        , Attribute.class "block-quote"
+        ]
+        (Html.node "style"
+            []
+            [ Html.text """.block-quote { 
+                    background: #f9f9f9;
+                    border-left: 10px solid #ccc;
+                    margin: 1.5em 10px;
+                    padding: 0.5em 10px;
+                    quotes:  "‘" "’" "“" "”" ;
+                }
+                .block-quote:before {
+                    font-family: Times, serif;
+                    content: open-quote;
+                    color: #ccc;
+                    font-size: 4em;
+                    line-height: 0.1em;
+                    margin-right: 0.25em;
+                    vertical-align: -0.4em;
+                }
+                .block-quote p {
+                    display: inline;
+                }
+            """ ]
+            :: children
+        )
 
 
 showHeading : Int -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
