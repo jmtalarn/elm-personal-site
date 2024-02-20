@@ -94,7 +94,8 @@ You should remember the value will apply on cascade so only will affect those el
 
 You can check the following embedded Codepen to see an example of how the values are changed via Javacript and the value applied on cascade:
 
-<!-- <p data-height="720" data-theme-id="light" data-slug-hash="ERLRyO" data-default-tab="result" data-user="jmtalarn" data-pen-title="CSS Variables" class="codepen">See the Pen <a href="https://codepen.io/jmtalarn/pen/ERLRyO/">CSS Variables</a> by Joan Maria Talarn Espelta (<a href="https://codepen.io/jmtalarn">@jmtalarn</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<!-- <p data-height="720" data-theme-id="light" data-slug-hash="ERLRyO" data-default-tab="result" data-user="jmtalarn" data-pen-title="CSS Variables" class="codepen">See the Pen <a href="https://codepen.io/jmtalarn/pen/ERLRyO/">CSS Variables</a> by Joan Maria Talarn Espelta (<a href="https://codepen.io/jmtalarn">@jmtalarn</a>) on <a href="https://codepen.io">CodePen</a>.
+
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script> -->
 
 <iframe height="300" style="width: 100%;" scrolling="no" title="CSS Variables" src="https://codepen.io/jmtalarn/embed/ERLRyO?default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">

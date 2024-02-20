@@ -4,6 +4,7 @@ import Array
 import ErrorPage exposing (Msg)
 import Html exposing (Html)
 import Html.Attributes as Attribute
+import SyntaxHighlight
 
 
 processStyleAttribute : String -> List (Html.Attribute msg)
@@ -252,9 +253,26 @@ showTableData class id style colspan children =
     Html.td (classAttribute ++ idAttribute ++ processStyleAttribute (Maybe.withDefault "" style) ++ colspanAttribute) children
 
 
+imageStyle : List (Html.Attribute msg)
+imageStyle =
+    [ Attribute.style "max-width" "100vw"
+    , Attribute.style "margin" "0 auto"
+    , Attribute.style "display" "block"
+    ]
+
+
 showImage : Maybe String -> Maybe String -> Maybe String -> Maybe String -> String -> List (Html msg) -> Html msg
 showImage alt title class id src children =
-    Html.img [ Attribute.class (Maybe.withDefault "" class), Attribute.id (Maybe.withDefault "" id), Attribute.title (Maybe.withDefault "" title), Attribute.alt (Maybe.withDefault "" alt), Attribute.src src ] children
+    Html.img
+        ([ Attribute.class (Maybe.withDefault "" class)
+         , Attribute.id (Maybe.withDefault "" id)
+         , Attribute.title (Maybe.withDefault "" title)
+         , Attribute.alt (Maybe.withDefault "" alt)
+         , Attribute.src src
+         ]
+            ++ imageStyle
+        )
+        children
 
 
 showDefinitionList : List (Html msg) -> Html msg
@@ -270,6 +288,27 @@ showDefinitionTerm id children =
 showDefinitionDescription : List (Html msg) -> Html msg
 showDefinitionDescription children =
     Html.dd [] children
+
+
+warningBox : List (Html msg) -> Html msg
+warningBox children =
+    Html.div
+        [ Attribute.style "display" "flex"
+        , Attribute.style "align-items" "center"
+        , Attribute.style "gap" "1rem"
+        , Attribute.style "padding" "1rem"
+        , Attribute.style "background-color" "lightyellow"
+        , Attribute.style "font-weight" "100"
+        , Attribute.style "border-radius" "10px"
+        ]
+        [ Html.span
+            [ Attribute.style "color" "orange"
+            , Attribute.style "text-shadow" "1px 0px gray"
+            , Attribute.style "font-size" "2rem"
+            ]
+            [ Html.text "⚠️" ]
+        , Html.div [ Attribute.style "line-height" "1.3rem" ] children
+        ]
 
 
 printStartsOutOf : Int -> Int -> String
@@ -304,4 +343,90 @@ showEasyLikeScore likeness easiness _ =
             [ Html.text "Likeness"
             , Html.text (printStartsOutOf like 5)
             ]
+        ]
+
+
+codeBlock : { body : String, language : Maybe String } -> Html msg
+codeBlock { body, language } =
+    let
+        languagesh =
+            case language of
+                Just l ->
+                    case l of
+                        "scss" ->
+                            SyntaxHighlight.css
+
+                        "css" ->
+                            SyntaxHighlight.css
+
+                        "elm" ->
+                            SyntaxHighlight.elm
+
+                        "java" ->
+                            SyntaxHighlight.javascript
+
+                        "javascript" ->
+                            SyntaxHighlight.javascript
+
+                        "typescript" ->
+                            SyntaxHighlight.javascript
+
+                        "python" ->
+                            SyntaxHighlight.python
+
+                        "sql" ->
+                            SyntaxHighlight.sql
+
+                        "html" ->
+                            SyntaxHighlight.xml
+
+                        "xml" ->
+                            SyntaxHighlight.xml
+
+                        "json" ->
+                            SyntaxHighlight.json
+
+                        "bash" ->
+                            SyntaxHighlight.nix
+
+                        "nix" ->
+                            SyntaxHighlight.nix
+
+                        "noLang" ->
+                            SyntaxHighlight.noLang
+
+                        _ ->
+                            SyntaxHighlight.noLang
+
+                Nothing ->
+                    SyntaxHighlight.noLang
+    in
+    Html.div [ Attribute.class "code-block" ]
+        [ Html.node "style"
+            []
+            [ Html.text ".code-block pre code { display: block; text-wrap: wrap; padding: 1rem;}" ]
+        , SyntaxHighlight.useTheme
+            SyntaxHighlight.oneDark
+        , body
+            |> languagesh
+            |> Result.map (SyntaxHighlight.toBlockHtml (Just 1))
+            |> Result.withDefault
+                (Html.pre [] [ Html.code [] [ Html.text body ] ])
+        ]
+
+
+codeBlockStyle : List (Html.Attribute msg)
+codeBlockStyle =
+    [ Attribute.style "width" "100%"
+    , Attribute.style "display" "block"
+    , Attribute.style "text-wrap" "wrap"
+    ]
+
+
+showCodeBlock : Maybe String -> List (Html msg) -> Html msg
+showCodeBlock class children =
+    Html.div [ Attribute.class "code-block" ]
+        [ Html.pre
+            [ Attribute.class (Maybe.withDefault "" class) ]
+            [ Html.code [] children ]
         ]

@@ -1,81 +1,84 @@
 ---
 title:
-  'Build and publish a Ionic App – Angular application structure: services and
-  factories'
+    "Build and publish a Ionic App – Angular application structure: services and
+    factories"
 date: 2017-07-27T11:35:06
 type: post
 slug: build-publish-ionic-app-angular-structure-services-controllers
 cover: /images/featured/angular-factory.jpg
-category: ['App development', 'Web development']
+category: ["App development", "Web development"]
 tags:
-  [
-    'android',
-    'angularjs',
-    'app',
-    'firebase',
-    'google',
-    'html',
-    'ionic',
-    'nodejs',
-    'play store',
-    'productivity',
-    'strikethru',
-  ]
+    [
+        "android",
+        "angularjs",
+        "app",
+        "firebase",
+        "google",
+        "html",
+        "ionic",
+        "nodejs",
+        "play store",
+        "productivity",
+        "strikethru",
+    ]
 author: jmtalarn
 ---
 
 In any application sometimes you need to share some code or common functionalities among the components of the application. One way to do it is using a services pattern. In AngularJs Applications there are three ways to create them: services and factories.
+
 <!--more-->
 <h2>Services vs Factories in Angularjs</h2>
-<p>The first thing to know is the difference between these kind of objects. In this post <a href="https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/">https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/</a> the author gives the definitions of each kind of components and illustrate them with clear examples.</p>
+The first thing to know is the difference between these kind of objects. In this post <a href="https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/">https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/</a> the author gives the definitions of each kind of components and illustrate them with clear examples.
+
 <h3>Factories</h3>
-<p>When you create a factory, you define an object with its properties and methods and return it directly. Then this same object will be used in the controllers where it is injected in the usual ways.</p>
+When you create a factory, you define an object with its properties and methods and return it directly. Then this same object will be used in the controllers where it is injected in the usual ways.
 
 ```javascript
-app.factory('aFactory', function() {
-  var property = ''
-  method = function() {
-    return property
-  }
-  return { method: getProperty }
-})
+app.factory("aFactory", function () {
+	var property = "";
+	method = function () {
+		return property;
+	};
+	return { method: getProperty };
+});
 ```
 
 <h3>Services</h3>
-<p>When a service is instantiated it's called the defining function with the new keyword so the object returned is a new instance of the object created with the function.</p>
+When a service is instantiated it's called the defining function with the new keyword so the object returned is a new instance of the object created with the function.
 
 ```javascript
-app.service('aService', function() {
-  var property = ''
-  this.getProperty = function() {
-    return property
-  }
-})
+app.service("aService", function () {
+	var property = "";
+	this.getProperty = function () {
+		return property;
+	};
+});
 ```
 
 <h3>Providers</h3>
-<p>The providers are the only kind of service that you can pass to the application config function so if you have to use or configure a service in the moment you are configuring the app you need to create it as a provider. The object returned in the inner $get method will be the available when you use it in your controllers.</p>
+The providers are the only kind of service that you can pass to the application config function so if you have to use or configure a service in the moment you are configuring the app you need to create it as a provider. The object returned in the inner $get method will be the available when you use it in your controllers.
 
 ```javascript
-app.provider('aProvider', function() {
-  this.property = ''
-  this.propertyWhenConfig = ''
+app.provider("aProvider", function () {
+	this.property = "";
+	this.propertyWhenConfig = "";
 
-  //Only the properties on the object returned from $get are available in the controller.
-  this.$get = function() {
-    var that = this
-    return {
-      getProperty: function() {
-        return that.property
-      },
-      getPropertyWhenConfig: that.propertyWhenConfig,
-    }
-  }
-})
+	//Only the properties on the object returned from $get are available in the controller.
+	this.$get = function () {
+		var that = this;
+		return {
+			getProperty: function () {
+				return that.property;
+			},
+			getPropertyWhenConfig: that.propertyWhenConfig,
+		};
+	};
+});
 ```
 
 <h2>Services and Factories in the App</h2>
-<p>These are the <a href="https://github.com/jmtalarn/strikethru/blob/master/www/js/services.js">services and factories</a> created in the development of the <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/">Strikethru App with Ionic</a></p>
+These are the <a href="https://github.com/jmtalarn/strikethru/blob/master/www/js/services.js">services and factories</a> created in the development of the <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/">Strikethru App with Ionic</a>
+
 <h3>Factories</h3>
 <dl>
 <dt>Todos</dt>

@@ -21,7 +21,7 @@ This language is a markup language, and this means that it will be formed by a s
 </figure>
 The standard <a href="https://www.w3.org/html/">rules and sintax</a> of the HTML language are defined on the <a href="https://www.w3.org/Consortium/">World Wide Web Consortium (W3C)</a> site.
 
-<blockquote>The <strong>World Wide Web Consortium (W3C)</strong> is an international community where Member organizations, a full-time staff, and the public work together to develop Web standards. Led by Web inventor <a href="https://en.wikipedia.org/wiki/Tim_Berners-Lee">Tim Berners-Lee</a> and CEO Jeffrey Jaffe, W3C's mission is to lead the Web to its full potential.
+<blockquote>The **World Wide Web Consortium (W3C)** is an international community where Member organizations, a full-time staff, and the public work together to develop Web standards. Led by Web inventor <a href="https://en.wikipedia.org/wiki/Tim_Berners-Lee">Tim Berners-Lee</a> and CEO Jeffrey Jaffe, W3C's mission is to lead the Web to its full potential.
 </blockquote>
 <h2 id="abrieflyhistoryabouthtml">A briefly history about HTML</h2>
 Initially the HTML was designed to share and spread cientific information over the wide world. It was mainly a structural language and not even you could put a bold or cursive text but progressively were introduced the modifiers to format text and images with the language revisions.

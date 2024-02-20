@@ -67,7 +67,7 @@ It's called [_Jekyll exporter_](https://github.com/benbalter/wordpress-to-jekyll
 
 It worked pretty well, because it exports the posts and a bunch of information like the category, the tags or the author and also some meta data like the page template used and others even it was added by plugins like [Yoast SEO](https://yoast.com/wordpress/plugins/seo/).
 
-**<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> But, I don't know why but maybe is due a missconfiguration the all media is not exported, so in order to do that I tried a second approach.**
+**<i class="fa fa-exclamation-triangle" aria-hidden="true">\* But, I don't know why but maybe is due a missconfiguration the all media is not exported, so in order to do that I tried a second approach.**
 
 ### Second attempt using jekyll-import script and default export tool.
 

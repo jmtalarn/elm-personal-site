@@ -31,7 +31,6 @@ As I saw in a Tweet it has to be a record for Opensource and I think also for th
 
 — Justin Dorfman (@jdorfman) <a href="https://twitter.com/jdorfman/status/791384038879690752">October 26, 2016</a>
 
-</p>
 </blockquote>
 
 Do you have ever used the FontAwesome project? If you have ever used it, you know how useful it is. It decorates and give sense to your buttons and links. Imagine now that you have a 1000 more icons available for your projects. Come on! Only for the time you used the previous versions of FontAwesome Dave deserves it. And the best of all is that there will be, as previously, a free version of the project.
@@ -50,5 +49,6 @@ The other project was posted on IndieGoGo. Without the repercussion of the FontA
 You can collaborate to help him with his work of write 5 books about Javascript. You know Javascript is the language of the moment, but there is always a lot of things to understand and to know how to do them with the latest version. You can find the work in progress of the author at <a href="https://mjavascript.com/">mjavascript.com</a>, an html version of the books on <a href="https://ponyfoo.com/books/">ponyfoo.com</a> ( the author's blog) and the project on <a href="https://github.com/mjavascript/">Github</a> and it will be free on the end the writing process. So... Why I backed this project if everybody could get the books in a future for free? First of all, to make it possible. The author knows there is a market with his product and backing the project to get the goal assures him at least the interest for the backers. And the second, if you back enough you can get a digital copy of the books published by O'Reilly. 5 books for 40$ ? This is less than 10 bucks each book, much less than any of the books I was looking for in Amazon these past days.
 
 <h2 id="crowdfundingamixofselfishnessandaltruism">Crowdfunding, a mix of selfishness and altruism.</h2>
-In my case I felt like a sponsor feeling right thinking about all the benefits everybody will get with both projects. On the other hand I think about how few I payed and all about I'll get and I'm feeling a little bit like an scammer.<br />
+In my case I felt like a sponsor feeling right thinking about all the benefits everybody will get with both projects. On the other hand I think about how few I payed and all about I'll get and I'm feeling a little bit like an scammer.
+
 I don't know what will happen, but I feel in a right sense of peaceful and happy to get my piece of cake.

@@ -4,14 +4,16 @@ date: 2015-08-17T03:50:00
 type: post
 slug: sketching-with-pencil
 cover: /images/featured/2015-04-09-12_09_43-Home---Pencil-Project.png
-tags: ['design', 'resources']
-category: ['Design resources']
+tags: ["design", "resources"]
+category: ["Design resources"]
 author: jmtalarn
 ---
 
 **Evolus Pencil** is an open source software for prototyping and sketching and is what I use as a free alternative to all the web based existing applications to do the designs and wireframes.
-It has many bundled stencils collections to use based on Android,iOS and many web frameworks components ... 
-<!--more--> 
+It has many bundled stencils collections to use based on Android,iOS and many web frameworks components ...
+
+<!--more-->
+
 but it has one based on sketchy elements, perfect to draw the wireframes designs and separate it from the final look and feel, the most used in my concepts and designs.
 
 The latest stable version, 2.0.5, was released on September 2013 ... but it's almost free of bugs and working fine.
@@ -45,9 +47,11 @@ There is a FontAwesome stencil collection but its based on an earlier version of
 
 1. Install the Font Awesome as a font system. The True Type font can be downloaded from [http://fortawesome.github.io/Font-Awesome/](http://fortawesome.github.io/Font-Awesome/) inside the fonts folder in the zipped package.
 2. Look for the unicode value for the icon you want to include
-3. Search in a Characters map tool like the one in Windows or any equivalent in your Linux distro for the unicode value for the Font Awesome font<br>![Characters map from Windows](../images/2015-04-09-11_57_23-Mapa-de-caracteres.png)
+3. Search in a Characters map tool like the one in Windows or any equivalent in your Linux distro for the unicode value for the Font Awesome font
+   ![Characters map from Windows](../images/2015-04-09-11_57_23-Mapa-de-caracteres.png)
 4. Copy it to the clipboard
-5. Create a simple Plain text element from the common shapes collection<br>![Plain text element](../images/2015-04-09-10_14_05-Plain-text-label_---Pencil-1.png)
+5. Create a simple Plain text element from the common shapes collection
+   ![Plain text element](../images/2015-04-09-10_14_05-Plain-text-label_---Pencil-1.png)
 6. Paste the content of the clipboard. You probably will see a non-character valid until you change the font to the FontAwesome installed in your OS.
 7. Right click over the element and choose the _'Add to my collections...'_ option. If you choose to autogenerate icon preview is probably that doesn't display it on your collection. It's up to you to provide a generated preview but I think naming it properly to identify it at a glance should be enough.
 8. Now you have the icon in your private collection. Repeat for all the needed icons.

@@ -4,6 +4,7 @@
 	"elm-version": "0.19.1",
 	"dependencies": {
 		"direct": {
+			"NoRedInk/elm-string-conversions": "1.0.1",
 			"avh4/elm-color": "1.0.0",
 			"danfishgold/base64-bytes": "1.1.0",
 			"danyx23/elm-mimetype": "4.0.1",
@@ -31,6 +32,7 @@
 			"mdgriffith/elm-codegen": "4.1.1",
 			"miniBill/elm-codec": "2.1.0",
 			"noahzgordon/elm-color-extra": "1.0.2",
+			"pablohirafuji/elm-syntax-highlight": "3.5.0",
 			"robinheghan/fnv1a": "1.0.0",
 			"rtfeldman/elm-css": "18.0.0",
 			"the-sett/elm-syntax-dsl": "6.0.2",
@@ -57,8 +59,6 @@
 	},
 	"test-dependencies": {
 		"direct": {},
-		"indirect": {
-			"NoRedInk/elm-string-conversions": "1.0.1"
-		}
+		"indirect": {}
 	}
 }

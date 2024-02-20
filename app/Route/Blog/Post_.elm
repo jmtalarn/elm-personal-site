@@ -3,6 +3,7 @@ module Route.Blog.Post_ exposing (ActionData, Data, Model, Msg, route)
 import BackendTask exposing (BackendTask)
 import BackendTask.File
 import BackendTask.Glob as Glob
+import Components.PostHeader as PostHeader
 import Dict exposing (Dict)
 import FatalError exposing (FatalError)
 import Head
@@ -25,6 +26,9 @@ type alias BlogPost =
     { body : String
     , slug : String
     , title : String
+    , cover : String
+    , category : List String
+    , tags : List String
     }
 
 
@@ -98,9 +102,12 @@ blogPostsGlob =
 
 blogPostDecoder : String -> Decoder BlogPost
 blogPostDecoder body =
-    Decode.map2 (BlogPost body)
+    Decode.map5 (BlogPost body)
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
+        (Decode.field "cover" Decode.string)
+        (Decode.field "category" <| Decode.list <| Decode.string)
+        (Decode.field "tags" <| Decode.list <| Decode.string)
 
 
 processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
@@ -115,7 +122,7 @@ processHtml =
             showSpan
             |> Markdown.Html.withOptionalAttribute "class"
             |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "b" (\children -> Html.b [] children)
+        , Markdown.Html.tag "b" (Html.b [])
         , Markdown.Html.tag "em" (\class children -> Html.em [ Attribute.class (Maybe.withDefault "" class) ] children) |> Markdown.Html.withOptionalAttribute "class"
         , Markdown.Html.tag "p" (\children -> Html.p [] children)
         , Markdown.Html.tag "blockquote" showBlockquote |> Markdown.Html.withOptionalAttribute "class"
@@ -188,12 +195,12 @@ processHtml =
             |> Markdown.Html.withOptionalAttribute "style"
             |> Markdown.Html.withOptionalAttribute "colspan"
         , Markdown.Html.tag "i" (Html.i [])
-        , Markdown.Html.tag "strong" (Html.strong [])
+        , Markdown.Html.tag "strong" (\children -> Html.span [] [ Html.strong [] children ])
         , Markdown.Html.tag "br" (Html.br [])
         , Markdown.Html.tag "li" (\id children -> Html.li [ Attribute.id (Maybe.withDefault "" id) ] children) |> Markdown.Html.withOptionalAttribute "id"
         , Markdown.Html.tag "ol" (Html.ol [])
         , Markdown.Html.tag "ul" (Html.ul [])
-        , Markdown.Html.tag "code" (Html.code [])
+        , Markdown.Html.tag "code" showCodeBlock |> Markdown.Html.withOptionalAttribute "class"
         , Markdown.Html.tag "img" showImage
             |> Markdown.Html.withOptionalAttribute "alt"
             |> Markdown.Html.withOptionalAttribute "title"
@@ -210,12 +217,17 @@ processHtml =
         , Markdown.Html.tag "easy-like-score" showEasyLikeScore
             |> Markdown.Html.withAttribute "likeness"
             |> Markdown.Html.withAttribute "easiness"
+        , Markdown.Html.tag "warning" warningBox
         ]
 
 
 customHtmlRenderer : Renderer (Html msg)
 customHtmlRenderer =
-    { defaultHtmlRenderer | html = processHtml }
+    { defaultHtmlRenderer
+        | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing src []
+        , codeBlock = codeBlock
+        , html = processHtml
+    }
 
 
 
@@ -276,7 +288,7 @@ data { post } =
                                 blogpost
 
                             Nothing ->
-                                BlogPost "" "" ""
+                                BlogPost "" "" "" "" [] []
                     )
     in
     BackendTask.map Data blogPostFound
@@ -308,20 +320,32 @@ view :
     -> View (PagesMsg Msg)
 view app sharedModel =
     let
-        body =
-            app.data.blogPost.body
+        { title, cover, tags, category, body } =
+            app.data.blogPost
 
-        markdownOptions =
-            { githubFlavored = Just { tables = False, breaks = False }
-            , defaultHighlighting = Nothing
-            , sanitize = False
-            , smartypants = False
-            }
+        _ =
+            Debug.log "title" app.data.blogPost.title
+
+        _ =
+            Debug.log "cover" app.data.blogPost.cover
+
+        _ =
+            Debug.log "tags" app.data.blogPost.tags
+
+        _ =
+            Debug.log "category" app.data.blogPost.category
+
+        -- markdownOptions =
+        --     { githubFlavored = Just { tables = False, breaks = False }
+        --     , defaultHighlighting = Nothing
+        --     , sanitize = False
+        --     , smartypants = False
+        --    }
     in
-    { title = "Blog Post"
+    { title = app.data.blogPost.title ++ " 🗒️ web dev notes"
     , -- , body = [ Html.text "You're on the page Blog.Post_"
       --     , EMarkdown.toHtmlWith markdownOptions [] body ] ++ markdownToView body
-      body = markdownToView body
+      body = PostHeader.show title cover tags category :: markdownToView body
 
     --  , body = [ Html.text "You're on the page Blog.Post_", ExplorationsMarkdown.toHtmlWith { githubFlavored = Just { tables = True, breaks = False }, defaultHighlighting = Just "elm", sanitize = True, smartypants = False } [] body ]
     }

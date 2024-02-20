@@ -37,7 +37,7 @@ I tried some systems before without success but <a href="http://striketh.ru/">St
 
 <iframe src="https://www.youtube.com/embed/T4M8JfArx6I?rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 
-<strong>Yet another todo tasks list application. </strong>The idea for the app is, against the original idea, to replace the analog paper notebook and the pen. Simple and useful.
+**Yet another todo tasks list application. **The idea for the app is, against the original idea, to replace the analog paper notebook and the pen. Simple and useful.
 
 <h2 id="technology"> The technology</h2>
 
@@ -61,10 +61,10 @@ I discovered the Firebase Platform during the free React course of <a href="htt
 
 🔒Authentication
 💾Datastore and Nonrel db
-✈Intermitent offline<a href="https://twitter.com/hashtag/angularjs?src=hash">#angularjs</a></p>
+✈Intermitent offline<a href="https://twitter.com/hashtag/angularjs?src=hash">#angularjs</a>
 
 <p style="text-align: center;">— JMTE (@jmtalarn) <a href="https://twitter.com/jmtalarn/status/847149153000050688">29 de març de 2017</a>
-</p>
+
 </blockquote>
 
 For the moment I limited the target app to the Google Play store due the access barrier is only for 25 € instead of the 100 € /yearly of the Apple App store.
