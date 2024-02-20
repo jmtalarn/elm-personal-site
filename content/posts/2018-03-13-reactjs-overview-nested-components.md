@@ -86,7 +86,7 @@ class Greeting extends React.Component {
     This is the lifecycle of a React component and the methods you can override in your component. Each one of the methods is descriptive enough to know when it is executed, even that they are also listed in execution order.
 
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-             <i class="fal fa-plus-hexagon fa-2x" style="margin-right: 1rem; color: MediumSeaGreen;"></i> 
+             <i class="fal fa-plus-hexagon fa-2x" style="margin-right: 1rem; color: MediumSeaGreen;">* 
              Mounting
     </h4>
          A component is created and inserted into the DOM
@@ -96,7 +96,7 @@ class Greeting extends React.Component {
              4. <code>componentDidMount()</code>
 
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-            <i class="fal fa-sync fa-2x" style="margin-right: 1rem; color: Orange;"></i> 
+            <i class="fal fa-sync fa-2x" style="margin-right: 1rem; color: Orange;">* 
             Updating
     </h4> 
         The state of the component was changed
@@ -106,7 +106,7 @@ class Greeting extends React.Component {
             4. <code>render()</code>
             5. <code>componentDidUpdate()</code>
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-            <i class="fal fa-trash-alt fa-2x" style="margin-right: 1rem; color: Tomato;"></i> 
+            <i class="fal fa-trash-alt fa-2x" style="margin-right: 1rem; color: Tomato;">* 
             Unmounting
     </h4>
     The component is removed from the DOM
@@ -114,7 +114,7 @@ class Greeting extends React.Component {
         </ol>
 
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-            <i class="fal fa-bug fa-2x" style="margin-right: 1rem; color: IndianRed;"></i> 
+            <i class="fal fa-bug fa-2x" style="margin-right: 1rem; color: IndianRed;">* 
             Error Handling
     </h4>
     An error occurred during rendering

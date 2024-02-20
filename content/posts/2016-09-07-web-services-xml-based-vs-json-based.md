@@ -65,8 +65,10 @@ After the request the server will answer with a response also in an xml format, 
 <h2 id="soap">SOAP</h2>
 <h3 id="simpleobjectaccessprotocol">Simple Object Access Protocol.</h3>
 
-Assuming that simple is because the calls will be always done in the same way being independent the way it's implemented. The messages sent and received are very similar to the XML-RPC ones because both are based with the xml format for the data. The SOAP protocol allows you to freely format the <a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">request and response</a> message when you are implementing and once the format is defined it should be shared with the client for an effective and satisfactory communication.<br />
-SOAP adds the concept of envelope to encapsulate the data.<br />
+Assuming that simple is because the calls will be always done in the same way being independent the way it's implemented. The messages sent and received are very similar to the XML-RPC ones because both are based with the xml format for the data. The SOAP protocol allows you to freely format the <a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">request and response</a> message when you are implementing and once the format is defined it should be shared with the client for an effective and satisfactory communication.
+
+SOAP adds the concept of envelope to encapsulate the data.
+
 This is an example of a request xml message:
 
 ```xml

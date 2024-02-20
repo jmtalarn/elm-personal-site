@@ -9,17 +9,17 @@ tags: ["web servers"]
 author: jmtalarn
 ---
 
-When we talk about <strong>web server</strong> we are referring indistinctly to the software providing web content and the machine is running it.
+When we talk about **web server** we are referring indistinctly to the software providing web content and the machine is running it.
 
 Generally a web server is a software providing web content to the clients connected to them, usually web browsers.
 
-This software is running listening on a <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#port">port</a></strong> and when a client makes a request over the http protocol to a determined resource, usually via the <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#methods">get method</a></strong>, it is sent to the client as response.
+This software is running listening on a **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#port">port</a>** and when a client makes a request over the http protocol to a determined resource, usually via the **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#methods">get method</a>**, it is sent to the client as response.
 
 <!--more-->
 
-So, the web server is accepting <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#http">http</a></strong> <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">requests</a></strong> and serving http <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">responses</a></strong> which are tipically <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#html">html</a></strong> documents. But these responses can also be text, images and practically any document type.
+So, the web server is accepting **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#http">http</a>** **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">requests</a>** and serving http **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">responses</a>** which are tipically **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#html">html</a>** documents. But these responses can also be text, images and practically any document type.
 
-All this resources are placed in a structure under the base server <strong><a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#URL">URL</a></strong>, like if they were folders, and in many cases like the static servers is like this. The web server will be responsible to do the routing, also known as URL routing, from the resouce address to the correspondant content.
+All this resources are placed in a structure under the base server **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#URL">URL</a>**, like if they were folders, and in many cases like the static servers is like this. The web server will be responsible to do the routing, also known as URL routing, from the resouce address to the correspondant content.
 
 <blockquote>The set of contents located on a web server is called a web site.</blockquote>
 A web server will be able to record in its logs data and information about any happening connection to server, statistics of usage and also any error that could happen during the process to elaborate and prepare the requests and the responses. All these information could be useful for web developers and webmasters to solve and detect incidents or users behaviours and tendences.
@@ -58,7 +58,7 @@ Not all web servers will respond to all methods and not all the methods would wo
 <dt id="html">html</dt>
 <dd>Acronym for Hypertext Markup Language,and this is the language, using a tagging format, of how are the basic web documents build. It's the source of any web page presented on a web server. It allows to embed images, video or audio as part of the document. The HTML, the CSS stylesheets and the javascript language used all together allow you to build anything you need based on the web from a simple welcome page to a complex Android or iOS app.</dd>
 <dt id="URL">URL</dt>
-<dd>Acronym of Uniform Resource Locator, and this is the specification where a resource is located on a server. Where a client, like a web browser, should make its request to get the resource needed. It is formed by a sequence like the following: <i>protocol</i>://<i>server name</i>[:<i>port</i>]/<i>path</i>/<i>for</i>/<i>the</i>/<i>resource</i>/<i>location</i>, defining the protocol to be used,<i>http</i> or <i>https</i> in the case of web server content, the server name, unique for the network where the client is connected, an optional port and followed for the concrete resource location</dd>
+<dd>Acronym of Uniform Resource Locator, and this is the specification where a resource is located on a server. Where a client, like a web browser, should make its request to get the resource needed. It is formed by a sequence like the following: *protocol*://*server name*[:*port*]/*path*/*for*/*the*/*resource*/*location*, defining the protocol to be used,*http* or *https* in the case of web server content, the server name, unique for the network where the client is connected, an optional port and followed for the concrete resource location</dd>
 <dt id="port">port</dt>
 <dd>is defined by an integer number from 0 to 65535. When we are talking about port we must understand it as a channel where our pc establish a connection to other machine. Is the channel where all communication will be performed. The first 1024 ports will be assigned to known protocols, like the 80 for web servers, and in spite of you can configure any port to use any protocol you are going to use, it is recommended to follow the preset numbers.</dd>
 <dt id="request-response">request and response</dt>

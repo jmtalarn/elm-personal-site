@@ -32,9 +32,9 @@ these cover from basic to advanced aspects of the web development, but necessary
 
 This is a free course from <a href="https://www.codeschool.com/" target="_blank" rel="noopener">Code School a PluralSight company</a>. I know Angular is about its 4 version but there is a lot of projects using the firsts versions of this framework. Also AngularJs is quite different than the Angular.io so it's good to learn about it. It's not necessary to learn AngularJs to learn Angular.io but it gives you an idea about from where is coming all of this and can give you an idea about how this kind of frameworks works.
 
-<strong>Shaping Up with Angular.js</strong> is a practical base course to learn about the basics concepts and patterns used with this framework. Modules, expressions, services, directives and controllers and bindings are the terms you'll see during this practical course. As the course progresses, a demo application is being built applying everything learned.
+**Shaping Up with Angular.js** is a practical base course to learn about the basics concepts and patterns used with this framework. Modules, expressions, services, directives and controllers and bindings are the terms you'll see during this practical course. As the course progresses, a demo application is being built applying everything learned.
 
-<strong>Link</strong> <a href="https://www.codeschool.com/courses/shaping-up-with-angularjs" target="_blank" rel="noopener">https://www.codeschool.com/courses/shaping-up-with-angularjs</a>
+**Link** <a href="https://www.codeschool.com/courses/shaping-up-with-angularjs" target="_blank" rel="noopener">https://www.codeschool.com/courses/shaping-up-with-angularjs</a>
 
 <h2>Progressive Web Applications training</h2>
 <a href="https://developers.google.com/web/ilt/pwa/" target="_blank" rel="noopener">
@@ -43,7 +43,7 @@ This is a free course from <a href="https://www.codeschool.com/" target="_blank"
     height="562" />
 </a>
 
-Google Devs site provides you this full extended practical free course about what are <strong>Progressive WebApps</strong> (PWA). In this course you will learn what an application needs to do to be a PWA and a set of tools andtips to work with. Of course, with examples linked to its products. PWA are not any concrete API but a compound of native browsers features that used in web applications allows you to build reliable, fast and consequently engaging apps.
+Google Devs site provides you this full extended practical free course about what are **Progressive WebApps** (PWA). In this course you will learn what an application needs to do to be a PWA and a set of tools andtips to work with. Of course, with examples linked to its products. PWA are not any concrete API but a compound of native browsers features that used in web applications allows you to build reliable, fast and consequently engaging apps.
 
 The course consists of a series of slides, videos and practical lab exercises you can download from this <a href="https://github.com/google-developer-training/pwa-training-labs.git" target="\_blank"el="noopener">GitHub repository</a>.
 
@@ -52,7 +52,7 @@ native payments request API. It really worth it to learn about all of these brow
 
 This course is not for beginers as you should have a good knowledge about how HTML, Javascript and CSS works.
 
-<strong>Link</strong> <a href="https://developers.google.com/web/ilt/pwa/" target="_blank"
+**Link** <a href="https://developers.google.com/web/ilt/pwa/" target="_blank"
   rel="noopener">https://developers.google.com/web/ilt/pwa/</a>
 
 <h2>30 days of Javascript</h2>
@@ -62,7 +62,7 @@ Getting skilled with Javascript will give you an extra power to be able to learn
 as are based in this language. Also, most of the concepts applying to the language working on the browsers, work also in
 the Node.js engine, so you will learn potential use of the language in the frontend and in the backend.
 
-<strong>30 lessons, one per day</strong>, will show you almost everything about Javascript and its Ecmascript 6 new features. Each lesson is a practical video tutorial where you will get fun while you are bringing your browser powers to do awesome things and learning tips and tricks of this language.
+**30 lessons, one per day**, will show you almost everything about Javascript and its Ecmascript 6 new features. Each lesson is a practical video tutorial where you will get fun while you are bringing your browser powers to do awesome things and learning tips and tricks of this language.
 
 The author of this course is <a href="https://twitter.com/wesbos">Wes Bos</a>.
 
@@ -77,7 +77,7 @@ The author of this course is <a href="https://twitter.com/wesbos">Wes Bos</a>.
 This guy is really good at this. He has many courses and tutorials and he also runs a podcast, together with Scott Tolinski, called Syntax (<a href="https://itunes.apple.com/ca/podcast/syntax-tasty-web-development-treats/id1253186678?mt=2&amp;__s=ocexybn43sacwomc2o8h">iTunes
 link</a>, and <a href="https://feed.syntax.fm/rss?__s=ocexybn43sacwomc2o8h">RSS link</a>)
 
-<strong>Link</strong> <a href="https://javascript30.com/" target="_blank" rel="noopener">https://javascript30.com/</a>
+**Link** <a href="https://javascript30.com/" target="_blank" rel="noopener">https://javascript30.com/</a>
 
 <h2>MiniCurso: React.js + Firebase</h2>
 <img class="aligncenter size-full" src="../images/thumb_mincourse.png" alt="" width="705" height="401" />
@@ -92,20 +92,20 @@ This guy is really awesome too. One reference in Spain about the web development
     width="1500" height="500" />
 </a> Chefly, catering and home made food providers in an App
 
-<strong>Link</strong> <a href="http://cursos.carlosazaustre.es/p/react-firebase1?affcode=88885_sat3rmdz" target="_blank"
+**Link** <a href="http://cursos.carlosazaustre.es/p/react-firebase1?affcode=88885_sat3rmdz" target="_blank"
   rel="noopener">http://cursos.carlosazaustre.es/p/react-firebase1</a>
 
 <hr />
 
 <h2>Bonus track</h2>
-3 <strong>funny interactive online courses/trainings</strong> to learn the use of the Source Control Manager <strong>Git</strong>, and two powerful resources provided with the CSS features, the <strong>flexbox</strong> property and the newest <strong>CSS grid</strong>.
+3 **funny interactive online courses/trainings** to learn the use of the Source Control Manager **Git**, and two powerful resources provided with the CSS features, the **flexbox** property and the newest **CSS grid**.
 
 <div class="bonus-course">
   <h3>Git course</h3>
  
   <img src="../images/completed-try-git-b54d1cd9fa940e4a3c1925056d38eca2-150x150.png" />
 
-Another practical course from  <a href="https://www.codeschool.com/" target="_blank" rel="noopener">Code School a PluralSight company</a>. In this case, you will learn in an interactive console on the same web how to use <a href="https://twitter.com/playcodepip">Git</a>.   You will use the basics and usage commands trying to help the GitHub mascot, <strong>Octocat</strong>, to live a funny adventure.
+Another practical course from  <a href="https://www.codeschool.com/" target="_blank" rel="noopener">Code School a PluralSight company</a>. In this case, you will learn in an interactive console on the same web how to use <a href="https://twitter.com/playcodepip">Git</a>.   You will use the basics and usage commands trying to help the GitHub mascot, **Octocat**, to live a funny adventure.
 
 <a href="https://www.codeschool.com/courses/try-git" target="_blank"
       rel="noopener">https://www.codeschool.com/courses/try-git</a>
@@ -117,7 +117,7 @@ Another practical course from  <a href="https://www.codeschool.com/" target="_b
   <h3>Flexbox Froggy</h3>
   
   <img src="../images/frog-green.svg" alt="" style="width: 4rem; height: 4rem; min-width: 4rem;margin-right: 1rem;" />
-  The guys from <a href="https://twitter.com/playcodepip" target="_blank" rel="noopener">CodePip</a> built the two following resources. In this case, also in an interactive CSS editor, you will lead a green frog(s) to jump from a water lily to another at the same time you are learning how to use the <strong>Flexbox CSS properties</strong>.
+  The guys from <a href="https://twitter.com/playcodepip" target="_blank" rel="noopener">CodePip</a> built the two following resources. In this case, also in an interactive CSS editor, you will lead a green frog(s) to jump from a water lily to another at the same time you are learning how to use the **Flexbox CSS properties**.
 
 <a href="http://flexboxfroggy.com/" target="_blank" rel="noopener">http://flexboxfroggy.com/</a>
 

@@ -130,7 +130,7 @@ expect(foo).toThrowError(TypeError, "foo bar baz");</td>
 
 And in order to execute it you only have to run them in any browser able to run Javascript to run the test. This is an example:
 
-<strong>function.js file</strong>
+**function.js file**
 
 ```javascript
 function helloWorld() {
@@ -138,7 +138,7 @@ function helloWorld() {
 }
 ```
 
-<strong>test-specs.js file</strong>
+**test-specs.js file**
 
 ```javascript
 describe("Hello world", function () {
@@ -148,7 +148,7 @@ describe("Hello world", function () {
 });
 ```
 
-<strong>specrunner.html</strong>
+**specrunner.html**
 
 ```html
 <!DOCTYPE html>

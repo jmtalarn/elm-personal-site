@@ -4,23 +4,31 @@ date: 2016-07-16T20:58:38
 type: post
 slug: building-a-jsf-composite-component
 cover: /images/featured/Sense-t-tol.png
-category: ['Web development']
-tags: ['jsf', 'java', 'components']
+category: ["Web development"]
+tags: ["jsf", "java", "components"]
 author: jmtalarn
 ---
 
-Since the version 2.2 of the JSF specification build composite components is a really easy thing to do. I will describe here how we implemented one to reuse a piece of UI in many pages.<br />
-From the answer of this <a href="http://stackoverflow.com/questions/6358066/how-to-implement-a-dynamic-list-with-a-jsf-2-0-composite-component" target="_blank"><i class="fab fa-stack-overflow"></i> StackOverflow question</a> I'd learned about how to create the <em>java</em> part of this example.
+Since the version 2.2 of the JSF specification build composite components is a really easy thing to do. I will describe here how we implemented one to reuse a piece of UI in many pages.
+
+From the answer of this <a href="http://stackoverflow.com/questions/6358066/how-to-implement-a-dynamic-list-with-a-jsf-2-0-composite-component" target="_blank"><i class="fab fa-stack-overflow">\* StackOverflow question</a> I'd learned about how to create the \*java\* part of this example.
+
 <!--more-->
 <h1 id="herethereistheexample">Here is the example.</h1>
-<p>This is a HTML5 canvas showing a map where you can drag and drop elements like a treasure, a house or a plant from a toolbar over it.<br />
-The position of the items will be written on a table that is the data whith the backing bean will work.<br />
-And in the same way you can edit the table of the elements over the represented map.<br />
-There are some parameters like the size of the component or the background image for the map.<br />
-For most of the components used I worked with the <a href="http://www.primefaces.org/showcase/index.xhtml">PrimeFaces components</a> and to take advantage of the use of the data attributes from html5 with the xhtml specification I added the use of the <a href="http://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/p/tld-summary.html">passthrough library</a></p>
+This is a HTML5 canvas showing a map where you can drag and drop elements like a treasure, a house or a plant from a toolbar over it.
+
+The position of the items will be written on a table that is the data whith the backing bean will work.
+
+And in the same way you can edit the table of the elements over the represented map.
+
+There are some parameters like the size of the component or the background image for the map.
+
+For most of the components used I worked with the <a href="http://www.primefaces.org/showcase/index.xhtml">PrimeFaces components</a> and to take advantage of the use of the data attributes from html5 with the xhtml specification I added the use of the <a href="http://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/p/tld-summary.html">passthrough library</a>
+
 <h2 id="xhtml">xhtml</h2>
-<p>This is the component xhtml code placed under the resources folder in WebContent <strong>webcontent/resources/mapoftreasure/</strong><br />
-In this folder there should be also all the assets needed for the component like the javascript included or the images referenced.</p>
+This is the component xhtml code placed under the resources folder in WebContent **webcontent/resources/mapoftreasure/**
+
+In this folder there should be also all the assets needed for the component like the javascript included or the images referenced.
 
 ```xml
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -169,10 +177,13 @@ xmlns:ui="http://java.sun.com/jsf/facelets"
 ```
 
 <h2 id="java">java</h2>
-<p>This is the component java code <strong>source package</strong></p>
-<p>As you can see, the value of the FacesComponent annotation is the component type we specified in the componentType attribute in the composite interface definition in the xhtml.<br />
-The great thing here is that you can access the values in the attributes of the component and work with them in the backend. You can access database or external APIs to query or, by the way, make big calculations that you want to avoid to do in the client.<br />
-The methods created here will be accessible in the xhtml part using the cc.<em>nameofthemethod</em> like the add and remove methods or the list of data you can access to draw all the <em>things</em> over the map.</p>
+This is the component java code **source package**
+
+As you can see, the value of the FacesComponent annotation is the component type we specified in the componentType attribute in the composite interface definition in the xhtml.
+
+The great thing here is that you can access the values in the attributes of the component and work with them in the backend. You can access database or external APIs to query or, by the way, make big calculations that you want to avoid to do in the client.
+
+The methods created here will be accessible in the xhtml part using the cc._nameofthemethod_ like the add and remove methods or the list of data you can access to draw all the _things_ over the map.
 
 ```java
 package mapoftreasures.factory.web.component;
@@ -222,54 +233,57 @@ public class mapOfTreasureCanvas extends UINamingContainer {
 ```
 
 <h2 id="exampleofuse">Example of use</h2>
-<p>This is how to use the component in your xhtml page.</p>
+This is how to use the component in your xhtml page.
 
 ```html
 <!DOCTYPE html>
 <html
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:h="http://xmlns.jcp.org/jsf/html"
-  xmlns:f="http://xmlns.jcp.org/jsf/core"
-  xmlns:p="http://primefaces.org/ui"
-  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-  xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:sec="http://www.springframework.org/security/tags"
 >
-  <h:head></h:head>
-  <h:body>
-    <ui:composition
-      template="/xhtml/index.xhtml"
-      xmlns:dn="http://java.sun.com/jsf/composite/mapoftreasure"
-    >
-      <ui:define name="content">
-        <style></style>
-        <div class="ui-grid ui-grid-responsive">
-          <div class="ui-grid-row">
-            <div class="ui-grid-col-4">
-              <dn:canvas id="canvas" things="#{thingsView.things}"></dn:canvas>
-            </div>
-          </div>
-          <div class="ui-grid-row">
-            <div class="ui-grid-col-4">
-              <dn:canvas
-                id="city_map"
-                width="550"
-                height="260"
-                mapBackground="city"
-              ></dn:canvas>
-            </div>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div>
-            <canvas id="canvasExample" width="400" height="300">
-              This text is displayed if your browser does not support HTML5
-              Canvas.
-            </canvas>
-          </div>
-        </div>
-      </ui:define>
-    </ui:composition>
-  </h:body>
+	<h:head></h:head>
+	<h:body>
+		<ui:composition
+			template="/xhtml/index.xhtml"
+			xmlns:dn="http://java.sun.com/jsf/composite/mapoftreasure"
+		>
+			<ui:define name="content">
+				<style></style>
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4">
+							<dn:canvas
+								id="canvas"
+								things="#{thingsView.things}"
+							></dn:canvas>
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4">
+							<dn:canvas
+								id="city_map"
+								width="550"
+								height="260"
+								mapBackground="city"
+							></dn:canvas>
+						</div>
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div>
+						<canvas id="canvasExample" width="400" height="300">
+							This text is displayed if your browser does not
+							support HTML5 Canvas.
+						</canvas>
+					</div>
+				</div>
+			</ui:define>
+		</ui:composition>
+	</h:body>
 </html>
 ```
