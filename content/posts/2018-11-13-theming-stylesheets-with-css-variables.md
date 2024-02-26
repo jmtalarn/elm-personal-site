@@ -42,10 +42,10 @@ But are widely implemented among the browsers and you're close to be sure to use
 [About custom properties in caniuse](https://www.caniuse.com/#search=css%20variables)
 
 <h3>How to define CSS variables?</h3>
-You can define the CSS variables inside any common CSS selector you are using in your stylesheets with a simple <code>--</code> following the css name for that variable and the value for that variable after the <code>:</code> property assignation.
+You can define the CSS variables inside any common CSS selector you are using in your stylesheets with a simple `--` following the css name for that variable and the value for that variable after the `:` property assignation.
 As you are defining them into a CSS selector, the value will be applied in cascade in the same way any other property would apply. The value there will be defined there in the same way you declare any CSS property value.
 
-A practical way to use it is making them accessible over all your stylesheet so you can define them into the root of the document using the <code>:root</code> pseudo element.
+A practical way to use it is making them accessible over all your stylesheet so you can define them into the root of the document using the `:root` pseudo element.
 
 ```css
 :root {
@@ -56,7 +56,7 @@ A practical way to use it is making them accessible over all your stylesheet so 
 ```
 
 <h3>How to use CSS variables?</h3>
-After your declaration you can use them inside the scope of the selector you defined it with the <code>var()</code> function, using as parameter the property in the same way you declared it (with the two preceding dashes).
+After your declaration you can use them inside the scope of the selector you defined it with the `var()` function, using as parameter the property in the same way you declared it (with the two preceding dashes).
 
 As easy as this:
 
@@ -67,18 +67,18 @@ As easy as this:
 }
 ```
 
-Note the second argument in the use of the <code>var</code> for the color property. You can provide there also a default value in case your variable is not defined yet. This can happen if, for example, you are setting it via Javascript after the first render of the web view
+Note the second argument in the use of the `var` for the color property. You can provide there also a default value in case your variable is not defined yet. This can happen if, for example, you are setting it via Javascript after the first render of the web view
 
 <h3>How to manipulate CSS variables?</h3>
 After you set your variables you can manipulate it as you would do with the css properties in Javascript.
 
-You can go by the style property of an element and use the <code>getPropertyValue</code> on that property to get the value as a String.
+You can go by the style property of an element and use the `getPropertyValue` on that property to get the value as a String.
 
 ```javascript
 element.style.getPropertyValue("--your-color-variable-1");
 ```
 
-Also, you can get the computed style for an element using the <code>getComputedStyle</code> function available on the global <code>window</code> object and also use the <code>getPropertyValue</code> on the style object retrieved.
+Also, you can get the computed style for an element using the `getComputedStyle` function available on the global `window` object and also use the `getPropertyValue` on the style object retrieved.
 
 ```javascript
 getComputedStyle(element).getPropertyValue("--your-color-variable-1");

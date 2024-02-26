@@ -107,7 +107,7 @@ gem install rouge
 ```
 
 To colour it properly you will have to add a nice CSS stylesheet. But don't worry because Rouge is completely compatible with [Pygments](http://richleland.github.io/pygments-css/) and you only have to download from there the CSS you want and include it in your project.
-The only caveat is that you have to replace the tag with the markdown or html generated from the exports (usually <code>&#96;&#96;&#96;</code> or <code>&lt;pre>&lt;code></code> blocks) with the Jekyll helper for highlighting
+The only caveat is that you have to replace the tag with the markdown or html generated from the exports (usually ` ``` ` or `<pre><code>` blocks) with the Jekyll helper for highlighting
 
 ```html
 {% highlight _language_ %} //code here {% endhighlight %}
