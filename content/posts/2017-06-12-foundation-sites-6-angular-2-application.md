@@ -42,7 +42,7 @@ And proceed installing the latest version of the Angular CLI
 npm install -g @angular/cli
 ```
 
-You can show all available commands with the <code>ng help</code> command.
+You can show all available commands with the `ng help` command.
 
 Once it is installed we can create the application skeleton with the following command. You can also add support to Sass, using the style parameter with the scss or sass option, depending on your preferences.
 
@@ -121,7 +121,7 @@ npm install motion-ui --save
 ```
 
 <h2>Creating the main stylesheet</h2>
-As we created the app with support for scss format it has created a styles.scss in the root of the source folder <code>./src/styles.scss</code>.
+As we created the app with support for scss format it has created a styles.scss in the root of the source folder `./src/styles.scss`.
 
 In this file we should add all the scss we need. This include the Foundation base scss and the Motion UI scss files if you also need it. Generally you will add the scss and then you should include the defined mixin in order to use the styles.
 
@@ -136,7 +136,7 @@ In this file we should add all the scss we need. This include the Foundation bas
 @include motion-ui-animations;
 ```
 
-If you want to customize your styles like colors or fonts you can copy the content of the settings file located in the <code>scss/settings</code> folder of the <code>foundation-sites</code> package in the project <code>node_modules</code> folder and modify any value you consider.
+If you want to customize your styles like colors or fonts you can copy the content of the settings file located in the `scss/settings` folder of the `foundation-sites` package in the project `node_modules` folder and modify any value you consider.
 
 <h2>Customizing your application</h2>
 
@@ -165,7 +165,7 @@ In your application main component, for instance, app.component.ts there is a de
 })
 ```
 
-In that definition there is where is located the scss file (<code>styleUrls: ['./app.component.scss']</code>) for that component, in that case, the main component as we want to configure it a global style for the whole angualr application.
+In that definition there is where is located the scss file (`styleUrls: ['./app.component.scss']`) for that component, in that case, the main component as we want to configure it a global style for the whole angualr application.
 
 So in that app.component.scss you should include the \_settings.scss that we just copied on our assets folder.
 

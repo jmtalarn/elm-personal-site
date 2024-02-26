@@ -32,11 +32,11 @@ The Ionic applications have two main assets which will be the visual presentatio
 You should put your original images in the resources folder.
 
 -   <h4>icon</h4>
-     The first one, **the icon**, the typical clickable element on your device that will boot your application. It should be an image at least 1024 per 1024 pixels, called icon.png and placed on the resources folder. <code>resources/icon.png</code>
+     The first one, **the icon**, the typical clickable element on your device that will boot your application. It should be an image at least 1024 per 1024 pixels, called icon.png and placed on the resources folder. `resources/icon.png`
 
   <li>
       <h4>splash</h4>
-      The **splash** image is the image used as presentation during the first boot waiting time. It should be an image at least 2732×2732px, called splash.png and placed on the resources folder. <code>resources/splash.png</code>
+      The **splash** image is the image used as presentation during the first boot waiting time. It should be an image at least 2732×2732px, called splash.png and placed on the resources folder. `resources/splash.png`
 
 <h3>Execute command to generate resources</h3>
 
@@ -46,7 +46,7 @@ You only have to execute the following command to generate all necessary assets.
 $ ionic cordova resources
 ```
 
-If you want to generate specifically only one target system you can specify a third parameter <code>ios</code> or <code>android</code>. Here [](https://ionicframework.com/docs/cli/cordova/resources) there is all the information about this command.
+If you want to generate specifically only one target system you can specify a third parameter `ios` or `android`. Here [](https://ionicframework.com/docs/cli/cordova/resources) there is all the information about this command.
 
 <h3>How to get good icons and images</h3>
 

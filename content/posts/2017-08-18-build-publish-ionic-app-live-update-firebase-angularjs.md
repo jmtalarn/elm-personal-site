@@ -98,7 +98,7 @@ var getArray = function (list, vaultId) {
 Once you created a connection to a collection in the Firebase backend AngularFire is in charge to keep up the collection updated in our referenced link.
 
 <h2>The AngularJS $watch function</h2>
-The <code>watch</code> function allows to bind a listener function to a variable or expression from a scope.
+The `watch` function allows to bind a listener function to a variable or expression from a scope.
 
 ```javascript
 $watch(watchExpression, listener, [objectEquality]);
@@ -126,7 +126,7 @@ $scope.autosave = {
 
 If the view state contains the todo Id it means that it already exists and the mission of the controller is retrieve it from the Firebase Array managed in the Todos factory we've seen in the previous section. Otherwise it will assign a new object only with the information of the current list (livelist, dump or vault category).
 
-As we described we use the <code>watch</code> function to listen to variable changes so we added the following code.
+As we described we use the `watch` function to listen to variable changes so we added the following code.
 
 ```javascript
 $scope.$watch('todo', function(newVal, oldVal) {
@@ -140,7 +140,7 @@ $scope.$watch('todo', function(newVal, oldVal) {
     }, true);
 ```
 
-What this function does is check for changes from the old value to the new one and if the <code>autosave.enabled</code> variable is true it will proceed to set a timeout of two seconds to run the update function. This delay allows to avoid launching an update operation for each single change in the todo item. Also any update operation will cancel the waiting update operation.
+What this function does is check for changes from the old value to the new one and if the `autosave.enabled` variable is true it will proceed to set a timeout of two seconds to run the update function. This delay allows to avoid launching an update operation for each single change in the todo item. Also any update operation will cancel the waiting update operation.
 
 ```javascript
 $scope.remove = function (todo) {
@@ -169,4 +169,4 @@ $scope.remove = function (todo) {
 };
 ```
 
-In the same way, if we want to delete an item, the delay allows to cancel the operation before proceed with the  deletion of the element. Also when a delete is performed beyond cancelling any pending update operation it will set the <code>autosave.enabled</code> to false and it will act as a semaphore in red to any attempt to update meanwhile the operation ends.
+In the same way, if we want to delete an item, the delay allows to cancel the operation before proceed with the  deletion of the element. Also when a delete is performed beyond cancelling any pending update operation it will set the `autosave.enabled` to false and it will act as a semaphore in red to any attempt to update meanwhile the operation ends.

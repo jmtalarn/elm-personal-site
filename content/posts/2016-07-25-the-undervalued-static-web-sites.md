@@ -47,15 +47,15 @@ You can refer to the [documentation](http://foundation.zurb.com/) to see all opt
 
 1. You have to install **_Node.js_** v0.12 or above. Refer to Node.js documentation for your OS [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
-2. Once you have installed Node.js you have to install _gulp_ and _bower_ globally executing with sudo if you are in Linux environment <code>sudo npm install -g gulp bower</code>
+2. Once you have installed Node.js you have to install _gulp_ and _bower_ globally executing with sudo if you are in Linux environment `sudo npm install -g gulp bower`
 
 3. Git installed is also a requirement [https://git-scm.com/downloads](https://git-scm.com/downloads)
 
 <h3 id="buildthesitetemplate">Build the site template</h3>
 
-1. Install the _foundation-cli_ globally that will help you through the process to create a new site each time you need it (also with sudo if you are in Linux environment) <code>sudo npm install -g foundation-cli</code>
+1. Install the _foundation-cli_ globally that will help you through the process to create a new site each time you need it (also with sudo if you are in Linux environment) `sudo npm install -g foundation-cli`
 2. Create a working folder to set as your project development folder. Open a command line there or change to the working directory.
-3. Execute the command <code>foundation new</code> to generate a new site with the cli in the working directory.
+3. Execute the command `foundation new` to generate a new site with the cli in the working directory.
 4. The assistant will ask you for 3 questions:
     1. The type of project you're building that is _A web site_ and this will use the _Foundation for Sites_ framework,
     2. the project name,
@@ -177,14 +177,14 @@ Run, change and review the result.
 
 You can run your project in a live server. This means that it will start a web server and will be listening to the changes in your project files like scss source files or html templates.
 
-This is the command <code>foundation watch</code>
+This is the command `foundation watch`
 
 Once you have a statisfactory result you can generate the final files to upload to your production web server. These are the same content than the generated during the development but optimized to get a higher performance in the real life and use.
 
-The command <code>foundation build</code> generates a **dist** folder containing the final result of your project.
+The command `foundation build` generates a **dist** folder containing the final result of your project.
 
 <h3 id="updatingit">Updating it</h3>
 
-You can run <code>npm update -g foundation-cli</code> to update the Foundation client.
+You can run `npm update -g foundation-cli` to update the Foundation client.
 
-Or if you want to update the package dependencies like the bower dependencies in your project you can run the command <code>foundation update</code>
+Or if you want to update the package dependencies like the bower dependencies in your project you can run the command `foundation update`

@@ -41,7 +41,7 @@ Once you know what Apache Cordova know you can find interesting the following pr
 
 <img class="size-medium" src="../images/ngCordova-Plugins-by-the-Ionic-Framework-Team-300x248.png" alt="" width="300" height="248" /> The ngCordova project provides a full list of all compatible plugins and documentation and examples of use.
 
-But while you are developing your Ionic app you aren't limited to this list of plugins. You can use any existing Cordova plugin and install it with the command line using the <code>ionic cordova plugin</code> command.
+But while you are developing your Ionic app you aren't limited to this list of plugins. You can use any existing Cordova plugin and install it with the command line using the `ionic cordova plugin` command.
 
 <h2>Cordova plugins used in our Ionic app</h2>
 <h3>cordova-plugin-calendar 4.5.5 "Calendar"</h3>

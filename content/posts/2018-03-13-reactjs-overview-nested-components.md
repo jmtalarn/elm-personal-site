@@ -34,7 +34,7 @@ with knowdledge and experience with the technology.
 To explain it in terms of the newly introduced
     *classes* sugar a React component isn't anything that a
     *class* extending the React component class with a
-    <code>render</code> method where it returns the JSX content of your component.
+    `render` method where it returns the JSX content of your component.
 
 ```javascript
 class Greeting extends React.Component {
@@ -47,11 +47,11 @@ class Greeting extends React.Component {
 There are also two main rules you need to know to understand how it works.
 
 1. **React will render your component each time its internal state changes**. And should be only like this even you can force it.
-2. **React state is immutable.** So you cannot modify it directly. You will be using the <code>setState</code> method each time you need to change it.
+2. **React state is immutable.** So you cannot modify it directly. You will be using the `setState` method each time you need to change it.
 
 So you can define the initial state in the
 _class_ constructor method and "change it" using the
-<code>setState</code> in any other method.
+`setState` in any other method.
 
 You can also pass information to a component via its properties. They will be available in your component in its props property.
 
@@ -90,27 +90,27 @@ class Greeting extends React.Component {
              Mounting
     </h4>
          A component is created and inserted into the DOM
-             1. <code>constructor()</code>
-             2. <code>componentWillMount()</code>
-             3. <code>render()</code>
-             4. <code>componentDidMount()</code>
+             1. `constructor()`
+             2. `componentWillMount()`
+             3. `render()`
+             4. `componentDidMount()`
 
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
             <i class="fal fa-sync fa-2x" style="margin-right: 1rem; color: Orange;">* 
             Updating
     </h4> 
         The state of the component was changed
-            1. <code>componentWillReceiveProps()</code>
-            2. <code>shouldComponentUpdate()</code>
-            3. <code>componentWillUpdate()</code>
-            4. <code>render()</code>
-            5. <code>componentDidUpdate()</code>
+            1. `componentWillReceiveProps()`
+            2. `shouldComponentUpdate()`
+            3. `componentWillUpdate()`
+            4. `render()`
+            5. `componentDidUpdate()`
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
             <i class="fal fa-trash-alt fa-2x" style="margin-right: 1rem; color: Tomato;">* 
             Unmounting
     </h4>
     The component is removed from the DOM
-             1. <code>componentWillUnmount()</code>
+             1. `componentWillUnmount()`
         </ol>
 
 -   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
@@ -118,7 +118,7 @@ class Greeting extends React.Component {
             Error Handling
     </h4>
     An error occurred during rendering
-        1. <code>componentDidCatch()</code>
+        1. `componentDidCatch()`
 
 <h2>Passing data between components</h2>
 At the end, when you are building complex applications you'll need to nest components inside others and you should will use the component properties to pass information from parent elements to child components and the other way round.
