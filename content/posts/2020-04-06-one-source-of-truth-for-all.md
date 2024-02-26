@@ -1,6 +1,6 @@
 ---
 title: One source of truth to run them all
-date: 2020-04-06T13:10:19
+date: "2020-04-06T13:10:19"
 type: post
 slug: one-source-of-truth-for-all-Redux-javascript-components
 cover: /images/featured/one-ring-to-run-them-all.png
@@ -41,7 +41,7 @@ Even this have a so little efficiency this could make sense if you imagine sever
 
 Then I put myself hands on this and started thinking how to do it. First I decided to use a Redux store to share the state of the frontend application. All components would need a common state with shared (or not) information as well as which actions they need to run. Redux is a well known solution and wide used and finally is just a Javascript library so it could be easy to integrate with all the components coded for a web application as finally all code executed in the web browser is Javascript and it can be used in a way or another.
 
-<a href="https://redux.js.org/" class="card-preview">Redux</a>
+[Redux](https://redux.js.org/)
 
 The Redux store is created or referenced in the main index.js file. It is created not belonging to any library component or framework and I just have to find the way to share the current state (the counter value) and the actions which triggers the increment and decrement.
 

@@ -1,18 +1,18 @@
 ---
 title: Compiling Sass with Maven or Gulp
-date: 2015-10-21T14:28:23
+date: "2015-10-21T14:28:23"
 type: post
 slug: compiling-sass-maven-gulp
 cover: /images/featured/sass-logo-6.png
-tags: ['css', 'maven', 'gulp', 'sass']
-category: ['Web development']
+tags: ["css", "maven", "gulp", "sass"]
+category: ["Web development"]
 author: jmtalarn
 ---
 
 ## Sass compiling from Maven
 
 You can compile your sass css source files from your java projects build with maven with the **sass-maven-plugin**.
-You can find the source code at GitHub <a href="https://github.com/Jasig/sass-maven-plugin" target="\_blank"> https://github.com/Jasig/sass-maven-plugin</a>, and find it on the Maven Central Repository.
+You can find the source code at GitHub [https://github.com/Jasig/sass-maven-plugin](https://github.com/Jasig/sass-maven-plugin), and find it on the Maven Central Repository.
 
 > You should configure your maven pom file to properly use the plugin as needed.
 
@@ -115,69 +115,64 @@ Installing Node.js is one of the requirements since you are using Gulp and you s
 The module to add in the package.json file is gulp-sass and you can add to it with this line in the command-line from your project folder:
 
 ```bash
-
 npm install gulp-sass --save-dev
 ```
 
 Then you should configure a Gulp task to process your Sass files and compile them. This is an example about how to do it:
 
 ```javascript
-var gulp = require('gulp')
-var sass = require('gulp-sass')
+var gulp = require("gulp");
+var sass = require("gulp-sass");
 
-gulp.task('sass', function() {
-  gulp
-    .src('./scss/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./css'))
-})
+gulp.task("sass", function () {
+	gulp.src("./scss/*.scss").pipe(sass()).pipe(gulp.dest("./css"));
+});
 ```
 
 And execute it with:
 
 ```bash
-
 gulp sass
 ```
 
 For sure you can complicate it as you want, concatenating the execution of the plugins and modules you need:
 
 ```javascript
-gulp.task('site styles', function() {
-  // For best performance, don't add Sass partials to `gulp.src`
-  del(['.tmp'], function(err, deletedFiles) {
-    console.log('Files deleted:', deletedFiles.join(', '))
-  })
-  return (
-    gulp
-      .src(['public/scss/*.scss'])
-      .pipe($.sourcemaps.init())
-      .pipe(
-        $.changed('.tmp/styles', {
-          extension: '.css',
-        })
-      )
-      .pipe(
-        $.sass({
-          precision: 10,
-          onError: console.error.bind(console, 'Sass error:'),
-        })
-      )
-      .pipe(
-        $.autoprefixer({
-          browsers: AUTOPREFIXER_BROWSERS,
-        })
-      )
-      .pipe($.sourcemaps.write())
-      .pipe(gulp.dest('.tmp/styles'))
-      // Concatenate and minify styles
-      .pipe($.if('*.css', $.csso()))
-      .pipe(gulp.dest('public/css'))
-      .pipe(
-        $.size({
-          title: 'site styles',
-        })
-      )
-  )
-})
+gulp.task("site styles", function () {
+	// For best performance, don't add Sass partials to `gulp.src`
+	del([".tmp"], function (err, deletedFiles) {
+		console.log("Files deleted:", deletedFiles.join(", "));
+	});
+	return (
+		gulp
+			.src(["public/scss/*.scss"])
+			.pipe($.sourcemaps.init())
+			.pipe(
+				$.changed(".tmp/styles", {
+					extension: ".css",
+				})
+			)
+			.pipe(
+				$.sass({
+					precision: 10,
+					onError: console.error.bind(console, "Sass error:"),
+				})
+			)
+			.pipe(
+				$.autoprefixer({
+					browsers: AUTOPREFIXER_BROWSERS,
+				})
+			)
+			.pipe($.sourcemaps.write())
+			.pipe(gulp.dest(".tmp/styles"))
+			// Concatenate and minify styles
+			.pipe($.if("*.css", $.csso()))
+			.pipe(gulp.dest("public/css"))
+			.pipe(
+				$.size({
+					title: "site styles",
+				})
+			)
+	);
+});
 ```

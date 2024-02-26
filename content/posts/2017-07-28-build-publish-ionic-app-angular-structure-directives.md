@@ -1,6 +1,6 @@
 ---
 title: "Build and publish a Ionic App – Angular application structure: directives"
-date: 2017-07-28T11:34:38
+date: "2017-07-28T11:34:38"
 type: post
 slug: build-publish-ionic-app-angular-structure-directives
 cover: /images/featured/sign-post-2432209_1920.jpg
@@ -26,10 +26,11 @@ As we can create components like controllers, factories and services with code t
 
 <!--more-->
 
-So, as it is described in the definition of <a href="https://docs.angularjs.org/guide/directive">directive in the AngularJs documentation</a>, a directive is a marker in the DOM element that adds a new behaviour to the element or changes its default representation. The directives can be added as attributes or a css class in elements, properly as a new kind of element or even as a comment. AngularJs in the process to reinterpret all its tags and own directives in the HTML it will generate the new HTML corresponding to this modifications.
+So, as it is described in the definition of [directive in the AngularJs documentation](https://docs.angularjs.org/guide/directive), a directive is a marker in the DOM element that adds a new behaviour to the element or changes its default representation. The directives can be added as attributes or a css class in elements, properly as a new kind of element or even as a comment. AngularJs in the process to reinterpret all its tags and own directives in the HTML it will generate the new HTML corresponding to this modifications.
 
 <h2>Directives in the App</h2>
-In our <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/">project</a> only created three <a href="https://github.com/jmtalarn/strikethru/blob/master/www/js/directives.js">directives</a>.
+
+In our [project](http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/) only created three [directives](https://github.com/jmtalarn/strikethru/blob/master/www/js/directives.js).
 
 <dl>
 <dt>todoList</dt>

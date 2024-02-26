@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App – Cordova plugins
-date: 2017-08-11T18:49:17
+date: "2017-08-11T18:49:17"
 type: post
 slug: build-publish-ionic-app-cordova-plugins
 cover: /images/featured/Cordova_Alaska_aerial_view.jpg
@@ -25,17 +25,19 @@ Ionic provide you a framework to quickly implement with your web development ski
 <!--more-->
 <div style="display: flex; align-items: center; justify-content: center;">
   <img class="size-thumbnail" src="../images/q5Jmvu10tV-150x150.png" alt="" width="150" height="150" />
-  <blockquote><a href="http://cordova.apache.org/">Apache Cordova</a> is a Mobile application development framework that provides access to some of the API usually accessible throw the specific development platform for Android, iOs and Windows Phone apps throw a Javascript SDK to write apps using HTML5, CSS3 and plain Javascript.
+  <blockquote>[Apache Cordova](http://cordova.apache.org/) is a Mobile application development framework that provides access to some of the API usually accessible throw the specific development platform for Android, iOs and Windows Phone apps throw a Javascript SDK to write apps using HTML5, CSS3 and plain Javascript.
 </blockquote>
 </div>
-<p style="display: block; clear: both;">Once you know what Apache Cordova know you can find interesting the following project.
+
+Once you know what Apache Cordova know you can find interesting the following project.
 
 <div style="display: flex; align-items: center; justify-content: center;">
   <img class="size-thumbnail" src="../images/ngcordova-150x150.png" alt="" width="150" height="150" />
-  <blockquote><a href="http://ngcordova.com/" target="_blank" rel="noopener">ngCordova</a> gives you simple AngularJS wrappers for a massive amount of Cordova plugins. Check out the list below for all of the available plugins, and create an issue for a new request.
+  <blockquote>[ngCordova](http://ngcordova.com/) gives you simple AngularJS wrappers for a massive amount of Cordova plugins. Check out the list below for all of the available plugins, and create an issue for a new request.
 </blockquote>
 </div>
-<p style="display: block; clear: both;">**ngCordova **provides wrappers for the Cordova plugins in order to be used in your AngularJS application. You can find all the documentation and examples of use of the Cordova compatible plugins.
+
+**ngCordova **provides wrappers for the Cordova plugins in order to be used in your AngularJS application. You can find all the documentation and examples of use of the Cordova compatible plugins.
 
 <img class="size-medium" src="../images/ngCordova-Plugins-by-the-Ionic-Framework-Team-300x248.png" alt="" width="300" height="248" /> The ngCordova project provides a full list of all compatible plugins and documentation and examples of use.
 
@@ -61,7 +63,8 @@ ionic cordova plugin add cordova-plugin-crosswalk-webview --save
 ```
 
 <h3>cordova-plugin-googleplus 5.1.1 "Google SignIn"</h3>
-We wanted to include an standard Google author to make easy the procedure of sign-up for the potential users. Firebase provides a social author integration but, as you are developing an Android app you want to be nicely integrated with the device, so if you want to integrate it wiht the existing accounts registered in the device you should install this plugin. Despite the use of the googleplus term in the plugin name it will author with your Google account even if you're not in the failed social network of Google. The plugin has a good <a href="https://github.com/EddyVerbruggen/cordova-plugin-googleplus" target="_blank" rel="noopener">documentation</a> about how to install and use it and how to get the key needed for the Google Authentication API. But, as we are <a href="http://blog.jmtalarn.com/build-publish-ionic-app-configuring-firebase/">using Firebase</a> we can use it to **require the API key directly from the Firebase Console instead of create it manually as the documentation of the plugin explains**.
+
+We wanted to include an standard Google author to make easy the procedure of sign-up for the potential users. Firebase provides a social author integration but, as you are developing an Android app you want to be nicely integrated with the device, so if you want to integrate it wiht the existing accounts registered in the device you should install this plugin. Despite the use of the googleplus term in the plugin name it will author with your Google account even if you're not in the failed social network of Google. The plugin has a good [documentation](https://github.com/EddyVerbruggen/cordova-plugin-googleplus) about how to install and use it and how to get the key needed for the Google Authentication API. But, as we are [using Firebase](http://blog.jmtalarn.com/build-publish-ionic-app-configuring-firebase/) we can use it to **require the API key directly from the Firebase Console instead of create it manually as the documentation of the plugin explains**.
 
 <div style="display: block;">
 <div style="display: flex; align-items: center; justify-content: start">
@@ -74,7 +77,7 @@ We wanted to include an standard Google author to make easy the procedure of sig
   Choose the Android app option
 
 </div>
-You have to access your <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console Dashboard</a>, and once inside the project, you can add another application. In this case you should specify the Android option.
+You have to access your [Firebase Console Dashboard](https://console.firebase.google.com), and once inside the project, you can add another application. In this case you should specify the Android option.
 
 </div>
 <img class="size-full" src="../images/Firebase-21-19-47.png" alt="" />
@@ -84,7 +87,7 @@ Then, the next step requires you to register your Android application by setting
 
 <img class="size-full" src="../images/config_xml-strikethru.png" alt="" width="995" height="290" /> Change the id attribute from the widget element to your package name.
 
-It also asks you to set an SHA-1 debug key, needed in the case of the use of the authentication API. In order to get this SHA-1 key you need to generate it. In this link Google provides a guide of how to get it <a href="https://developers.google.com/drive/android/auth" target="_blank" rel="noopener">https://developers.google.com/drive/android/auth</a>.
+It also asks you to set an SHA-1 debug key, needed in the case of the use of the authentication API. In order to get this SHA-1 key you need to generate it. In this link Google provides a guide of how to get it [https://developers.google.com/drive/android/auth](https://developers.google.com/drive/android/auth).
 
 <blockquote>**TL;DR** If you have the keytool command installed you can get it by running this command pointing to your project keystore.
 

@@ -1,6 +1,6 @@
 ---
 title: Migrating from Ghost to WordPress over Openshift
-date: 2017-04-15T00:51:09
+date: "2017-04-15T00:51:09"
 type: post
 slug: migrating-from-ghost-to-wordpress-over-openshift
 cover: /images/featured/wp-vs-ghost.jpg
@@ -28,12 +28,13 @@ Everything will be installed and auto configured, ready to use.
 <h1>Importing posts and media from Ghost blog to Wordpress blog</h1>
 Importing the data is the most important. You don't want to loose your work in the process so you should be carefully...
 
-For sure you can do an export/import operation. You can export the data of your Ghost blog from _**Settings &gt; Labs &gt; Export**_ button, this will return a json file. The data in json format should be transformed into a format readable by Wordpress in order to be imported with the _**Tools &gt; Import &gt; Wordpress**_ option.  You can use a tool like <a href="http://ahmed.amayem.com/ghost-json-export-file-to-wordpress-xml-import-file-converter/">http://ahmed.amayem.com/ghost-json-export-file-to-wordpress-xml-import-file-converter/</a> to do the transformation but you have to be sure that all url references are correct linking to existing media ...
+For sure you can do an export/import operation. You can export the data of your Ghost blog from _**Settings &gt; Labs &gt; Export**_ button, this will return a json file. The data in json format should be transformed into a format readable by Wordpress in order to be imported with the _**Tools &gt; Import &gt; Wordpress**_ option.  You can use a tool like [http://ahmed.amayem.com/ghost-json-export-file-to-wordpress-xml-import-file-converter/](http://ahmed.amayem.com/ghost-json-export-file-to-wordpress-xml-import-file-converter/) to do the transformation but you have to be sure that all url references are correct linking to existing media ...
 
 Another option, which I preferred to use in this case, is using the _**Tools &gt; Import &gt; Rss**_ option. I took the Ghost blog rss url (usually http://your-ghost-blog/rss ) to import the published posts. All posts where correctly imported keeping the HTML final format, but all media whas pointing to the Ghost blog media resources. So the next step is import the media.
 
 <h1>Import external media into your Wordpress media gallery</h1>
-The plugin used was <a href="https://wordpress.org/plugins/auto-upload-images/">Auto Upload Images By Ali Irani </a>
+
+The plugin used was [Auto Upload Images By Ali Irani](https://wordpress.org/plugins/auto-upload-images/)
 
 <img  src="../images/Auto-Upload-Images-Settings-&#8249;-web-dev-notes-&#8212;-WordPress-293x300.png" alt="" /> Auto upload images settings
 

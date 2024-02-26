@@ -1,6 +1,6 @@
 ---
 title: IntelliJ Idea vs Eclipse keyboard shortcuts
-date: 2016-07-08T18:00:00
+date: "2016-07-08T18:00:00"
 type: post
 slug: intellij-idea-vs-eclipse-keyboard-shortcuts
 cover: /images/featured/eclipsevsintellij.png
@@ -12,6 +12,7 @@ author: jmtalarn
 Here there is the keyboard shortcuts table where you can find the equivalent combination between the two IDEs most used in Java development.<!--more-->
 
 <h3 id="editing">Editing</h3>
+
 <table>
 <tr>
 <th>Eclipse</th>
@@ -179,8 +180,10 @@ Another interesting equivalent shortcuts while debugging
 <td>*evaluate expression while debugging*</td>
 </tr>
 </table>
+
 <h2 id="intellijideamultilineselectionkeyboardshortcuts">IntelliJ Idea multiline selection keyboard shortcuts</h2>
-These are keyboard shortcuts for IntelliJ Idea so useful for me, once you are used to it. This are for the multiline selection to edit multiple lines at once, like you can do in "modern" editors like *Atom editor* or *Sublime Text*
+
+These are keyboard shortcuts for IntelliJ Idea so useful for me, once you are used to it. This are for the multiline selection to edit multiple lines at once, like you can do in "modern" editors like _Atom editor_ or _Sublime Text_
 
 <table>
 <tr>
@@ -204,19 +207,23 @@ These are keyboard shortcuts for IntelliJ Idea so useful for me, once you are us
 <td> Esc</td>
 </tr>
 </table>
+
 Combining the next occurrence and the manual cursor set you can jump the occurrences don't want to select.
 
 <h2 id="intellijideauniversalcommandandoptionssearch">IntelliJ Idea universal command and options search</h2>
+
 <blockquote>
 Ctrl + Shift + a will be your master key to open all the doors.
-
 </blockquote>
+
 It will find any command available or any option in the IDE. It's useful when you have the same keyboard shortcut defined in the system, like Ctrl + Alt + F1-7 in Linux Os, and you don't reconfigured to avoid the collision.
 
 <h2 id="intellijideacompletekeyboardshortcut">IntelliJ IDEA complete keyboard shortcut</h2>
+
 Here is a complete guide of the keyboard shortcuts available from IntelliJ Idea, coming directly from the JetBrains team. But if you are used to the shortcuts from Eclipse the above of equivalents table will be welcome.
 
 <blockquote>
-<a href="https://resources.jetbrains.com/images/products/intellij-idea/IntelliJIDEA_ReferenceCard.pdf">IntelliJ IDEA Refence Card</a>
+
+[IntelliJ IDEA Refence Card](https://resources.jetbrains.com/images/products/intellij-idea/IntelliJIDEA_ReferenceCard.pdf)
 
 </blockquote>

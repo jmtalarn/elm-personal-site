@@ -1,6 +1,6 @@
 ---
 title: HTML5 template - Structure and Tags
-date: 2016-10-08T03:54:20
+date: "2016-10-08T03:54:20"
 type: post
 slug: html5-template-structure-and-tags
 cover: /images/featured/html5-structure-tags.png

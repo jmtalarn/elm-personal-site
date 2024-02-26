@@ -1,6 +1,6 @@
 ---
 title: Use Foundation for sites 6 in your Angular 2 application
-date: 2017-06-12T01:08:26
+date: "2017-06-12T01:08:26"
 type: post
 slug: foundation-sites-6-angular-2-application
 cover: /images/featured/foundation-angular.jpg
@@ -25,10 +25,10 @@ author: jmtalarn
 
 <!--more-->
 
-I'm used to the Zurb's Foundation framework due its simplicity and I feel it less invasive than it could be other frameworks like <a href="http://getbootstrap.com/">Bootstrap</a>. Also this week I started learning about <a href="https://angular.io/">Angular (&gt;=2)</a> and I found that I needed some "prebuilt" components to help me in the project I started with learning purposes. So I struggled a little bit to add Foundation for sites to it and these are the steps I followed ...
+I'm used to the Zurb's Foundation framework due its simplicity and I feel it less invasive than it could be other frameworks like [Bootstrap](http://getbootstrap.com/). Also this week I started learning about [Angular (>=2)](https://angular.io/) and I found that I needed some "prebuilt" components to help me in the project I started with learning purposes. So I struggled a little bit to add Foundation for sites to it and these are the steps I followed ...
 
 <h2>Creating an Angular project with the CLI</h2>
-Angular provides a command line interface (CLI) to run the most common commands used during development. Previously to the following commands you should have installed <a href="https://nodejs.org/en/">Node.js</a> and its package manager NPM.
+Angular provides a command line interface (CLI) to run the most common commands used during development. Previously to the following commands you should have installed [Node.js](https://nodejs.org/en/) and its package manager NPM.
 
 You can update npm to the latest version with the following command:
 

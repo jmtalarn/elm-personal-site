@@ -1,11 +1,11 @@
 ---
 title: Tough Time Finding A Job? Consider Being A Delivery Drive
-date: 2018-08-20T23:33:45
+date: "2018-08-20T23:33:45"
 type: post
 slug: tough-time-finding-job-consider-being-delivery-driver
 cover: /images/featured/be-delivery-driver.jpg
-category: ['Guest post']
-tags: ['job']
+category: ["Guest post"]
+tags: ["job"]
 author: michael-kordvani
 ---
 
@@ -19,12 +19,12 @@ There are times when it is very difficult to find a job. Depending on your level
 
 Anyone who has been in need of some independent contract work in the past is probably well aware of both [Uber](https://www.uber.com/) and [Lyft](https://www.lyft.com/). Both of these companies allow licensed drivers to find work carrying passengers around wherever they need to go like a taxi service.
 
-<a href="https://www.uber.com/" class="card-preview" target="_blank">Uber</a>
-<a href="https://www.lyft.com/" class="card-preview" target="_blank">Lift</a>
+[Uber](https://www.uber.com/)
+[Lift](https://www.lyft.com/)
 
 The work is done from an app on a person's phone, and it helps them earn a little extra money for the rides that they give. It is not a bad way to earn a little extra money and maybe even pay off some debts that have been hanging around for far too long. However, some people would prefer to do something other than just carrying around passengers in their vehicle. Some are more interested in the latest offering that a new [Detroit delivery driver app](http://udely.com/) has to offer.
 
-<a href="http://udely.com/" class="card-preview" target="_blank">Udely</a>
+[Udely](http://udely.com/)
 
 ## What This App Means For Drivers
 

@@ -1,6 +1,6 @@
 ---
 title: What is Elm? Baby don't hurt me, no more
-date: 2020-09-03T11:15:51
+date: "2020-09-03T11:15:51"
 type: post
 slug: learning-elm-part-1-what-is-elm
 cover: /images/featured/elm-elmo.png
@@ -28,9 +28,9 @@ But here it comes the good part, **Elm** is developer focused. And that means th
 ### Excellent documentation.
 
 It has tons of documentation and examples in the official site where you can find from a getting started guide to examples and explanation about the Elm architecture
-<a href="https://guide.elm-lang.org/" class="card-preview" target="_blank" data-size="small">Elm Official Guide</a>
+[Elm Official Guide](https://guide.elm-lang.org/)
 and almost all of the libraries out there are the same with extended documentation about uses and examples.
-<a href="https://package.elm-lang.org/" class="card-preview" target="_blank" data-size="small">Package Docs</a>
+[Package Docs](https://package.elm-lang.org/)
 
 ### Friendly error messages.
 
@@ -121,4 +121,4 @@ Smaller assets means faster downloads and faster page loads, so Elm does a bunch
 
 Elm can take over a single node, so you can try it out on a small part of an existing project. Try it for something small. See if you like it.
 
-<a href="https://elm-lang.org/try" class="card-preview" target="_blank">Try Elm</a>
+[Try Elm](https://elm-lang.org/try)

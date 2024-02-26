@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App – First steps
-date: 2017-05-19T23:10:03
+date: "2017-05-19T23:10:03"
 type: post
 slug: build-publish-ionic-app-first-steps
 cover: /images/featured/blueprint-964630_1280.jpg
@@ -29,7 +29,7 @@ These are the first steps, the initial commands and the index.html file you need
 <h2>Install Node.js, Apache Cordova and Ionic framework</h2>
 The first step will be install Node.js as Ionic provides a CLI that helps you to generate the app and provides some commands to build and generate the APK file and many other useful commands.
 
-You should choose your development platform and Node.js version (Long Time Support or latest stable version) and follow the steps provided by the <a href="https://nodejs.org/en/">Node.js page.</a>
+You should choose your development platform and Node.js version (Long Time Support or latest stable version) and follow the steps provided by the [Node.js page.](https://nodejs.org/en/)
 
  <img class="" src="../images/2017-05-21-01_39_22-Node.js.png" alt="" />
 Once is installed, you proceed to install Ionic and Cordova as the Ionic Framework is built on the top of the Apache Cordova.
@@ -37,7 +37,7 @@ Once is installed, you proceed to install Ionic and Cordova as the Ionic Framew
 <h3>Installing Apache Cordova</h3>
 
 <img src="../images/cordova_bot.png" class="size-thumbnail" style="display: inline" alt="The Apache Cordova is a fundation part of the Ionic App" /> 
-<a href="http://cordova.apache.org/">Apache Cordova</a> is a Mobile application development framework that provides access to some of the API usually accessible throw the specific development platform for Android, iOs and Windows Phone apps throw a Javascript SDK to write apps using HTML5, CSS3 and plain Javascript.
+[Apache Cordova](http://cordova.apache.org/) is a Mobile application development framework that provides access to some of the API usually accessible throw the specific development platform for Android, iOs and Windows Phone apps throw a Javascript SDK to write apps using HTML5, CSS3 and plain Javascript.
 
 The following command will install the needed cordova executables globally, this is accessible for the whole system.
 
@@ -46,7 +46,7 @@ sudo npm install -g cordova
 ```
 
 <h3>Installing Ionic Framework CLI</h3>
-Ionic adds a layer over the Cordova framework providing an optimized version of the Angular framework, a set of visual components that will adapt to the specified target to follow the visual development guidelines  respectively and a Command Line Interface with own commands and as a wrapping of the <a href="https://bower.io/">Bower </a>and Cordova commands.
+Ionic adds a layer over the Cordova framework providing an optimized version of the Angular framework, a set of visual components that will adapt to the specified target to follow the visual development guidelines  respectively and a Command Line Interface with own commands and as a wrapping of the [Bower ](https://bower.io/)and Cordova commands.
 
 The next command will do the proper with the Ionic CLI to set it available throw all the system.
 
@@ -77,9 +77,9 @@ The command details are:
 
 blank will provide the HTML for a blank page and tabs provide the HTML skeleton for a tabbed application.
 
-In our app, we have chosen the tabbed template as it fits to the <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/">starting idea of the app</a>.</li>
+In our app, we have chosen the tabbed template as it fits to the [starting idea of the app](http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/).</li>
 
-<li>The final parameter **--type ionic1** forces the generator to use the version 1 of the framework because of the <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/#technology">technology chosen</a></li>
+<li>The final parameter **--type ionic1** forces the generator to use the version 1 of the framework because of the [technology chosen](http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/#technology)</li>
 </ul>
 
 <h2>Adding the mobile development platforms</h2>
@@ -91,18 +91,18 @@ ionic platform add android
 
 After this command you will be able to generate, build or emulate the application into the added platforms but you will need to install the needed SDK. In the case of Android you can follow the to add the SDK to your development box. A practical way to do it is installing and tune up the Android Studio and the Android SDK.
 
-<a href="https://developer.android.com/studio/index.html">https://developer.android.com/studio/index.html</a>
+[https://developer.android.com/studio/index.html](https://developer.android.com/studio/index.html)
 
 <img class="size-medium" src="../images/hero_image_studio.png" />
 
 <h2>Adding Firebase libraries to the Ionic App project</h2>
-We base our backend with <a href="http://blog.jmtalarn.com/build-publish-ionic-app-configuring-firebase/">Firebase</a> and Ionic Framework adds Angular to build the application. So we will install the JS libraries needed. We use the bower command to install the dependency and use it locally:
+We base our backend with [Firebase](http://blog.jmtalarn.com/build-publish-ionic-app-configuring-firebase/) and Ionic Framework adds Angular to build the application. So we will install the JS libraries needed. We use the bower command to install the dependency and use it locally:
 
 ```bash
 bower install firebase --save
 ```
 
-To help us in the development we added also the <a href="https://www.firebase.com/docs/web/libraries/angular/api.html">AngularFire</a> library to provide an easy use and access to the objects and collections of objects from the Firebase realtime database with the Angular Framework. AngularFire is the officially supported AngularJS binding for Firebase.
+To help us in the development we added also the [AngularFire](https://www.firebase.com/docs/web/libraries/angular/api.html) library to provide an easy use and access to the objects and collections of objects from the Firebase realtime database with the Angular Framework. AngularFire is the officially supported AngularJS binding for Firebase.
 
 ```bash
 bower install angularfire --save
@@ -144,9 +144,9 @@ This will launch an emulator running the app.
 ionic run android
 ```
 
-This will run the app into a device with USB debuggging enabled connected to the system as <a href="http://developer.android.com/tools/device.html">described in the Android developer site</a>. It will also automatically update if any change is detected in the source code of the application and is very useful for online debugging.
+This will run the app into a device with USB debuggging enabled connected to the system as [described in the Android developer site](http://developer.android.com/tools/device.html). It will also automatically update if any change is detected in the source code of the application and is very useful for online debugging.
 
-If this doesn’t work, make sure you have USB debugging enabled on your device, as <a href="http://developer.android.com/tools/device.html">described</a> on the Android developer site.
+If this doesn’t work, make sure you have USB debugging enabled on your device, as [described](http://developer.android.com/tools/device.html) on the Android developer site.
 
 <h2>The index.html file of the Ionic App</h2>
 This is the final index.html file used in the project.

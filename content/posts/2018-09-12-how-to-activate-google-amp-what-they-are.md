@@ -1,11 +1,11 @@
 ---
 title: How to activate Google's AMP and what they are
-date: 2018-09-12T23:45:33
+date: "2018-09-12T23:45:33"
 type: post
 slug: how-to-activate-google-amp-what-they-are
 cover: /images/featured/activate-google-amp.png
-category: ['Guest post', 'Web development']
-tags: ['amp', 'web', 'html']
+category: ["Guest post", "Web development"]
+tags: ["amp", "web", "html"]
 author: lissa-doniro
 ---
 
@@ -51,15 +51,15 @@ At this point you will intuit that implementing AMPs greatly enhances the loadin
 
 **AMPs are good friends with SEO because of the following:**
 
-- Google has affirmed that the websites with AMP versions will have benefits in the SERPs.
+-   Google has affirmed that the websites with AMP versions will have benefits in the SERPs.
 
-- In addition to rewarding you for having the responsive website, now Google will reward you for having the web completely optimized for mobile devices.
+-   In addition to rewarding you for having the responsive website, now Google will reward you for having the web completely optimized for mobile devices.
 
-- Eliminating all multimedia and JavaScripts, and focusing on the content, with the AMP of Google you offer articles that will position better thanks to the semantics.
+-   Eliminating all multimedia and JavaScripts, and focusing on the content, with the AMP of Google you offer articles that will position better thanks to the semantics.
 
-- You will have more accessible content and a better user experience and that Google likes a lot.
+-   You will have more accessible content and a better user experience and that Google likes a lot.
 
-- Your upload speed will improve substantially, adding points for Google.
+-   Your upload speed will improve substantially, adding points for Google.
 
 **How to activate AMP for WordPress sites?**
 
@@ -79,11 +79,11 @@ It is appreciated that Google warns of these errors and tells you what they are 
 
 On June 8, AMP Project presented an extension for Google Chrome that allows you to easily know if the page you are visiting has its version in accelerated pages format. It is called AMP Validator , and after installing in your browser you will know if the web page:
 
-- Does not have AMP version
+-   Does not have AMP version
 
-- It has AMP version available
+-   It has AMP version available
 
-- It has AMP version and you are in it
+-   It has AMP version and you are in it
 
 **Appearance and personalization of MPAs**
 
@@ -97,8 +97,8 @@ There are ways to modify the appearance of the AMP of your website , one of them
 
 In order for your Google Analytics account to correctly count your AMP results you must do a couple of things, very simple, too, with the plugin seen in the previous point.
 
-- We access the options of the plugin in the left sidebar and go to 'Analytics'. In this case we want to activate Google Analytics (although there are other services available such as Chartbeat or Parsely).
+-   We access the options of the plugin in the left sidebar and go to 'Analytics'. In this case we want to activate Google Analytics (although there are other services available such as Chartbeat or Parsely).
 
-- We chose Google Analytics and activated it. It will be necessary that you have the tracking code (UA - XXXXXXXX - X) and your active Google session nearby.
+-   We chose Google Analytics and activated it. It will be necessary that you have the tracking code (UA - XXXXXXXX - X) and your active Google session nearby.
 
 If you use Yoast SEO on your website , I also recommend that you install the Glue for Yoast SEO & AMPplugin . It is a Yoast extension that adds options to configure the AMP pages, both the appearance and the tracking in Analytics. Its your choice!

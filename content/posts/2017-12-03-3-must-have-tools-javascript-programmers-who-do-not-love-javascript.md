@@ -1,27 +1,27 @@
 ---
 title: 3 Must Have Tools for JavaScript App Development Programmers Who Do NOT Love JavaScript
-date: 2017-12-02T22:45:53
+date: "2017-12-02T22:45:53"
 type: post
 slug: 3-must-have-tools-javascript-programmers-who-do-not-love-javascript
 cover: /images/featured/drake-no-js-drake-yes-ts.png
-category: ['Guest post', 'Web development']
+category: ["Guest post", "Web development"]
 tags:
-  [
-    'javascript',
-    'ecmascript',
-    'transpile',
-    'esdoc',
-    'ejs',
-    'typescript',
-    'handlebars',
-    'mustache',
-    'pug',
-    'jade',
-  ]
+    [
+        "javascript",
+        "ecmascript",
+        "transpile",
+        "esdoc",
+        "ejs",
+        "typescript",
+        "handlebars",
+        "mustache",
+        "pug",
+        "jade",
+    ]
 author: michael-kordvani
 ---
 
-Though I am all in the JavaScript camp when it comes to app development and programming, I fully acknowledge that there are plenty of other <a href="https://fueled.com/services/" target="\_blank"> app development</a> programmers who are not JavaScript fans.
+Though I am all in the JavaScript camp when it comes to app development and programming, I fully acknowledge that there are plenty of other [ app development](https://fueled.com/services/) programmers who are not JavaScript fans.
 
 <!--more-->
 

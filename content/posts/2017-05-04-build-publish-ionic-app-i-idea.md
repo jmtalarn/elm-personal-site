@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App - The idea
-date: 2017-05-04T12:38:34
+date: "2017-05-04T12:38:34"
 type: post
 slug: build-publish-ionic-app-i-idea
 cover: /images/featured/ux-787980_1920.jpg
@@ -24,24 +24,24 @@ author: jmtalarn
 
 I created an app and I will write a series of posts about it with some issues, difficulties and caveats I found during the development.
 
-You can find the source code in Github <a href="https://github.com/jmtalarn/strikethru" target="\_blank">https://github.com/jmtalarn/strikethru</a>
+You can find the source code in Github [https://github.com/jmtalarn/strikethru](https://github.com/jmtalarn/strikethru)
 
 <!--more-->
 
 <h2>The idea</h2>
 I tried many times to find an original and breaking idea to implement an app... But my creativity is so limited and I'm not so good creating new things. Then I decided to implement a version of something existing and I thought with a productivity system since a time ago I am using.
 
-I tried some systems before without success but <a href="http://striketh.ru/">Strikethru </a>simply worked for me.
+I tried some systems before without success but [Strikethru](http://striketh.ru/)simply worked for me.
 
 <img src="../images/2017-04-27-09_59_06-Strikethru.png" alt="Strikethru, a new way to get more done" width="786" height="329" />
 
 <iframe src="https://www.youtube.com/embed/T4M8JfArx6I?rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 
-**Yet another todo tasks list application. **The idea for the app is, against the original idea, to replace the analog paper notebook and the pen. Simple and useful.
+**Yet another todo tasks list application. ** The idea for the app is, against the original idea, to replace the analog paper notebook and the pen. Simple and useful.
 
 <h2 id="technology"> The technology</h2>
 
-I decided to choose to develop it using <a href="https://ionicframework.com/">Ionic Framework v1</a> and <a href="https://firebase.google.com/">Firebase</a>.
+I decided to choose to develop it using [Ionic Framework v1](https://ionicframework.com/) and [Firebase](https://firebase.google.com/).
 
 <figure><img src="../images/1200px-Ionic_Logo.svg.png" style="height: 5rem; width:auto" alt="The Ionic Framework v1 helps you to create hybrid mobile apps" /> <figcaption>Ionic Framework: The top open source framework for building amazing mobile apps.</figcaption></figure>
 
@@ -54,18 +54,19 @@ I'm not the only one not yet introduced to Angular 2 framework and if it has bee
 
 Firebase provides a datastore for json data, allows off line disconections during the execution of the applications, integrates social author with Google and other providers and also helps you to integrate ads so I could monetize the app once it is published on the Play Store.
 
-I discovered the Firebase Platform during the free React course of <a href="http://carlosazaustre.es/blog">Carlos Azaustre</a>. In the following Youtube video you can see a presentation of the Firebase platform integrated with an Angular development and you can get an overview of the platform. The company was acquired by Google in October 2014.
+I discovered the Firebase Platform during the free React course of [Carlos Azaustre](http://carlosazaustre.es/blog). In the following Youtube video you can see a presentation of the Firebase platform integrated with an Angular development and you can get an overview of the platform. The company was acquired by Google in October 2014.
 
-<blockquote class="twitter-tweet" data-lang="ca">
-<p dir="ltr" lang="en" style="text-align: center;">Build an <a href="https://twitter.com/hashtag/app?src=hash">#app</a> with <a href="https://twitter.com/angular">@angular</a> and <a href="https://twitter.com/Firebase">@Firebase</a> <a href="https://t.co/JXPq7jKafq">https://t.co/JXPq7jKafq</a>
+<twitter-tweet>
+<p>Build an [#app](https://twitter.com/hashtag/app?src=hash) with [@angular](https://twitter.com/angular) and [@Firebase](https://twitter.com/Firebase) [https://t.co/JXPq7jKafq](https://t.co/JXPq7jKafq)
 
 🔒Authentication
 💾Datastore and Nonrel db
-✈Intermitent offline<a href="https://twitter.com/hashtag/angularjs?src=hash">#angularjs</a>
+✈Intermitent offline [#angularjs](https://twitter.com/hashtag/angularjs?src=hash)
 
-<p style="text-align: center;">— JMTE (@jmtalarn) <a href="https://twitter.com/jmtalarn/status/847149153000050688">29 de març de 2017</a>
+</p>
+— JMTE (@jmtalarn) [29 de març de 2017](https://twitter.com/jmtalarn/status/847149153000050688)
 
-</blockquote>
+</twitter-tweet>
 
 For the moment I limited the target app to the Google Play store due the access barrier is only for 25 € instead of the 100 € /yearly of the Apple App store.
 
