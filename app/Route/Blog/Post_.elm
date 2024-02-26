@@ -4,13 +4,19 @@ import BackendTask exposing (BackendTask)
 import BackendTask.File
 import BackendTask.Glob as Glob
 import Components.PostHeader as PostHeader
+import Components.TwitterTweet exposing (twitterTweet)
+import Components.WarningBox exposing (warningBox)
+import Date exposing (Date)
 import Dict exposing (Dict)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
+import Iso8601
 import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Extra as Decode
+import Markdown.Block as Block
 import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
@@ -18,6 +24,7 @@ import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
+import Time
 import Util.HTMLRender exposing (..)
 import View exposing (View)
 
@@ -29,7 +36,27 @@ type alias BlogPost =
     , cover : String
     , category : List String
     , tags : List String
+    , date : Date
     }
+
+
+
+-- decodeDate_ =
+--     Decode.string
+--         |> Decode.andThen
+--             (\str ->
+--                 Date.fromIsoString str
+--                     |> Decode.fromResult
+--             )
+
+
+decodeDate : Decoder Date
+decodeDate =
+    Iso8601.decoder
+        |> Decode.map
+            (\posix ->
+                Date.fromPosix Time.utc posix
+            )
 
 
 type alias Model =
@@ -102,12 +129,13 @@ blogPostsGlob =
 
 blogPostDecoder : String -> Decoder BlogPost
 blogPostDecoder body =
-    Decode.map5 (BlogPost body)
+    Decode.map6 (BlogPost body)
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "cover" Decode.string)
         (Decode.field "category" <| Decode.list <| Decode.string)
         (Decode.field "tags" <| Decode.list <| Decode.string)
+        (Decode.field "date" decodeDate)
 
 
 processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
@@ -124,7 +152,7 @@ processHtml =
             |> Markdown.Html.withOptionalAttribute "id"
         , Markdown.Html.tag "b" (Html.b [])
         , Markdown.Html.tag "em" (\class children -> Html.em [ Attribute.class (Maybe.withDefault "" class) ] children) |> Markdown.Html.withOptionalAttribute "class"
-        , Markdown.Html.tag "p" (\children -> Html.p [] children)
+        , Markdown.Html.tag "p" (Html.p [])
         , Markdown.Html.tag "blockquote" showBlockquote |> Markdown.Html.withOptionalAttribute "class"
         , Markdown.Html.tag "script" (\children -> Html.div [] children)
         , Markdown.Html.tag "a" showLink |> Markdown.Html.withOptionalAttribute "href" |> Markdown.Html.withOptionalAttribute "id" |> Markdown.Html.withOptionalAttribute "target" |> Markdown.Html.withOptionalAttribute "rel"
@@ -218,6 +246,7 @@ processHtml =
             |> Markdown.Html.withAttribute "likeness"
             |> Markdown.Html.withAttribute "easiness"
         , Markdown.Html.tag "warning" warningBox
+        , Markdown.Html.tag "twitter-tweet" twitterTweet
         ]
 
 
@@ -289,7 +318,7 @@ data { post } =
                                 blogpost
 
                             Nothing ->
-                                BlogPost "" "" "" "" [] []
+                                BlogPost "" "" "" "" [] [] (Date.fromCalendarDate 2000 Time.Jan 1)
                     )
     in
     BackendTask.map Data blogPostFound
@@ -321,20 +350,23 @@ view :
     -> View (PagesMsg Msg)
 view app sharedModel =
     let
-        { title, cover, tags, category, body } =
+        { title, cover, tags, category, body, date } =
             app.data.blogPost
 
         _ =
-            Debug.log "title" app.data.blogPost.title
+            Debug.log "title" title
 
         _ =
-            Debug.log "cover" app.data.blogPost.cover
+            Debug.log "cover" cover
 
         _ =
-            Debug.log "tags" app.data.blogPost.tags
+            Debug.log "tags" tags
 
         _ =
-            Debug.log "category" app.data.blogPost.category
+            Debug.log "category" category
+
+        _ =
+            Debug.log "date" date
 
         -- markdownOptions =
         --     { githubFlavored = Just { tables = False, breaks = False }
@@ -346,7 +378,7 @@ view app sharedModel =
     { title = app.data.blogPost.title ++ " 🗒️ web dev notes"
     , -- , body = [ Html.text "You're on the page Blog.Post_"
       --     , EMarkdown.toHtmlWith markdownOptions [] body ] ++ markdownToView body
-      body = PostHeader.show title cover tags category :: markdownToView body
+      body = PostHeader.show title cover tags category date :: markdownToView body
 
     --  , body = [ Html.text "You're on the page Blog.Post_", ExplorationsMarkdown.toHtmlWith { githubFlavored = Just { tables = True, breaks = False }, defaultHighlighting = Just "elm", sanitize = True, smartypants = False } [] body ]
     }

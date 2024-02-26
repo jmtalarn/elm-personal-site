@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App – Live update of Firebase backend with AngularJS
-date: 2017-08-18T14:28:28
+date: "2017-08-18T14:28:28"
 type: post
 slug: build-publish-ionic-app-live-update-firebase-angularjs
 cover: /images/featured/live_update.jpg
@@ -24,11 +24,11 @@ We wanted to create a kind of live update of the Firebase backend while the user
 
 <!--more-->
 <h2>Binding AngularJS models to Firebase with AngularFire</h2>
-We use Firebase as the backend and in order to integrate it better with our AngularJS application we installed also the <a href="http://blog.jmtalarn.com/build-publish-ionic-app-first-steps/">angularfire</a> library.
+We use Firebase as the backend and in order to integrate it better with our AngularJS application we installed also the [angularfire](http://blog.jmtalarn.com/build-publish-ionic-app-first-steps/) library.
 
 <blockquote>AngularFire is the officially supported AngularJS binding for Firebase. This binding lets you associate Firebase references with Angular models so that they will be transparently and immediately kept in sync with the database and with all other clients currently using your application.
 </blockquote>
-In our <a href="http://blog.jmtalarn.com/build-publish-ionic-app-angular-structure-services-controllers/">factory for managing ToDo items </a> we created the connection needed to open the references to our ToDo items lists.
+In our [factory for managing ToDo items ](http://blog.jmtalarn.com/build-publish-ionic-app-angular-structure-services-controllers/) we created the connection needed to open the references to our ToDo items lists.
 
 ```javascript
 .factory('Todos', function($firebaseArray, CurrentListService, $ionicLoading, Auth)
@@ -42,8 +42,8 @@ As it describes the definition of the object, it provides a service to get the e
 
 <h4>If you want read more about Javascript promises</h4>
 <ul>
-<li><a href="https://developers.google.com/web/fundamentals/getting-started/primers/promises" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/getting-started/primers/promises</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise</a></li>
+<li>[https://developers.google.com/web/fundamentals/getting-started/primers/promises](https://developers.google.com/web/fundamentals/getting-started/primers/promises)</li>
+<li>[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)</li>
 </ul>
 
 ```javascript

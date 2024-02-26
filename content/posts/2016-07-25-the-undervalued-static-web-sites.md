@@ -1,6 +1,6 @@
 ---
 title: The undervalued static web sites
-date: 2016-07-25T15:38:25
+date: "2016-07-25T15:38:25"
 type: post
 slug: the-undervalued-static-web-sites
 cover: /images/featured/Captura-de-pantalla-de-2016-07-08-13-00-25.png
@@ -39,31 +39,29 @@ You can be in the wave of newer technologies like **Node.js**, **Grunt**, **Gulp
 
 There are many options out there, but I tell which one I use. A framework that provides all together all the technologies I need: **Zurb Foundation** in the 6th version.
 
-You can refer to the <a href="http://foundation.zurb.com/">documentation</a> to see all options and possibilities to install and use the framework but I will provide a quick use guide
+You can refer to the [documentation](http://foundation.zurb.com/) to see all options and possibilities to install and use the framework but I will provide a quick use guide
 
-<h2 id="spanidfoundation6forsitesquickuseguidefoundation6forsitesquickuseguidespan"><span id="foundation-6-for-sites-quick-use-guide">Foundation 6 for sites: quick use guide</span></h2>
+<h2 id="foundation-6-for-sites-quick-use-guide">Foundation 6 for sites: quick use guide</h2>
+
 <h3 id="prerequisites">Pre-requisites</h3>
-<ol>
-<li>You have to install ***Node.js*** v0.12 or above. Refer to Node.js  documentation for your OS <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></li>
-<li>Once you have installed Node.js you have to install *gulp* and *bower* globally executing with sudo if you are in Linux environment  <code>sudo npm install -g gulp bower</code></li>
-<li>Git installed is also a requirement <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
-</ol>
+
+1. You have to install **_Node.js_** v0.12 or above. Refer to Node.js documentation for your OS [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+
+2. Once you have installed Node.js you have to install _gulp_ and _bower_ globally executing with sudo if you are in Linux environment <code>sudo npm install -g gulp bower</code>
+
+3. Git installed is also a requirement [https://git-scm.com/downloads](https://git-scm.com/downloads)
+
 <h3 id="buildthesitetemplate">Build the site template</h3>
-<ol>
-<li>Install the *foundation-cli* globally that will help you through the process to create a new site each time you need it (also with sudo if you are in Linux environment) <code>sudo npm install -g foundation-cli</code>  </li>
-<li>Create a working folder to set as your project development folder. Open a command line there or change to the working directory.  </li>
-<li>Execute the command <code>foundation new</code> to generate a new site with the cli in the working directory.  </li>
-<li>The assistant will ask you for 3 questions:
-<ol>
-<li>The type of project you're building that is *A web site* and this will use the *Foundation for Sites* framework,</li>
-<li>the project name, </li>
-<li>and the template to generate the site skeleton.
 
-I suggest to use the ZURB Template to use a set of tools that make the site development easier to structure content and modularize the components. These tools are basically the <a href="http://handlebarsjs.com/">Handlebars</a> template system, that allows you to structure the HTML in a set of source files and the <a href="http://sass-lang.com/">Sass</a> compiler to generate a resultant css from the source files with the help of some functions to manipulate the css generated and a modularized style of components. </li>
+1. Install the _foundation-cli_ globally that will help you through the process to create a new site each time you need it (also with sudo if you are in Linux environment) <code>sudo npm install -g foundation-cli</code>
+2. Create a working folder to set as your project development folder. Open a command line there or change to the working directory.
+3. Execute the command <code>foundation new</code> to generate a new site with the cli in the working directory.
+4. The assistant will ask you for 3 questions:
+    1. The type of project you're building that is _A web site_ and this will use the _Foundation for Sites_ framework,
+    2. the project name,
+    3. and the template to generate the site skeleton.
 
-</ol>
-</li>
-</ol>
+I suggest to use the ZURB Template to use a set of tools that make the site development easier to structure content and modularize the components. These tools are basically the [Handlebars](http://handlebarsjs.com/) template system, that allows you to structure the HTML in a set of source files and the [Sass](http://sass-lang.com/) compiler to generate a resultant css from the source files with the help of some functions to manipulate the css generated and a modularized style of components.
 
 ```bash
 ? What are you building today? (Use arrow keys)
@@ -154,35 +152,27 @@ Now run foundation watch while inside the myproject folder.
         └── template.html
 ```
 
-<ul>
-<li>**bower_components** and **bower.json** You should install your bower dependencies in the root directory of your project. Here you can install things like <a href="http://fontawesome.io/" target="\_blank">Font-Awesome</a>, <a href="http://momentjs.com/" target="\_blank">Moment</a> or <a href="https://d3js.org/" target="\_blank">D3</a> In the *bowercomponents* folder there are the basic dependencies of the Zurb Foundation framework like <a href="https://jquery.com/" target="\_blank">jQUery</a> </li>
-<li>**node_modules** folder contain the **Node.js** dependencies of the framework needed to generate the final files and folders to distribute as the site and **package.json** is the definition for *Node.js* packages for the current site. </li>
-<li>**gulpfile.babel.js** is the definition of the <a href="http://gulpjs.com/" target="\_blank">gulp</a> taks running the project. These tasks will use the configuration from the YAML file **config.yml** </li>
-<li>**readme.md** A basic definition of how the project and the foundation cli rules.</li>
-<li>**src** folder content are the fundamental elements of your site. Here is where you'll change things and generate the content of your website.
-<ul>
-<li>**assets**
+-   **bower_components** and **bower.json** You should install your bower dependencies in the root directory of your project. Here you can install things like [Font-Awesome](http://fontawesome.io/), [Moment](http://momentjs.com/) or [D3](https://d3js.org/) In the _bowercomponents_ folder there are the basic dependencies of the Zurb Foundation framework like [jQUery](https://jquery.com/)
+-   **node_modules** folder contain the **Node.js** dependencies of the framework needed to generate the final files and folders to distribute as the site and **package.json** is the definition for _Node.js_ packages for the current site.
+-   **gulpfile.babel.js** is the definition of the [gulp](http://gulpjs.com/) taks running the project. These tasks will use the configuration from the YAML file **config.yml**
+-   **readme.md** A basic definition of how the project and the foundation cli rules.
+-   **src** folder content are the fundamental elements of your site. Here is where you'll change things and generate the content of your website.
 
-<ul>
-<li> **js** Any javascript file you want to include in your final code goes here </li>
-<li> **img** The folder to contain the image resources of your project</li>
-<li> **scss** It's containing the source files for all your custom styles as sass source files. </li>
-</ul>
-</li>
-<li>**layouts** containing **default.html** which is the template for the general layout of the project in the Handlebars flavour</li>
-<li>**partials** Any piece of html (Handlebars) you reuse in many pages could go here in order to be accessible for any page.</li>
-<li>**pages** Each one of the pages in your site. Here you can set the folder and section structure you prefer. Also in Handlebars format.</li>
-<li>**styleguide** Is a content example using the defined styles as a showcase of the basic html components</li>
-</ul>
-</li>
-</ul>
+    -   **assets**
+
+        -   **js** Any javascript file you want to include in your final code goes here
+        -   **img** The folder to contain the image resources of your project
+        -   **scss** It's containing the source files for all your custom styles as sass source files.
+
+    -   **layouts** containing **default.html** which is the template for the general layout of the project in the Handlebars flavour
+    -   **partials** Any piece of html (Handlebars) you reuse in many pages could go here in order to be accessible for any page.
+    -   **pages** Each one of the pages in your site. Here you can set the folder and section structure you prefer. Also in Handlebars format.
+    -   **styleguide** Is a content example using the defined styles as a showcase of the basic html components
 
 <h3 id="runningit">Running it</h3>
 
 <blockquote>
-
 Run, change and review the result.
-
 </blockquote>
 
 You can run your project in a live server. This means that it will start a web server and will be listening to the changes in your project files like scss source files or html templates.

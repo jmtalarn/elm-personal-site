@@ -2,7 +2,7 @@
 title:
     "Build and publish a Ionic App – Angular application structure: services and
     factories"
-date: 2017-07-27T11:35:06
+date: "2017-07-27T11:35:06"
 type: post
 slug: build-publish-ionic-app-angular-structure-services-controllers
 cover: /images/featured/angular-factory.jpg
@@ -28,7 +28,8 @@ In any application sometimes you need to share some code or common functionaliti
 
 <!--more-->
 <h2>Services vs Factories in Angularjs</h2>
-The first thing to know is the difference between these kind of objects. In this post <a href="https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/">https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/</a> the author gives the definitions of each kind of components and illustrate them with clear examples.
+
+The first thing to know is the difference between these kind of objects. In this post [https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/](https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider/) the author gives the definitions of each kind of components and illustrate them with clear examples.
 
 <h3>Factories</h3>
 When you create a factory, you define an object with its properties and methods and return it directly. Then this same object will be used in the controllers where it is injected in the usual ways.
@@ -77,7 +78,8 @@ app.provider("aProvider", function () {
 ```
 
 <h2>Services and Factories in the App</h2>
-These are the <a href="https://github.com/jmtalarn/strikethru/blob/master/www/js/services.js">services and factories</a> created in the development of the <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/">Strikethru App with Ionic</a>
+
+These are the [services and factories](https://github.com/jmtalarn/strikethru/blob/master/www/js/services.js)</a> created in the development of the [Strikethru App with Ionic](http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/).
 
 <h3>Factories</h3>
 <dl>

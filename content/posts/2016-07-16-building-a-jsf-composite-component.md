@@ -1,6 +1,6 @@
 ---
 title: Building a JSF composite component
-date: 2016-07-16T20:58:38
+date: "2016-07-16T20:58:38"
 type: post
 slug: building-a-jsf-composite-component
 cover: /images/featured/Sense-t-tol.png
@@ -11,7 +11,7 @@ author: jmtalarn
 
 Since the version 2.2 of the JSF specification build composite components is a really easy thing to do. I will describe here how we implemented one to reuse a piece of UI in many pages.
 
-From the answer of this <a href="http://stackoverflow.com/questions/6358066/how-to-implement-a-dynamic-list-with-a-jsf-2-0-composite-component" target="_blank"><i class="fab fa-stack-overflow">\* StackOverflow question</a> I'd learned about how to create the \*java\* part of this example.
+From the answer of this [StackOverflow question](http://stackoverflow.com/questions/6358066/how-to-implement-a-dynamic-list-with-a-jsf-2-0-composite-component) I've learned about how to create the _java_ part of this example.
 
 <!--more-->
 <h1 id="herethereistheexample">Here is the example.</h1>
@@ -23,7 +23,7 @@ And in the same way you can edit the table of the elements over the represented 
 
 There are some parameters like the size of the component or the background image for the map.
 
-For most of the components used I worked with the <a href="http://www.primefaces.org/showcase/index.xhtml">PrimeFaces components</a> and to take advantage of the use of the data attributes from html5 with the xhtml specification I added the use of the <a href="http://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/p/tld-summary.html">passthrough library</a>
+For most of the components used I worked with the [PrimeFaces components](http://www.primefaces.org/showcase/index.xhtml) and to take advantage of the use of the data attributes from html5 with the xhtml specification I added the use of the [passthrough library](http://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/p/tld-summary.html).
 
 <h2 id="xhtml">xhtml</h2>
 This is the component xhtml code placed under the resources folder in WebContent **webcontent/resources/mapoftreasure/**

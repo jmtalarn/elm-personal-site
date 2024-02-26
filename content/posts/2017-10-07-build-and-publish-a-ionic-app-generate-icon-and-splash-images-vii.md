@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App – Generate icon and splash images
-date: 2017-10-07T02:32:34
+date: "2017-10-07T02:32:34"
 type: post
 slug: build-publish-ionic-app-icon-splash-images
 cover: /images/featured/splash.jpg

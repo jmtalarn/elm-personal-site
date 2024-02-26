@@ -1,6 +1,6 @@
 ---
 title: Theming your stylesheets with css variables
-date: 2018-11-13T12:50:12
+date: "2018-11-13T12:50:12"
 type: post
 slug: theming-stylesheets-with-css-variables
 cover: /images/featured/css-variables.png
@@ -27,19 +27,19 @@ They can be very useful to avoid CSS repetition, with a better performance in ru
 
 <!--more-->
 
-Maybe you used or saw the use of variables in preprocessors like <a href="https://sass-lang.com/" target="_blank">Sass</a> or <a href="http://lesscss.org/" target="_blank">Less</a> but there are some differences in the use.
+Maybe you used or saw the use of variables in preprocessors like [Sass](https://sass-lang.com/) or [Less](http://lesscss.org/) but there are some differences in the use.
 Unlike the way the variables are set and used in preprocessors which are only available in compilation time you can use the CSS custom properties during 'execution' time so the browser can update the things displayed accordingly the changes.
 
-<a href="https://sass-lang.com/" class="card-preview" target="_blank">Sass</a>
-<a href="http://lesscss.org/" class="card-preview" target="_blank">Less</a>
+[Sass](https://sass-lang.com/)
+[Less](http://lesscss.org/)
 
 The CSS custom properties are currently defined as a candidate recommendation in the W3C.org
 
-<a href="https://www.w3.org/TR/css-variables/" class="card-preview" target="_blank">W3C Custom properties</a>
+[W3C Custom properties](https://www.w3.org/TR/css-variables/)
 
 But are widely implemented among the browsers and you're close to be sure to use them in your projects
 
-<a href="https://www.caniuse.com/#search=css%20variables" class="card-preview" target="_blank">About custom properties in caniuse</a>
+[About custom properties in caniuse](https://www.caniuse.com/#search=css%20variables)
 
 <h3>How to define CSS variables?</h3>
 You can define the CSS variables inside any common CSS selector you are using in your stylesheets with a simple <code>--</code> following the css name for that variable and the value for that variable after the <code>:</code> property assignation.

@@ -1,6 +1,6 @@
 ---
 title: Express app and a Ghost blog together
-date: 2016-01-26T04:35:12
+date: "2016-01-26T04:35:12"
 type: post
 slug: express-app-and-a-ghost-blog-together
 category: ["Blogging", "Web development"]
@@ -9,16 +9,17 @@ cover: /images/featured/nodejsexpressghost.jpg
 author: jmtalarn
 ---
 
-If you know anything about Ghost development surely you know _Ghost_ is based with the _Express_ framework over the \*Node.js\* server.
+If you know anything about Ghost development surely you know _Ghost_ is based with the _Express_ framework over the _Node.js_ server.
 
-Well, maybe someday you want to add an extra superpower to your blog taking advantage of your javascript development skills over \*Node.js\*.
+Well, maybe someday you want to add an extra superpower to your blog taking advantage of your javascript development skills over _Node.js_.
 
 You can put it all together and play with all this stuff.
 
 <!--more-->
 
 <h2 id="letsseehow">Let's see how.</h2>
-*Ghost* is available as *Node* module in the *Npm* repository and the solution is as easy as install the needed modules.
+
+_Ghost_ is available as _Node_ module in the _Npm_ repository and the solution is as easy as install the needed modules.
 
 You can see in the dependencies section how the two required packaged were added in the descriptive package.json file.
 

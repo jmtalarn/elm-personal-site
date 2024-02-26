@@ -1,6 +1,6 @@
 ---
 title: Migrate a blog from Wordpress to Jekyll
-date: 2017-09-22T23:38:28
+date: "2017-09-22T23:38:28"
 type: post
 slug: migrate-blog-from-wordpress-to-jekyll
 cover: /images/featured/wordpress-jekyll.png

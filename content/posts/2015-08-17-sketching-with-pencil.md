@@ -1,6 +1,6 @@
 ---
 title: Sketching with Pencil
-date: 2015-08-17T03:50:00
+date: "2015-08-17T03:50:00"
 type: post
 slug: sketching-with-pencil
 cover: /images/featured/2015-04-09-12_09_43-Home---Pencil-Project.png

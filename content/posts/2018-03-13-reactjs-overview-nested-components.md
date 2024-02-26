@@ -1,6 +1,6 @@
 ---
 title: React quick overview and nested components
-date: 2018-03-13T01:52:42
+date: "2018-03-13T01:52:42"
 type: post
 slug: reactjs-overview-nested-components
 cover: /images/featured/reactjs-passdata.jpg

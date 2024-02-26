@@ -1,6 +1,6 @@
 ---
 title: Basic concepts about web servers
-date: 2016-09-01T00:03:00
+date: "2016-09-01T00:03:00"
 type: post
 slug: basic-concepts-about-web-servers
 cover: /images/featured/web.jpg
@@ -13,20 +13,21 @@ When we talk about **web server** we are referring indistinctly to the software 
 
 Generally a web server is a software providing web content to the clients connected to them, usually web browsers.
 
-This software is running listening on a **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#port">port</a>** and when a client makes a request over the http protocol to a determined resource, usually via the **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#methods">get method</a>**, it is sent to the client as response.
+This software is running listening on a **[port](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#port)** and when a client makes a request over the http protocol to a determined resource, usually via the **[get method](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#methods)**, it is sent to the client as response.
 
 <!--more-->
 
-So, the web server is accepting **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#http">http</a>** **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">requests</a>** and serving http **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response">responses</a>** which are tipically **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#html">html</a>** documents. But these responses can also be text, images and practically any document type.
+So, the web server is accepting **[http](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#http)** **[requests](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response)** and serving http **[responses](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#request-response)** which are tipically **[html](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#html)** documents. But these responses can also be text, images and practically any document type.
 
-All this resources are placed in a structure under the base server **<a href="http://blog.jmtalarn.com/basic-concepts-about-web-servers/#URL">URL</a>**, like if they were folders, and in many cases like the static servers is like this. The web server will be responsible to do the routing, also known as URL routing, from the resouce address to the correspondant content.
+All this resources are placed in a structure under the base server **[URL](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#URL)**, like if they were folders, and in many cases like the static servers is like this. The web server will be responsible to do the routing, also known as URL routing, from the resouce address to the correspondant content.
 
-<blockquote>The set of contents located on a web server is called a web site.</blockquote>
+> The set of contents located on a web server is called a web site.
+
 A web server will be able to record in its logs data and information about any happening connection to server, statistics of usage and also any error that could happen during the process to elaborate and prepare the requests and the responses. All these information could be useful for web developers and webmasters to solve and detect incidents or users behaviours and tendences.
 
 And as final concepts to know about how the web server prepares the content to serve. The webserver sites can be static and/or dynamic. When a web site is static it means that all the content is already produced before it is requested. All the images, html documents and anything it serves already exists before the request. When a web site is dynamic it means that the response, or part of the response, is generated when it is requested and only exists after the request call.
 
-<a href="https://twitter.com/veltman">Noah veltman</a> explains it and compares the static web sites with vending machines and the dynamic web sites with restaurants in this article <a href="http://noahveltman.com/static-dynamic/">http://noahveltman.com/static-dynamic/</a>
+[Noah veltman](https://twitter.com/veltman)</a> explains it and compares the static web sites with vending machines and the dynamic web sites with restaurants in this article [http://noahveltman.com/static-dynamic/](http://noahveltman.com/static-dynamic/)
 
 <h4 id="sometermsusedabove">Some terms used above</h4>
 <dl>
@@ -42,16 +43,14 @@ A web browser client usually only understand this protocol, and if you specify a
 
 These are:
 
-<ul>
-<li>GET; is the common method to get the resource requested.</li>
-<li>POST; this method is used to send information to the server in order to be processed and executed an action, normally pretending to create a resource.</li>
-<li>PUT; this method also allows to send information but with the intention to be appened to thre requested resource.</li>
-<li>DELETE; it is used with the intention to delete the resource</li>
-<li>HEAD; this method will be used as if it was a GET method but the server will not return the body of the response.</li>
-<li>OPTIONS; is used to check if the location is available and what it needs to be retrieved.</li>
-<li>CONNECT; it pretends to establish a connection with a proxy.</li>
-<li>TRACE; it should be used to get an echo message for the request send.</li>
-</ul>
+-   GET; is the common method to get the resource requested.
+-   POST; this method is used to send information to the server in order to be processed and executed an action, normally pretending to create a resource.
+-   PUT; this method also allows to send information but with the intention to be appened to thre requested resource.
+-   DELETE; it is used with the intention to delete the resource
+-   HEAD; this method will be used as if it was a GET method but the server will not return the body of the response.
+-   OPTIONS; is used to check if the location is available and what it needs to be retrieved.
+-   CONNECT; it pretends to establish a connection with a proxy.
+-   TRACE; it should be used to get an echo message for the request send.
 
 Not all web servers will respond to all methods and not all the methods would work like are defined, because it depends on what is programmed in the server, especially in the dynamic sites and which methods are allowed.</dd>
 
@@ -66,6 +65,6 @@ Not all web servers will respond to all methods and not all the methods would wo
 
 When you are developing dynamic sites you have access to all the data sent on a request in order to build a response that the client can interpret. In a static site when you get a request it is automatically translated to a local resource and it is returned as the response, being these HTML documents or any other resource.
 
-If the request have different methods to ask for different behaviours over the server, the response has the status code. With this code, a numeric one, you can interpret the result as satisfactory or erroneous. Some of the most used codes are 200 to indicate a correct operation, 401 to unauthorized request, 404 for a resource not found, or 500 to indicate an error occurred on the server before sending the response. Here is a list with many more status codes <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">https://en.wikipedia.org/wiki/List_of_HTTP_status_codes</a></dd>
+If the request have different methods to ask for different behaviours over the server, the response has the status code. With this code, a numeric one, you can interpret the result as satisfactory or erroneous. Some of the most used codes are 200 to indicate a correct operation, 401 to unauthorized request, 404 for a resource not found, or 500 to indicate an error occurred on the server before sending the response. Here is a list with many more status codes [https://en.wikipedia.org/wiki/List_of_HTTP_status_codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)</dd>
 
 </dl>

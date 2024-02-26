@@ -1,6 +1,6 @@
 ---
 title: Frameworks for testing your Javascript code
-date: 2016-10-15T02:28:32
+date: "2016-10-15T02:28:32"
 type: post
 slug: frameworks-for-testing-your-javascript-code
 cover: /images/featured/javascript.testing.jpg

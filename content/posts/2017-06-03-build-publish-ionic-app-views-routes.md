@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App – Views and routes
-date: 2017-06-03T02:30:28
+date: "2017-06-03T02:30:28"
 type: post
 slug: build-publish-ionic-app-views-routes
 cover: /images/featured/angular-ionic-wall.jpg
@@ -22,18 +22,18 @@ tags:
 author: jmtalarn
 ---
 
-When we <a href="http://blog.jmtalarn.com/build-publish-ionic-app-first-steps/#generating" target="\_blank">generate the application using the Ionic CLI</a> it generates the application structure to manage three tabs _Dash_, _Chats_ and \*Account\*. Angular provides a main module as the core framework and the additional required functionalities are added via modules like the URL mapping and routing. In the app skeleton generated each one of the tabs is considered a view or a state (actually that are substates of a tab state) and each one is related to an URL. Angular provides generally two modules as options to manage the URL routing: <a href="https://docs.angularjs.org/api/ngRoute" target="\_blank">Angular ngRoute</a> and <a href="https://github.com/angular-ui/ui-router" target="\_blank">AngularUI Router</a>. Ionic uses by default the ui-router.
+When we [generate the application using the Ionic CLI](http://blog.jmtalarn.com/build-publish-ionic-app-first-steps/#generating) it generates the application structure to manage three tabs _Dash_, _Chats_ and _Account_. Angular provides a main module as the core framework and the additional required functionalities are added via modules like the URL mapping and routing. In the app skeleton generated each one of the tabs is considered a view or a state (actually that are substates of a tab state) and each one is related to an URL. Angular provides generally two modules as options to manage the URL routing: [Angular ngRoute](https://docs.angularjs.org/api/ngRoute) and [AngularUI Router](https://github.com/angular-ui/ui-router). Ionic uses by default the ui-router.
 
 <!--more-->
 <h3>ngRoute vs ui-router</h3>
 Both modules are used to manage the views related with the URLs.
 
-**ngRouter** helps you to render views when a specified URL is requested. The URL is managed by the application in the browser and doesn't request the server to get the data because all views code is loaded when the application boots up. This is the principle of the <a href="https://en.wikipedia.org/wiki/Single-page_application">Single Page Applications (SPA)</a>. The module will load an HTML code into an element, a directive, known or marked as <code>&lt;ng-view&gt;&lt;/ng-view&gt;</code>.
+**ngRouter** helps you to render views when a specified URL is requested. The URL is managed by the application in the browser and doesn't request the server to get the data because all views code is loaded when the application boots up. This is the principle of the [Single Page Applications (SPA)](https://en.wikipedia.org/wiki/Single-page_application). The module will load an HTML code into an element, a directive, known or marked as <code>&lt;ng-view&gt;&lt;/ng-view&gt;</code>.
 
 The AngularUI router provides all this basic functionality but adds more options and configurations than only one state/view to an url. With this module it can be defined multiple nested views or subviews. The states can be defined with a name and this allows to reference it along your code by its name, both for change the view programatically or generate the links referencing only the name so any change in the url but that name will be applied anywhere. The target directive for ui-router is called <code>&lt;ui-view&gt;&lt;/ui-view&gt;</code>.
 
 <h3>Defining states with ui-router</h3>
-In the <a href="https://github.com/jmtalarn/strikethru/blob/master/www/js/app.js">app.js</a> file where is configured the main module of the application.
+In the [app.js](https://github.com/jmtalarn/strikethru/blob/master/www/js/app.js) file where is configured the main module of the application.
 
 In the config method is where the states will be defined and we will use two useful providers within the ui-router:
 
@@ -57,7 +57,7 @@ This is the provider where we attached the states.
   })
 ```
 
-A view where the app is presented and shows also a button to <a href="http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/#technology">author the app with your Google account</a>
+A view where the app is presented and shows also a button to [author the app with your Google account](http://blog.jmtalarn.com/build-publish-ionic-app-i-idea/#technology)
 
 ```javascript
   .state('logout', {
@@ -101,7 +101,7 @@ This is the state and controller with the tab container. The controller checks w
   })
 ```
 
-This is the first tab related with the **<a href="http://striketh.ru/how-it-works/">livelist</a>**, the list of hot items ready to be done.
+This is the first tab related with the **[livelist](http://striketh.ru/how-it-works/)**, the list of hot items ready to be done.
 
 ```javascript
   .state('tab.vault', {
@@ -115,7 +115,7 @@ This is the first tab related with the **<a href="http://striketh.ru/how-it-work
   })
 ```
 
-This is <a href="http://striketh.ru/how-it-works/">**the vault**</a> tab where there are the list of category or projects where the pending items are classified previously to be moved to the livelist when are ready.
+This is **[the vault](http://striketh.ru/how-it-works/)** tab where there are the list of category or projects where the pending items are classified previously to be moved to the livelist when are ready.
 
 ```javascript
   .state('tab.vault-detail', {
@@ -143,7 +143,7 @@ This is the view with the form where the vault category can be edited or created
   })
 ```
 
-This is the view for the <a href="http://striketh.ru/how-it-works/">Dump</a> where you can add any notes, annotations or ideas (in the shape of a todo item)
+This is the view for the [Dump](http://striketh.ru/how-it-works/) where you can add any notes, annotations or ideas (in the shape of a todo item)
 
 ```javascript
   .state('tab.vault-todo-detail', {

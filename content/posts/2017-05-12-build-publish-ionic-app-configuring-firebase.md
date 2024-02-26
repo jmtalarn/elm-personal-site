@@ -1,6 +1,6 @@
 ---
 title: Build and publish a Ionic App – Configuring Firebase
-date: 2017-05-12T12:38:35
+date: "2017-05-12T12:38:35"
 type: post
 slug: build-publish-ionic-app-configuring-firebase
 cover: /images/featured/Firebase-header.png
@@ -22,7 +22,7 @@ tags:
 author: jmtalarn
 ---
 
-Configure Firebase is easy-peasy. You only have to signup or author with your Google account into the <a href="https://firebase.google.com/" target="\_blank">Firebase console</a>, create a new application and add the needed modules.
+Configure Firebase is easy-peasy. You only have to signup or author with your Google account into the [Firebase console](https://firebase.google.com/), create a new application and add the needed modules.
 
 <!--more-->
 
@@ -32,10 +32,10 @@ Configure Firebase is easy-peasy. You only have to signup or author with your Go
 <div style="border: 1px solid #2980b9;">
   <h3 style="padding-left: 1em;">Content</h3>
   <ul style="margin: 1em 4em;">
-  <li><a href="#project">Create a new project</a></li>
-  <li><a href="#app">Create an app</a></li>
-  <li><a href="#authentication">Adding the authentication provider with Firebase</a></li>
-  <li><a href="#database">Adding the realtime Firebase JSON database to our project</a></li>
+  <li>[Create a new project](#project)</li>
+  <li>[Create an app](#app)</li>
+  <li>[Adding the authentication provider with Firebase](#authentication)</li>
+  <li>[Adding the realtime Firebase JSON database to our project](#database)</li>
   </ul>
 </div>
 
@@ -93,7 +93,7 @@ Once we clicked on the to start the authentication configuration we can add the 
 <figure><img src="../images/EnableGoogleLoginAuthorization.png" alt="Enable Google author provider" /> 
 <figcaption>Enable Google author provider</figcaption></figure>
 
-As Firebase is integrated with the big G this step will create automatically the Google API keys to integrate the author process. Once you finished this step you can check it on the <a href="https://console.developers.google.com/cloud-resource-manager">Google APIs console</a>. If you want to add more author provider you will need to get manually the API keys for each service.
+As Firebase is integrated with the big G this step will create automatically the Google API keys to integrate the author process. Once you finished this step you can check it on the [Google APIs console](https://console.developers.google.com/cloud-resource-manager). If you want to add more author provider you will need to get manually the API keys for each service.
 
 <h2 id="database">Adding the realtime Firebase JSON database to our project</h2>
 
