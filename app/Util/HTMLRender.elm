@@ -137,6 +137,7 @@ showBlockquote class children =
                     margin: 1.5em 10px;
                     padding: 0.5em 10px;
                     quotes:  "‘" "’" "“" "”" ;
+                    word-wrap: break-word;
                 }
                 .block-quote:before {
                     font-family: Times, serif;
@@ -282,8 +283,8 @@ showTableData class id style colspan children =
 
 imageStyle : List (Html.Attribute msg)
 imageStyle =
-    [ Attribute.style "max-width" "100vw"
-    , Attribute.style "margin" "0 auto"
+    [ Attribute.style "max-width" "100%"
+    , Attribute.style "margin" "1rem auto"
     , Attribute.style "display" "block"
     ]
 

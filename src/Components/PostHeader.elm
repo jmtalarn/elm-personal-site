@@ -20,7 +20,7 @@ show : String -> String -> List String -> List String -> Date -> Html msg
 show title cover tags category date =
     Html.header (headerStyle cover)
         [ Html.h1
-            []
+            [ Attribute.style "line-height" "2rem" ]
             [ Html.text title
             ]
         , Html.div
