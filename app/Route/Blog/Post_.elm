@@ -328,20 +328,49 @@ head :
     App Data ActionData RouteParams
     -> List Head.Tag
 head app =
+    let
+        { title, cover } =
+            app.data.blogPost
+    in
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "Web dev notes - jmtalarn blog"
         , image =
-            { url = Pages.Url.external "TODO"
-            , alt = "elm-pages logo"
+            { url = Pages.Url.external cover
+            , alt = title
             , dimensions = Nothing
             , mimeType = Nothing
             }
         , description = "TODO"
         , locale = Nothing
-        , title = "TODO title" -- metadata.title -- TODO
+        , title = title
         }
         |> Seo.website
+
+
+blogPostStyle : Html msg
+blogPostStyle =
+    Html.node "style"
+        []
+        [ Html.text ".blog-post {"
+        , Html.text "    padding: 0 1rem;"
+        , Html.text "    max-width: 960px;"
+        , Html.text "    margin: 0 auto;"
+        , Html.text "}"
+        , Html.text ".blog-post p {"
+        , Html.text "    text-align: justify;"
+        , Html.text "}"
+        , Html.text ".blog-post iframe {"
+        , Html.text "   max-width: 100%;"
+        , Html.text "}"
+        , Html.text ".blog-post img {"
+        , Html.text "   margin-bottom: 1rem"
+        , Html.text "}"
+        , Html.text ".blog-post figcaption {"
+        , Html.text "   font-weight: 100;"
+        , Html.text "   font-style: oblique;"
+        , Html.text "}"
+        ]
 
 
 view :
@@ -378,7 +407,11 @@ view app sharedModel =
     { title = app.data.blogPost.title ++ " 🗒️ web dev notes"
     , -- , body = [ Html.text "You're on the page Blog.Post_"
       --     , EMarkdown.toHtmlWith markdownOptions [] body ] ++ markdownToView body
-      body = PostHeader.show title cover tags category date :: markdownToView body
+      body =
+        [ blogPostStyle
+        , PostHeader.show title cover tags category date
+        , Html.article [ Attribute.class "blog-post" ] (markdownToView body)
+        ]
 
     --  , body = [ Html.text "You're on the page Blog.Post_", ExplorationsMarkdown.toHtmlWith { githubFlavored = Just { tables = True, breaks = False }, defaultHighlighting = Just "elm", sanitize = True, smartypants = False } [] body ]
     }

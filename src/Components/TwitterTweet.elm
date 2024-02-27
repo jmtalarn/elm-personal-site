@@ -11,10 +11,10 @@ twitterTweet children =
         , Attribute.style "align-items" "center"
         , Attribute.style "gap" "1rem"
         , Attribute.style "padding" "1rem"
-        , Attribute.style "background-color" "lightyellow"
+        , Attribute.style "background-color" "LightCyan"
         , Attribute.style "font-weight" "100"
         , Attribute.style "border-radius" "10px"
-        , Attribute.style "border-left" "10px solid blue"
+        , Attribute.style "border-left" "10px solid SkyBlue"
         ]
         [ Html.span
             [ Attribute.style "color" "blue"

@@ -117,17 +117,17 @@ This is a commonly way to implement a webservice to provide an [API](http://blog
 
 <h4 id="sometermsusedabove">Some terms used above</h4>
 <dl>
-    <dt id="xml">xml</dt>
-    <dd>Acronym of eXtensible Markup Language. An XML document is a document represented by a tree structure, being the root node the first element and hanging from it, like the tree branches, there will be the child elements. Any child element, could have child elements. Each node is formed by the element name, and also can have attributes with an optional value. Each node can contain data. The top line of a xml document, called XML prolog, can define the file containing the rules that the document format should follow. You can take a look of the syntax [here](http://www.w3schools.com/xml/xml_syntax.asp)
-    </dd>
-    <dt id="tag">tag</dt>
-    <dd>A tag is the representation of a node in a xml document. It will be enclosed with &lt; and &gt; symbols. The elements can be closed in the same tag like this &lt;TAG/&gt; or using another tag to indicate the end of the element &lt;BLAH BLAH BLAH&gt;</dd>
-    <dt id="json">JSON</dt>
-        <dd>Acronym for JavaScript Object Notation, and is the way that the objects in the javascript programming languages are defined. This format is commonly used to serialize and send data from web services to clients and in the other way round.</dd>
-    <dt id="api">API</dt>
-        <dd>Acronym for Application Programming Interface and it refers to the specification of use for an application. By the way, in the webservices it will refer to the methods existing, the paremeters required and the response obtained.</dd>
-    <dt id="uri">URI</dt>
-        <dd>Acronym for Uniform resource Identifier, and it indicates the name of a resource with a string of characters. An [URL](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#url) is a common form of URI to identify web resources.</dd>
-    <dt id="hypermedia">Hypermedia</dt>
-        <dd>Extending the hypertext concept, that is the text showed on the web with which the user can interact, to all the media involved in the hypertext documents.</dd>
+<dt id="xml">xml</dt>
+<dd>Acronym of eXtensible Markup Language. An XML document is a document represented by a tree structure, being the root node the first element and hanging from it, like the tree branches, there will be the child elements. Any child element, could have child elements. Each node is formed by the element name, and also can have attributes with an optional value. Each node can contain data. The top line of a xml document, called XML prolog, can define the file containing the rules that the document format should follow. You can take a look of the syntax [here](http://www.w3schools.com/xml/xml_syntax.asp)
+</dd>
+<dt id="tag">tag</dt>
+<dd>A tag is the representation of a node in a xml document. It will be enclosed with &lt; and &gt; symbols. The elements can be closed in the same tag like this &lt;TAG/&gt; or using another tag to indicate the end of the element &lt;BLAH BLAH BLAH&gt;</dd>
+<dt id="json">JSON</dt>
+<dd>Acronym for JavaScript Object Notation, and is the way that the objects in the javascript programming languages are defined. This format is commonly used to serialize and send data from web services to clients and in the other way round.</dd>
+<dt id="api">API</dt>
+<dd>Acronym for Application Programming Interface and it refers to the specification of use for an application. By the way, in the webservices it will refer to the methods existing, the paremeters required and the response obtained.</dd>
+<dt id="uri">URI</dt>
+<dd>Acronym for Uniform resource Identifier, and it indicates the name of a resource with a string of characters. An [URL](http://blog.jmtalarn.com/basic-concepts-about-web-servers/#url) is a common form of URI to identify web resources.</dd>
+<dt id="hypermedia">Hypermedia</dt>
+<dd>Extending the hypertext concept, that is the text showed on the web with which the user can interact, to all the media involved in the hypertext documents.</dd>
 </dl>

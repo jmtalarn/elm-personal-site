@@ -22,22 +22,20 @@ tags:
 author: jmtalarn
 ---
 
-I created an app and I will write a series of posts about it with some issues, difficulties and caveats I found during the development.
-
-You can find the source code in Github [https://github.com/jmtalarn/strikethru](https://github.com/jmtalarn/strikethru)
+I created an app and I will write a series of posts about it with some issues, difficulties and caveats I found during the development. You can find the source code in Github [https://github.com/jmtalarn/strikethru](https://github.com/jmtalarn/strikethru).
 
 <!--more-->
 
 <h2>The idea</h2>
 I tried many times to find an original and breaking idea to implement an app... But my creativity is so limited and I'm not so good creating new things. Then I decided to implement a version of something existing and I thought with a productivity system since a time ago I am using.
 
-I tried some systems before without success but [Strikethru](http://striketh.ru/)simply worked for me.
+I tried some systems before without success but [Strikethru](http://striketh.ru/) simply worked for me.
 
 <img src="../images/2017-04-27-09_59_06-Strikethru.png" alt="Strikethru, a new way to get more done" width="786" height="329" />
 
 <iframe src="https://www.youtube.com/embed/T4M8JfArx6I?rel=0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 
-**Yet another todo tasks list application. ** The idea for the app is, against the original idea, to replace the analog paper notebook and the pen. Simple and useful.
+**Yet another todo tasks list application.** The idea for the app is, against the original idea, to replace the analog paper notebook and the pen. Simple and useful.
 
 <h2 id="technology"> The technology</h2>
 
@@ -58,12 +56,11 @@ I discovered the Firebase Platform during the free React course of [Carlos Azau
 
 <twitter-tweet>
 <p>Build an [#app](https://twitter.com/hashtag/app?src=hash) with [@angular](https://twitter.com/angular) and [@Firebase](https://twitter.com/Firebase) [https://t.co/JXPq7jKafq](https://t.co/JXPq7jKafq)
-
-🔒Authentication
-💾Datastore and Nonrel db
-✈Intermitent offline [#angularjs](https://twitter.com/hashtag/angularjs?src=hash)
-
 </p>
+- 🔒Authentication
+- 💾Datastore and Nonrel db
+- ✈Intermitent offline [#angularjs](https://twitter.com/hashtag/angularjs?src=hash)
+
 — JMTE (@jmtalarn) [29 de març de 2017](https://twitter.com/jmtalarn/status/847149153000050688)
 
 </twitter-tweet>
