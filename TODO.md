@@ -4,7 +4,10 @@
 -   [x] Warning component
 -   [x] Show Header on Posts
     -   [x] Show date
--   [ ] Review Markdown files <p ...> tags without endind </p>
+-   [x] Review Markdown files <p ...> tags without endind </p>
 -   [ ] Show additional data on blog index for posts
 -   [ ] Paginate Blog index
--   [ ] Why is dl dt dd rendering that black spot under the thing
+-   [x] NavBar
+-   [x] Footer
+-   [ ] Add icons
+-   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)

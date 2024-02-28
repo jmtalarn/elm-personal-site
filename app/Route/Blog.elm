@@ -1,21 +1,19 @@
 module Route.Blog exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
-import BackendTask.File
-import BackendTask.Glob as Glob
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html
-import Json.Decode as Decode exposing (Decoder)
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
-import Route
+
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import UrlPath
 import View exposing (View)
-
+import DataModel.BlogPosts exposing (..)
+import Components.BlogPostCard exposing (blogPostCard)
 
 type alias Model =
     {}
@@ -27,13 +25,6 @@ type alias Msg =
 
 type alias RouteParams =
     {}
-
-
-type alias BlogPost =
-    { body : String
-    , slug : String
-    , title : String
-    }
 
 
 type alias Data =
@@ -53,39 +44,11 @@ route =
         |> RouteBuilder.buildNoState { view = view }
 
 
-data : BackendTask FatalError Data
+data : BackendTask FatalError (List BlogPost)
 data =
     blogPosts
 
 
-blogPostDecoder : String -> Decoder BlogPost
-blogPostDecoder body =
-    Decode.map2 (BlogPost body)
-        (Decode.field "slug" Decode.string)
-        (Decode.field "title" Decode.string)
-
-
-blogPosts : BackendTask FatalError (List BlogPost)
-blogPosts =
-    blogPostsGlob
-        |> BackendTask.map (List.map (\blogPost -> BackendTask.File.bodyWithFrontmatter blogPostDecoder blogPost.filePath))
-        |> BackendTask.resolve
-        |> BackendTask.allowFatal
-
-
-blogPostsGlob : BackendTask error (List { fileName : String, filePath : String })
-blogPostsGlob =
-    Glob.succeed
-        (\filePath fileName ->
-            { filePath = filePath
-            , fileName = fileName
-            }
-        )
-        |> Glob.captureFilePath
-        |> Glob.match (Glob.literal "content/posts/")
-        |> Glob.capture Glob.wildcard
-        |> Glob.match (Glob.literal ".md")
-        |> Glob.toBackendTask
 
 
 head :
@@ -94,7 +57,7 @@ head :
 head app =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "jmtalarn.com ~ web dev notes blog "
         , image =
             { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "elm-pages logo"
@@ -103,7 +66,7 @@ head app =
             }
         , description = "Welcome to elm-pages!"
         , locale = Nothing
-        , title = "elm-pages is running"
+        , title = "jmtalarn.com ~ web dev notes blog"
         }
         |> Seo.website
 
@@ -116,6 +79,6 @@ view app shared =
     { title = "elm-pages is running"
     , body =
         [ Html.h1 [] [ Html.text "This is the blog index" ]
-        , Html.ul [] (List.map (\{ title, slug } -> Html.li [] [ Route.Blog__Post_ { post = slug } |> Route.link [] [ Html.text title ] ]) app.data)
+        , Html.ul [] (List.map blogPostCard app.data)
         ]
     }

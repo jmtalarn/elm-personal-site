@@ -7,7 +7,8 @@ import Html.Attributes as Attribute
 twitterTweet : List (Html msg) -> Html msg
 twitterTweet children =
     Html.div
-        [ Attribute.style "display" "flex"
+        [ Attribute.class "twitter-tweet"
+        , Attribute.style "display" "flex"
         , Attribute.style "align-items" "center"
         , Attribute.style "gap" "1rem"
         , Attribute.style "padding" "1rem"
@@ -22,7 +23,10 @@ twitterTweet children =
             , Attribute.style "font-size" "2rem"
             ]
             [ Html.text "🐦" ]
-        , Html.div [ Attribute.style "line-height" "1.3rem" ] children
+        , Html.div
+            [ Attribute.style "line-height" "1.3rem"
+            ]
+            children
         ]
 
 
