@@ -1,6 +1,8 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
 import BackendTask exposing (BackendTask)
+import Components.NavBar as NavBar
+import Components.Footer as Footer
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import Html exposing (Html)
@@ -11,6 +13,8 @@ import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 import UrlPath exposing (UrlPath)
 import View exposing (View)
+import Time
+import BackendTask.Time
 
 
 template : SharedTemplate Msg Model Data msg
@@ -30,7 +34,7 @@ type Msg
 
 
 type alias Data =
-    ()
+    { now: Time.Posix}
 
 
 type SharedMsg
@@ -61,6 +65,7 @@ init flags maybePagePath =
     )
 
 
+
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
@@ -78,7 +83,7 @@ subscriptions _ _ =
 
 data : BackendTask FatalError Data
 data =
-    BackendTask.succeed ()
+    BackendTask.map Data BackendTask.Time.now
 
 
 view :
@@ -93,29 +98,10 @@ view :
     -> { body : List (Html msg), title : String }
 view sharedData page model toMsg pageView =
     { body =
-        [ Html.nav []
-            [ Html.button
-                [ Html.Events.onClick MenuClicked ]
-                [ Html.text
-                    (if model.showMenu then
-                        "Close Menu"
-
-                     else
-                        "Open Menu"
-                    )
-                ]
-            , Route.Blog |> Route.link [] [ Html.text "Blog Index" ]
-            , if model.showMenu then
-                Html.ul []
-                    [ Html.li [] [ Html.text "Menu item 1" ]
-                    , Html.li [] [ Html.text "Menu item 2" ]
-                    ]
-
-              else
-                Html.text ""
-            ]
+        [ NavBar.view model MenuClicked
             |> Html.map toMsg
         , Html.main_ [] pageView.body
+        , Footer.footer sharedData.now
         ]
     , title = pageView.title
     }

@@ -1,22 +1,17 @@
 module Route.Blog.Post_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
-import BackendTask.File
-import BackendTask.Glob as Glob
+
 import Components.PostHeader as PostHeader
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
-import Date exposing (Date)
-import Dict exposing (Dict)
+
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
-import Iso8601
-import Json.Decode as Decode exposing (Decoder)
-import Json.Decode.Extra as Decode
-import Markdown.Block as Block
+import DataModel.BlogPosts exposing (..)
 import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
@@ -24,40 +19,11 @@ import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
-import Time
 import Util.HTMLRender exposing (..)
 import View exposing (View)
-
-
-type alias BlogPost =
-    { body : String
-    , slug : String
-    , title : String
-    , cover : String
-    , category : List String
-    , tags : List String
-    , date : Date
-    }
-
-
-
--- decodeDate_ =
---     Decode.string
---         |> Decode.andThen
---             (\str ->
---                 Date.fromIsoString str
---                     |> Decode.fromResult
---             )
-
-
-decodeDate : Decoder Date
-decodeDate =
-    Iso8601.decoder
-        |> Decode.map
-            (\posix ->
-                Date.fromPosix Time.utc posix
-            )
-
+import Date 
+import Dict 
+import Time
 
 type alias Model =
     {}
@@ -99,43 +65,16 @@ blogPost2RouteParams { slug } =
 -- ]
 
 
-blogPosts : BackendTask FatalError (List BlogPost)
-blogPosts =
-    blogPostsGlob
-        |> BackendTask.map (List.map (\blogPost -> BackendTask.File.bodyWithFrontmatter blogPostDecoder blogPost.filePath))
-        |> BackendTask.resolve
-        |> BackendTask.allowFatal
 
 
-blogPostsToDict : BackendTask FatalError (List BlogPost) -> BackendTask FatalError (Dict String BlogPost)
-blogPostsToDict blogPostList =
-    blogPostList |> BackendTask.map (\list -> Dict.fromList (list |> List.map (\blogPost -> ( .slug blogPost, blogPost ))))
 
 
-blogPostsGlob : BackendTask error (List { fileName : String, filePath : String })
-blogPostsGlob =
-    Glob.succeed
-        (\filePath fileName ->
-            { filePath = filePath
-            , fileName = fileName
-            }
-        )
-        |> Glob.captureFilePath
-        |> Glob.match (Glob.literal "content/posts/")
-        |> Glob.capture Glob.wildcard
-        |> Glob.match (Glob.literal ".md")
-        |> Glob.toBackendTask
 
 
-blogPostDecoder : String -> Decoder BlogPost
-blogPostDecoder body =
-    Decode.map6 (BlogPost body)
-        (Decode.field "slug" Decode.string)
-        (Decode.field "title" Decode.string)
-        (Decode.field "cover" Decode.string)
-        (Decode.field "category" <| Decode.list <| Decode.string)
-        (Decode.field "tags" <| Decode.list <| Decode.string)
-        (Decode.field "date" decodeDate)
+
+
+
+
 
 
 processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
@@ -233,6 +172,7 @@ processHtml =
             |> Markdown.Html.withOptionalAttribute "alt"
             |> Markdown.Html.withOptionalAttribute "title"
             |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "style"
             |> Markdown.Html.withOptionalAttribute "id"
             |> Markdown.Html.withAttribute "src"
         , Markdown.Html.tag "dl" showDefinitionList
@@ -253,7 +193,7 @@ processHtml =
 customHtmlRenderer : Renderer (Html msg)
 customHtmlRenderer =
     { defaultHtmlRenderer
-        | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing src []
+        | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing Nothing src []
         , blockQuote = \content -> showBlockquote Nothing content
         , codeBlock = codeBlock
         , html = processHtml

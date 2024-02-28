@@ -106,16 +106,16 @@ Basically you should build a page with the following structure and you have an A
 				}
 			}
 		</style>
-		<noscript
-			><style amp-boilerplate>
+		<noscript>
+			<style amp-boilerplate>
 				body {
 					-webkit-animation: none;
 					-moz-animation: none;
 					-ms-animation: none;
 					animation: none;
 				}
-			</style></noscript
-		>
+			</style>
+		</noscript>
 		<script async src="https://cdn.ampproject.org/v0.js"></script>
 	</head>
 	<body>

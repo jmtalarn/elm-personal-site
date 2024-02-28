@@ -57,7 +57,7 @@ head :
 head app =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "jmtalarn.com"
         , image =
             { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "elm-pages logo"
@@ -66,7 +66,7 @@ head app =
             }
         , description = "Welcome to elm-pages!"
         , locale = Nothing
-        , title = "elm-pages is running"
+        , title = "jmtalarn.com ~ Home "
         }
         |> Seo.website
 
@@ -84,8 +84,12 @@ view app shared =
             ]
         , Html.ul []
             [ Html.li []
-                [ Route.Blog__Post_ { post = "hello" }
-                    |> Route.link [] [ Html.text "My blog post" ]
+                [ Route.Greet 
+                    |> Route.link [] [ Html.text "Greetings" ]
+                ]
+            , Html.li []
+                [ Route.Hello 
+                    |> Route.link [] [ Html.text "Hello from Dillon T. Kearns" ]
                 ]
             , Html.li []
                 [ Route.Sluggy__Slug_ { slug = "hello" }

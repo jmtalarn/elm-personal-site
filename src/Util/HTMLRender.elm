@@ -289,8 +289,8 @@ imageStyle =
     ]
 
 
-showImage : Maybe String -> Maybe String -> Maybe String -> Maybe String -> String -> List (Html msg) -> Html msg
-showImage alt title class id src children =
+showImage : Maybe String -> Maybe String -> Maybe String -> Maybe String -> Maybe String -> String -> List (Html msg) -> Html msg
+showImage alt title class style id src children =
     Html.img
         ([ Attribute.class (Maybe.withDefault "" class)
          , Attribute.id (Maybe.withDefault "" id)
@@ -299,6 +299,7 @@ showImage alt title class id src children =
          , Attribute.src src
          ]
             ++ imageStyle
+            ++ processStyleAttribute (Maybe.withDefault "" style)
         )
         children
 
