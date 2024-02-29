@@ -9,8 +9,7 @@ tags: ["wordpress", "blog", "blogging", "static web sites", "jekyll"]
 author: jmtalarn
 ---
 
-In this case the situation was the end of life of Openshift v2, the platform I used to host (for free) the WordPress blog. As I was not yet accepted in the program of Openshift v3 I decided to try an alternative. So I had access to a static hosting and I moved all the content from Wordpress to Jekyll. Jekyll is a static site generator and as I described in a <a href="/the-undervalued-static-web-sites/" target="\_blank"
- title="The undervalued static web sites">previous post</a> there is nothing bad with that if you use the correct tools.
+In this case the situation was the end of life of Openshift v2, the platform I used to host (for free) the WordPress blog. As I was not yet accepted in the program of Openshift v3 I decided to try an alternative. So I had access to a static hosting and I moved all the content from Wordpress to Jekyll. Jekyll is a static site generator and as I described in a [previous post](/the-undervalued-static-web-sites/ "The undervalued static web sites") there is nothing bad with that if you use the correct tools.
 
 <!--more-->
 

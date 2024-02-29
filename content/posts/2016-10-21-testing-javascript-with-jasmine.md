@@ -13,8 +13,10 @@ author: jmtalarn
 
 [http://jasmine.github.io/](http://jasmine.github.io/)
 
-<blockquote>Jasmine is a behavior-driven development framework for testing JavaScript code. It does not depend on any other JavaScript frameworks. It does not require a DOM. And it has a clean, obvious syntax so that you can easily write tests.</blockquote>
+> Jasmine is a behavior-driven development framework for testing JavaScript code. It does not depend on any other JavaScript frameworks. It does not require a DOM. And it has a clean, obvious syntax so that you can easily write tests.
+
 <!--more-->
+
 As its description says, Jasmine helps you to test any testable piece of javascript. For the seasoned java developers is very similar to the [jUnit](http://junit.org/junit4/) approach: you create a suite in which you define a set of tests with its appropiate assertions.
 
 You can create your custom matchers but by default Jasmine has a large list of matchers to create your assertions:

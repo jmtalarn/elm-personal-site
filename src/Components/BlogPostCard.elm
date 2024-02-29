@@ -64,7 +64,10 @@ whiteLinksStyle =
 
 blogPostCardContentStyle : List (Html.Attribute msg)
 blogPostCardContentStyle =
-    [ Attribute.style "padding" "1rem" ]
+    [ Attribute.style "padding" ".5rem"
+    , Attribute.style "text-align" "justify"
+    , Attribute.style "font-size" ".8rem"
+    ]
 
 
 getAbstract : String -> String
@@ -95,5 +98,5 @@ blogPostCard { title, slug, date, cover, body } =
             ]
         , Html.div
             blogPostCardContentStyle
-            [ Html.p [] (MarkdownProcessor.markdownToText (getAbstract body)) ]
+            [ Html.p [] [ Html.text (MarkdownProcessor.markdownToText (getAbstract body)) ] ]
         ]
