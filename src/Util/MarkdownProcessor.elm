@@ -159,39 +159,53 @@ markdownToView markdownString =
            )
 
 
-markdownToText : String -> List (Html msg)
+markdownToText : String -> String
 markdownToText markdownString =
     markdownString
         |> Markdown.Parser.parse
-        |> Result.mapError (\error -> error |> List.map Markdown.Parser.deadEndToString |> String.join "\n")
-        |> Result.andThen (\ast -> Markdown.Renderer.render textRenderer ast)
-        |> Result.withDefault [ Html.text "<parse error>" ]
+        |> Result.withDefault []
+        |> Markdown.Renderer.render textRenderer
+        |> Result.withDefault []
+        |> String.join " "
+        |> String.replace "  " " "
 
 
-firstElementOnly : a -> List a -> a
-firstElementOnly d l =
-    List.head l |> Maybe.withDefault d
-
-
-textRenderer : Renderer (Html msg)
+textRenderer : Renderer String
 textRenderer =
-    { defaultHtmlRenderer
-        | text = Html.text
-        , codeSpan = Html.text
-        , image = always (Html.text "")
-        , heading = \{ rawText } -> Html.text (String.trim rawText)
-        , paragraph = firstElementOnly (Html.text "")
-        , blockQuote = firstElementOnly (Html.text "")
-        , orderedList = \i l -> List.map (firstElementOnly (Html.text "")) l |> firstElementOnly (Html.text "")
-        , unorderedList =
-            \l ->
-                List.map
-                    (\li ->
-                        case li of
-                            Markdown.Block.ListItem _ children ->
-                                children |> firstElementOnly (Html.text "")
+    { heading = \{ children } -> String.concat children
+    , paragraph = String.concat
+    , hardLineBreak = "\n"
+    , blockQuote = String.concat
+    , strong = String.concat
+    , emphasis = String.concat
+    , codeSpan = identity
+    , link = \link content -> String.concat content
+    , image = \imageInfo -> ""
+    , text = identity
+    , unorderedList =
+        \items ->
+            items
+                |> List.map
+                    (\(Markdown.Block.ListItem _ children) ->
+                        String.concat children
                     )
-                    l
-                    |> firstElementOnly (Html.text "")
-        , html = Markdown.Html.oneOf ([ "p", "h1", "h2", "h3", "h4", "h5", "h6", "style", "code", "span", "pre" ] |> List.map (\tag -> Markdown.Html.tag tag (\rc -> List.head rc |> Maybe.withDefault (Html.text ""))))
+                |> String.join " "
+    , orderedList =
+        \startingIndex items ->
+            items
+                |> List.indexedMap
+                    (\idx itemBlocks ->
+                        String.fromInt (idx + startingIndex) ++ ") " ++ String.concat itemBlocks
+                    )
+                |> String.join " "
+    , html = Markdown.Html.oneOf [] |> Markdown.Html.map (always String.concat)
+    , codeBlock = \block -> block.body
+    , thematicBreak = " "
+    , table = always ""
+    , tableHeader = always ""
+    , tableBody = always ""
+    , tableRow = always ""
+    , tableHeaderCell = \_ _ -> ""
+    , tableCell = \_ _ -> ""
+    , strikethrough = String.concat
     }
