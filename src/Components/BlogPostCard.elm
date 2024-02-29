@@ -10,49 +10,27 @@ import Html exposing (Html)
 import Html.Attributes as Attribute
 import Html.Events
 import Route
+import Util.MarkdownProcessor as MarkdownProcessor
 
 
-type alias Model =
-    { hoverCard : Bool }
-
-
-init : Model
-init =
-    { hoverCard = False }
-
-
-type Msg
-    = HoveringCard
-    | NotHoveringCard
-
-
-update : Msg -> Model -> ( Model, Effect msg )
-update msg model =
-    case msg of
-        HoveringCard ->
-            ( { model | hoverCard = True }, Effect.none )
-
-        NotHoveringCard ->
-            ( { model | hoverCard = False }, Effect.none )
-
-
-blogPostCardStyle : Bool -> List (Html.Attribute Msg)
-blogPostCardStyle hovering =
-    [ Attribute.style "display" "flex"
-    , Attribute.style "flex-direction" "column"
-    , Attribute.style "margin" "1rem"
-
-    --, Attribute.style "border" "1px solid grey"
-    , Attribute.style "border-radius"
-        "10px"
-    , if hovering then
-        Attribute.style "box-shadow" "0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-
-      else
-        Attribute.style "box-shadow" "0 8px 16px 0 rgba(0, 0, 0, 0.2)"
-    , Html.Events.onMouseOver HoveringCard
-    , Html.Events.onMouseOut NotHoveringCard
-    ]
+blogPostCardStyle : Html msg
+blogPostCardStyle =
+    Html.node
+        "style"
+        []
+        [ Html.text """
+            .blog-post-card {
+                display: flex;
+                flex-direction: column;
+                margin: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                transition: box-shadow 300ms ease-in;
+            }
+            .blog-post-card:hover {
+                box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.2);
+            }
+        """ ]
 
 
 blogPostCardHeaderStyle : String -> List (Html.Attribute msg)
@@ -89,27 +67,33 @@ blogPostCardContentStyle =
     [ Attribute.style "padding" "1rem" ]
 
 
+getAbstract : String -> String
+getAbstract body =
+    Maybe.withDefault "" <| List.head (String.split "<!--more-->" body)
+
+
 blogPostCard : BlogPost -> Html msg
-blogPostCard { title, slug, date, cover } =
+blogPostCard { title, slug, date, cover, body } =
     Html.article
-        blogPostCardStyle
-        [ Html.header
+        [ Attribute.class "blog-post-card" ]
+        [ blogPostCardStyle
+        , Html.header
             (blogPostCardHeaderStyle cover)
             [ Route.Blog__Post_ { post = slug }
                 |> Route.link whiteLinksStyle
                     [ Html.h3 [ Attribute.style "margin" "0" ] [ Html.text title ]
+                    , Html.div
+                        [ Attribute.style "display" "flex"
+                        , Attribute.style "align-items" "center"
+                        , Attribute.style "justify-content" "flex-end"
+                        ]
+                        [ Html.span
+                            [ Attribute.style "font-size" "0.6rem" ]
+                            [ Html.text ("📅 " ++ Date.format "d, MMMM y" date) ]
+                        ]
                     ]
             ]
         , Html.div
             blogPostCardContentStyle
-            [ Html.span [ Attribute.style "font-size" "0.8rem" ] [ Html.text ("📅 " ++ Date.format "d, MMMM y" date) ] ]
+            [ Html.p [] (MarkdownProcessor.markdownToText (getAbstract body)) ]
         ]
-
-
-main : Program () Model Msg
-main =
-    Browser.sandbox
-        { init = init
-        , view = blogPostCard
-        , update = update
-        }
