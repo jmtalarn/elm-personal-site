@@ -1,19 +1,19 @@
 module Route.Blog exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import Components.BlogPostCard exposing (blogPostCard)
+import DataModel.BlogPosts exposing (..)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
-
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import UrlPath
 import View exposing (View)
-import DataModel.BlogPosts exposing (..)
-import Components.BlogPostCard exposing (blogPostCard)
+
 
 type alias Model =
     {}
@@ -49,8 +49,6 @@ data =
     blogPosts
 
 
-
-
 head :
     App Data ActionData RouteParams
     -> List Head.Tag
@@ -79,6 +77,6 @@ view app shared =
     { title = "elm-pages is running"
     , body =
         [ Html.h1 [] [ Html.text "This is the blog index" ]
-        , Html.ul [] (List.map blogPostCard app.data)
+        , Html.div [] (List.map blogPostCard app.data)
         ]
     }
