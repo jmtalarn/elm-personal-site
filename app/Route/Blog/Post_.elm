@@ -1,29 +1,23 @@
 module Route.Blog.Post_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
-
 import Components.PostHeader as PostHeader
-import Components.TwitterTweet exposing (twitterTweet)
-import Components.WarningBox exposing (warningBox)
-
+import DataModel.BlogPosts exposing (..)
+import Date
+import Dict
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
-import DataModel.BlogPosts exposing (..)
-import Markdown.Html
-import Markdown.Parser
-import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
-import Util.HTMLRender exposing (..)
-import View exposing (View)
-import Date 
-import Dict 
 import Time
+import Util.MarkdownProcessor as MarkdownProcessor
+import View exposing (View)
+
 
 type alias Model =
     {}
@@ -63,144 +57,6 @@ blogPost2RouteParams { slug } =
 -- [ { post = "hello2" }
 -- , { post = "hello" }
 -- ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
-processHtml =
-    Markdown.Html.oneOf
-        [ Markdown.Html.tag "div"
-            showDiv
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "style"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "span"
-            showSpan
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "b" (Html.b [])
-        , Markdown.Html.tag "em" (\class children -> Html.em [ Attribute.class (Maybe.withDefault "" class) ] children) |> Markdown.Html.withOptionalAttribute "class"
-        , Markdown.Html.tag "p" (Html.p [])
-        , Markdown.Html.tag "blockquote" showBlockquote |> Markdown.Html.withOptionalAttribute "class"
-        , Markdown.Html.tag "script" (\children -> Html.div [] children)
-        , Markdown.Html.tag "a" showLink |> Markdown.Html.withOptionalAttribute "href" |> Markdown.Html.withOptionalAttribute "id" |> Markdown.Html.withOptionalAttribute "target" |> Markdown.Html.withOptionalAttribute "rel"
-        , Markdown.Html.tag "iframe"
-            showIframe
-            |> Markdown.Html.withAttribute "src"
-            |> Markdown.Html.withOptionalAttribute "width"
-            |> Markdown.Html.withOptionalAttribute "height"
-            |> Markdown.Html.withOptionalAttribute "allow"
-            |> Markdown.Html.withOptionalAttribute "scrolling"
-            |> Markdown.Html.withOptionalAttribute "frameborder"
-            |> Markdown.Html.withOptionalAttribute "style"
-            |> Markdown.Html.withOptionalAttribute "title"
-        , Markdown.Html.tag "h1"
-            (showHeading 1)
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "h2"
-            (showHeading 2)
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "h3"
-            (showHeading 3)
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "h4"
-            (showHeading 4)
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "h5"
-            (showHeading 5)
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "h6"
-            (showHeading 6)
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "table"
-            showTable
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "thead"
-            showTableHead
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "tbody"
-            showTableBody
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "th"
-            showTableHeader
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withOptionalAttribute "style"
-            |> Markdown.Html.withOptionalAttribute "colspan"
-        , Markdown.Html.tag "tr"
-            showTableRow
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "td"
-            showTableData
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withOptionalAttribute "style"
-            |> Markdown.Html.withOptionalAttribute "colspan"
-        , Markdown.Html.tag "i" (Html.i [])
-        , Markdown.Html.tag "strong" (\children -> Html.span [] [ Html.strong [] children ])
-        , Markdown.Html.tag "br" (Html.br [])
-        , Markdown.Html.tag "li" (\id children -> Html.li [ Attribute.id (Maybe.withDefault "" id) ] children) |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "ol" (Html.ol [])
-        , Markdown.Html.tag "ul" (Html.ul [])
-        , Markdown.Html.tag "code" showCodeBlock |> Markdown.Html.withOptionalAttribute "class"
-        , Markdown.Html.tag "img" showImage
-            |> Markdown.Html.withOptionalAttribute "alt"
-            |> Markdown.Html.withOptionalAttribute "title"
-            |> Markdown.Html.withOptionalAttribute "class"
-            |> Markdown.Html.withOptionalAttribute "style"
-            |> Markdown.Html.withOptionalAttribute "id"
-            |> Markdown.Html.withAttribute "src"
-        , Markdown.Html.tag "dl" showDefinitionList
-        , Markdown.Html.tag "dd" showDefinitionDescription
-        , Markdown.Html.tag "dt" showDefinitionTerm |> Markdown.Html.withOptionalAttribute "id"
-        , Markdown.Html.tag "figure" (Html.figure [])
-        , Markdown.Html.tag "figcaption" (Html.figcaption [])
-        , Markdown.Html.tag "hr" (Html.hr [])
-        , Markdown.Html.tag "label" (Html.label [])
-        , Markdown.Html.tag "easy-like-score" showEasyLikeScore
-            |> Markdown.Html.withAttribute "likeness"
-            |> Markdown.Html.withAttribute "easiness"
-        , Markdown.Html.tag "warning" warningBox
-        , Markdown.Html.tag "twitter-tweet" twitterTweet
-        ]
-
-
-customHtmlRenderer : Renderer (Html msg)
-customHtmlRenderer =
-    { defaultHtmlRenderer
-        | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing Nothing src []
-        , blockQuote = \content -> showBlockquote Nothing content
-        , codeBlock = codeBlock
-        , html = processHtml
-    }
-
-
-
 -- Markdown.Html.oneOf
 --     [ Markdown.Html.tag "b" (Html.b [])
 --     , Markdown.Html.tag "blockquote" (Html.blockquote [] )
@@ -210,31 +66,6 @@ customHtmlRenderer =
 --     , Markdown.Html.tag "div" (Html.div [])
 --     , Markdown.Html.tag "iframe" (Html.iframe [])
 --     ]
-
-
-markdownToView : String -> List (Html msg)
-markdownToView markdownString =
-    markdownString
-        |> Markdown.Parser.parse
-        |> Result.mapError (\error -> error |> List.map Markdown.Parser.deadEndToString |> String.join "\n")
-        |> Result.andThen
-            (\blocks ->
-                Markdown.Renderer.render
-                    customHtmlRenderer
-                    blocks
-            )
-        |> (\result ->
-                case result of
-                    Ok markdown ->
-                        markdown
-
-                    Err error ->
-                        let
-                            _ =
-                                Debug.log "Error" error
-                        in
-                        [ Html.text "There was an error parsing the Markdown", Html.text error ]
-           )
 
 
 type alias Data =
@@ -350,7 +181,7 @@ view app sharedModel =
       body =
         [ blogPostStyle
         , PostHeader.show title cover tags category date
-        , Html.article [ Attribute.class "blog-post" ] (markdownToView body)
+        , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView body)
         ]
 
     --  , body = [ Html.text "You're on the page Blog.Post_", ExplorationsMarkdown.toHtmlWith { githubFlavored = Just { tables = True, breaks = False }, defaultHighlighting = Just "elm", sanitize = True, smartypants = False } [] body ]
