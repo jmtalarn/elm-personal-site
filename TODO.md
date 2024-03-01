@@ -5,8 +5,9 @@
 -   [x] Show Header on Posts
     -   [x] Show date
 -   [x] Review Markdown files <p ...> tags without endind </p>
--   [ ] Show additional data on blog index for posts
+-   [x] Show additional data on blog index for posts
 -   [ ] Paginate Blog index
+-   [x] Sort Blog posts
 -   [x] NavBar
 -   [x] Footer
 -   [ ] Add icons

@@ -33,26 +33,27 @@ blogPostCardStyle =
         """ ]
 
 
-blogPostCardHeaderStyle : String -> List (Html.Attribute msg)
-blogPostCardHeaderStyle cover =
-    [ Attribute.style
-        "background-image"
-        ("""linear-gradient(
-                rgba(0, 0, 0, 0.7), 
-                rgba(0, 0, 0, 0.7)
-            ),
-            url(\""""
-            ++ cover
-            ++ """")"""
-        )
-    , Attribute.style "background-repeat" "no-repeat"
-    , Attribute.style "background-position" "center"
-    , Attribute.style "background-size" "cover"
-    , Attribute.style "border-radius" "10px 10px 0 0"
-    , Attribute.style "padding" "1rem"
-    , Attribute.style "color" "white"
-    , Attribute.style "text-shadow" "2px 2px 2px black"
-    ]
+
+-- blogPostCardHeaderStyle : String -> List (Html.Attribute msg)
+-- blogPostCardHeaderStyle cover =
+--     [ Attribute.style
+--         "background-image"
+--         ("""linear-gradient(
+--                 rgba(0, 0, 0, 0.7),
+--                 rgba(0, 0, 0, 0.7)
+--             ),
+--             url(\""""
+--             ++ cover
+--             ++ """")"""
+--         )
+--     , Attribute.style "background-repeat" "no-repeat"
+--     , Attribute.style "background-position" "center"
+--     , Attribute.style "background-size" "cover"
+--     , Attribute.style "border-radius" "10px 10px 0 0"
+--     , Attribute.style "padding" "1rem"
+--     , Attribute.style "color" "white"
+--     , Attribute.style "text-shadow" "2px 2px 2px black"
+--     ]
 
 
 whiteLinksStyle : List (Html.Attribute msg)
@@ -64,9 +65,9 @@ whiteLinksStyle =
 
 blogPostCardContentStyle : List (Html.Attribute msg)
 blogPostCardContentStyle =
-    [ Attribute.style "padding" ".5rem"
-    , Attribute.style "text-align" "justify"
+    [ Attribute.style "text-align" "justify"
     , Attribute.style "font-size" ".8rem"
+    , Attribute.style "margin" "0 1rem "
     ]
 
 
@@ -75,28 +76,40 @@ getAbstract body =
     Maybe.withDefault "" <| List.head (String.split "<!--more-->" body)
 
 
+headerImageStyle : List (Html.Attribute msg)
+headerImageStyle =
+    [ Attribute.style "width" "100%"
+    , Attribute.style "border-radius" "10px 10px 0 0"
+    ]
+
+
 blogPostCard : BlogPost -> Html msg
 blogPostCard { title, slug, date, cover, body } =
     Html.article
         [ Attribute.class "blog-post-card" ]
         [ blogPostCardStyle
         , Html.header
-            (blogPostCardHeaderStyle cover)
-            [ Route.Blog__Post_ { post = slug }
+            []
+            [ Html.img (Attribute.src cover :: headerImageStyle) []
+            , Route.Blog__Post_ { post = slug }
                 |> Route.link whiteLinksStyle
-                    [ Html.h3 [ Attribute.style "margin" "0" ] [ Html.text title ]
-                    , Html.div
-                        [ Attribute.style "display" "flex"
-                        , Attribute.style "align-items" "center"
-                        , Attribute.style "justify-content" "flex-end"
-                        ]
-                        [ Html.span
-                            [ Attribute.style "font-size" "0.6rem" ]
-                            [ Html.text ("📅 " ++ Date.format "d, MMMM y" date) ]
-                        ]
+                    [ Html.h3 [ Attribute.style "margin" "0 1rem" ] [ Html.text title ]
                     ]
             ]
         , Html.div
             blogPostCardContentStyle
             [ Html.p [] [ Html.text (MarkdownProcessor.markdownToText (getAbstract body)) ] ]
+        , Html.footer []
+            [ Html.div
+                [ Attribute.style "display" "flex"
+                , Attribute.style "align-items" "center"
+                , Attribute.style "justify-content" "flex-start"
+                ]
+                [ Html.span
+                    [ Attribute.style "font-size" "0.8rem"
+                    , Attribute.style "margin" "1rem"
+                    ]
+                    [ Html.text ("📅 " ++ Date.format "d, MMMM y" date) ]
+                ]
+            ]
         ]
