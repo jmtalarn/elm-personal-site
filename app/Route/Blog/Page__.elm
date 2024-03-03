@@ -1,6 +1,7 @@
-module Route.Blog exposing (ActionData, Data, Model, Msg, route)
+module Route.Blog.Page__ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import Components.BlogPagination exposing (pagination)
 import Components.BlogPostCard exposing (blogPostCard)
 import DataModel.BlogPosts exposing (..)
 import Date
@@ -26,11 +27,14 @@ type alias Msg =
 
 
 type alias RouteParams =
-    {}
+    { page : Maybe String }
 
 
 type alias Data =
-    List BlogPost
+    { posts : List BlogPost
+    , page : Int
+    , totalPages : Int
+    }
 
 
 type alias ActionData =
@@ -39,16 +43,60 @@ type alias ActionData =
 
 route : StatelessRoute RouteParams Data ActionData
 route =
-    RouteBuilder.single
+    RouteBuilder.preRender
         { head = head
+        , pages = pages
         , data = data
         }
         |> RouteBuilder.buildNoState { view = view }
 
 
-data : BackendTask FatalError (List BlogPost)
-data =
+pageSize : Int
+pageSize =
+    6
+
+
+pages : BackendTask FatalError (List RouteParams)
+pages =
     blogPosts
+        |> BackendTask.map
+            (\list ->
+                List.range 0 (ceiling (toFloat (List.length list) / toFloat pageSize))
+                    |> List.map
+                        (\n ->
+                            if n == 0 then
+                                { page = Nothing }
+
+                            else
+                                { page = Just (String.fromInt n) }
+                        )
+            )
+
+
+data : RouteParams -> BackendTask FatalError Data
+data { page } =
+    let
+        pageNumber =
+            Maybe.withDefault 1 <|
+                String.toInt <|
+                    Maybe.withDefault "" page
+    in
+    BackendTask.map3 Data
+        (blogPosts
+            |> BackendTask.map
+                (\posts ->
+                    sortPosts posts
+                        |> List.drop ((pageNumber - 1) * pageSize)
+                        |> List.take pageSize
+                )
+        )
+        (BackendTask.succeed pageNumber)
+        (blogPosts
+            |> BackendTask.map
+                (\list ->
+                    ceiling (toFloat (List.length list) / toFloat pageSize)
+                )
+        )
 
 
 head :
@@ -88,30 +136,42 @@ blogPostGridStyle =
 -- ]
 
 
+sortPosts : List BlogPost -> List BlogPost
+sortPosts posts =
+    List.sortWith
+        (\a b ->
+            case compare (Date.toRataDie a.date) (Date.toRataDie b.date) of
+                LT ->
+                    GT
+
+                EQ ->
+                    EQ
+
+                GT ->
+                    LT
+        )
+        posts
+
+
 view :
-    App (List BlogPost) ActionData RouteParams
+    App Data ActionData RouteParams
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app shared =
     let
         blogPosts =
-            List.sortWith
-                (\a b ->
-                    case compare (Date.toRataDie a.date) (Date.toRataDie b.date) of
-                        LT ->
-                            GT
+            app.data.posts
 
-                        EQ ->
-                            EQ
+        page =
+            app.data.page
 
-                        GT ->
-                            LT
-                )
-                app.data
+        totalPages =
+            app.data.totalPages
     in
     { title = "elm-pages is running"
     , body =
         [ Html.h1 [] [ Html.text "This is the blog index" ]
         , Html.div blogPostGridStyle (List.map blogPostCard blogPosts)
+        , pagination page totalPages
         ]
     }
