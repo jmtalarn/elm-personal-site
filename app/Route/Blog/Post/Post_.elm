@@ -1,4 +1,4 @@
-module Route.Blog.Post_ exposing (ActionData, Data, Model, Msg, route)
+module Route.Blog.Post.Post_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import Components.PostHeader as PostHeader

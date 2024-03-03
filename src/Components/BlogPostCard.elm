@@ -25,7 +25,8 @@ blogPostCardStyle =
                 margin: 1rem;
                 border-radius: 10px;
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-                transition: box-shadow 300ms ease-in;
+                transition: box-shadow 100ms ease-in;
+                break-inside: avoid-column;
             }
             .blog-post-card:hover {
                 box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.2);
@@ -91,7 +92,7 @@ blogPostCard { title, slug, date, cover, body } =
         , Html.header
             []
             [ Html.img (Attribute.src cover :: headerImageStyle) []
-            , Route.Blog__Post_ { post = slug }
+            , Route.Blog__Post__Post_ { post = slug }
                 |> Route.link whiteLinksStyle
                     [ Html.h3 [ Attribute.style "margin" "0 1rem" ] [ Html.text title ]
                     ]
