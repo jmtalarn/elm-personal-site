@@ -1,7 +1,9 @@
 module Components.TwitterTweet exposing (..)
 
+import Components.Icon as Icon
 import Html exposing (Html)
 import Html.Attributes as Attribute
+import Phosphor
 
 
 twitterTweet : List (Html msg) -> Html msg
@@ -22,7 +24,10 @@ twitterTweet children =
             , Attribute.style "text-shadow" "1px 0px gray"
             , Attribute.style "font-size" "2rem"
             ]
-            [ Html.text "🐦" ]
+            [ Icon.duotone
+                Phosphor.twitterLogo
+                (Just [ Attribute.style "font-size" "3rem" ])
+            ]
         , Html.div
             [ Attribute.style "line-height" "1.3rem"
             ]

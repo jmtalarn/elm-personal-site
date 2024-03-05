@@ -84,16 +84,20 @@ view app shared =
             ]
         , Html.ul []
             [ Html.li []
-                [ Route.Greet 
+                [ Route.Greet
                     |> Route.link [] [ Html.text "Greetings" ]
                 ]
             , Html.li []
-                [ Route.Hello 
+                [ Route.Hello
                     |> Route.link [] [ Html.text "Hello from Dillon T. Kearns" ]
                 ]
             , Html.li []
                 [ Route.Sluggy__Slug_ { slug = "hello" }
                     |> Route.link [] [ Html.text "Sluggy link" ]
+                ]
+            , Html.li []
+                [ Route.Blog__Page__ { page = Nothing }
+                    |> Route.link [] [ Html.text "Web dev notes" ]
                 ]
             ]
         ]

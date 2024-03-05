@@ -17,6 +17,16 @@ fill icon additionalStyle =
     icon Fill |> Phosphor.toHtml (Attribute.style "font-size" "1.4rem" :: Maybe.withDefault [] additionalStyle)
 
 
+regular : Phosphor.Icon -> Maybe (List (Html.Attribute msg)) -> Html msg
+regular icon additionalStyle =
+    icon Regular |> Phosphor.toHtml (Attribute.style "font-size" "1.4rem" :: Maybe.withDefault [] additionalStyle)
+
+
+duotone : Phosphor.Icon -> Maybe (List (Html.Attribute msg)) -> Html msg
+duotone icon additionalStyle =
+    icon Duotone |> Phosphor.toHtml (Attribute.style "font-size" "1.4rem" :: Maybe.withDefault [] additionalStyle)
+
+
 markdownIcon : String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
 markdownIcon icon text style _ =
     let
