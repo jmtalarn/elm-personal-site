@@ -1,20 +1,19 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
 import BackendTask exposing (BackendTask)
-import Components.NavBar as NavBar
+import BackendTask.Time
 import Components.Footer as Footer
+import Components.NavBar as NavBar
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import Html exposing (Html)
-import Html.Events
 import Pages.Flags
 import Pages.PageUrl exposing (PageUrl)
 import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
+import Time
 import UrlPath exposing (UrlPath)
 import View exposing (View)
-import Time
-import BackendTask.Time
 
 
 template : SharedTemplate Msg Model Data msg
@@ -34,7 +33,7 @@ type Msg
 
 
 type alias Data =
-    { now: Time.Posix}
+    { now : Time.Posix }
 
 
 type SharedMsg
@@ -63,7 +62,6 @@ init flags maybePagePath =
     ( { showMenu = False }
     , Effect.none
     )
-
 
 
 update : Msg -> Model -> ( Model, Effect Msg )

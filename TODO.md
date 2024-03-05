@@ -7,11 +7,16 @@
 -   [x] Review Markdown files <p ...> tags without endind </p>
 -   [ ] Show additional data on blog index for posts
     -   [ ] Add tags and categories info
+    -   [ ] Icons on tags and categories
 -   [x] Paginate Blog index
     -   [x] Pagination component
 -   [x] Sort Blog posts
 -   [x] NavBar
--   [x] Footer
--   [ ] Add icons
+-   [ ] Footer
+    -   [ ] Social icons on footer
+-   [x] Add icons
+    -   [ x ] Add drop shadow to icon on Header
 -   [ ] CV Page
+-   [ ] Book page
+-   [ ] About me page
 -   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)
