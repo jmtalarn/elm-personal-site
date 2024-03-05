@@ -17,24 +17,16 @@ with knowdledge and experience with the technology.
 
 <!--more-->
 
-    HTML5, CSS and Javascript is almost all you need to know to start coding a web component with React. In fact, you will be
-    writting JSX instead of HMTL but don't worry because is mostly the same as HTML with only some variations for reserved
-    words as you are actually writting it inside your Javascript code.
+HTML5, CSS and Javascript is almost all you need to know to start coding a web component with React. In fact, you will be
+writting JSX instead of HMTL but don't worry because is mostly the same as HTML with only some variations for reserved
+words as you are actually writting it inside your Javascript code.
 
+_e.g. to define the CSS classes that applies to an element it will **className** instead of **class** as it is the word to declare a class in Javascript_
 
-    *e.g. to define the CSS classes that applies to an element it will use
-        **className** instead of
-        **class** as it is the word to declare a class in Javascript*
-
-
-
-    Probably you'll want to code with Javascript using the latest specifications of the language then you'll using [Babel](https://babeljs.io/) together with your development with a build task.
+Probably you'll want to code with Javascript using the latest specifications of the language then you'll using [Babel](https://babeljs.io/) together with your development with a build task.
 
 <h2>How React works?</h2>
-To explain it in terms of the newly introduced
-    *classes* sugar a React component isn't anything that a
-    *class* extending the React component class with a
-    `render` method where it returns the JSX content of your component.
+To explain it in terms of the newly introduced *classes* sugar a React component isn't anything that a *class* extending the React component class with a `render` method where it returns the JSX content of your component.
 
 ```javascript
 class Greeting extends React.Component {
@@ -49,9 +41,7 @@ There are also two main rules you need to know to understand how it works.
 1. **React will render your component each time its internal state changes**. And should be only like this even you can force it.
 2. **React state is immutable.** So you cannot modify it directly. You will be using the `setState` method each time you need to change it.
 
-So you can define the initial state in the
-_class_ constructor method and "change it" using the
-`setState` in any other method.
+So you can define the initial state in the _class_ constructor method and "change it" using the `setState` in any other method.
 
 You can also pass information to a component via its properties. They will be available in your component in its props property.
 
@@ -77,48 +67,45 @@ class Greeting extends React.Component {
 
 <h2>React component lifecycle</h2>
 
-    Probably you want to do things but you need to figure out when you can do that.
-    <blockquote>When will be the component ready to be manipulated?
-    How you can add functionality when the component is destroyed ?
-    How to trick it when the component is already mounted ?
-    </blockquote>
+Probably you want to do things but you need to figure out when you can do that.
 
-    This is the lifecycle of a React component and the methods you can override in your component. Each one of the methods is descriptive enough to know when it is executed, even that they are also listed in execution order.
+<blockquote>When will be the component ready to be manipulated?
+How you can add functionality when the component is destroyed ?
+How to trick it when the component is already mounted ?
+</blockquote>
 
--   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-             <i class="fal fa-plus-hexagon fa-2x" style="margin-right: 1rem; color: MediumSeaGreen;">* 
-             Mounting
-    </h4>
-         A component is created and inserted into the DOM
-             1. `constructor()`
-             2. `componentWillMount()`
-             3. `render()`
-             4. `componentDidMount()`
+This is the lifecycle of a React component and the methods you can override in your component. Each one of the methods is descriptive enough to know when it is executed, even that they are also listed in execution order.
 
--   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-            <i class="fal fa-sync fa-2x" style="margin-right: 1rem; color: Orange;">* 
-            Updating
-    </h4> 
-        The state of the component was changed
-            1. `componentWillReceiveProps()`
-            2. `shouldComponentUpdate()`
-            3. `componentWillUpdate()`
-            4. `render()`
-            5. `componentDidUpdate()`
--   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-            <i class="fal fa-trash-alt fa-2x" style="margin-right: 1rem; color: Tomato;">* 
-            Unmounting
-    </h4>
-    The component is removed from the DOM
-             1. `componentWillUnmount()`
-        </ol>
+<h4>
+<icon icon="nut" text="1. Mounting" style="color: MediumSeaGreen;"></icon>
+</h4>
+A component is created and inserted into the DOM
+1. `constructor()`
+2. `componentWillMount()`
+3. `render()`
+4. `componentDidMount()`
 
--   <h4 style="left: -1.5rem; position: relative;display: flex; align-items: center;width: 15rem;">
-            <i class="fal fa-bug fa-2x" style="margin-right: 1rem; color: IndianRed;">* 
-            Error Handling
-    </h4>
-    An error occurred during rendering
-        1. `componentDidCatch()`
+<h4>
+<icon icon="sync" text="2. Updating" style="color: Orange;"> </icon> 
+</h4> 
+The state of the component was changed
+1. `componentWillReceiveProps()`
+2. `shouldComponentUpdate()`
+3. `componentWillUpdate()`
+4. `render()`
+5. `componentDidUpdate()`
+
+<h4>
+<icon icon="trash" text="3. Unmounting" style="color: Tomato;"></icon>
+</h4>
+The component is removed from the DOM
+1. `componentWillUnmount()`
+
+<h4>
+<icon icon="bug" text="4. Error Handling" style="color: IndianRed;"></icon> 
+</h4>
+An error occurred during rendering
+1. `componentDidCatch()`
 
 <h2>Passing data between components</h2>
 At the end, when you are building complex applications you'll need to nest components inside others and you should will use the component properties to pass information from parent elements to child components and the other way round.

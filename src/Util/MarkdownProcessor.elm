@@ -1,5 +1,6 @@
 module Util.MarkdownProcessor exposing (markdownToText, markdownToView)
 
+import Components.Icon as Icon
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
 import Html exposing (Html)
@@ -121,6 +122,10 @@ processHtml =
             |> Markdown.Html.withAttribute "easiness"
         , Markdown.Html.tag "warning" warningBox
         , Markdown.Html.tag "twitter-tweet" twitterTweet
+        , Markdown.Html.tag "icon" Icon.markdownIcon
+            |> Markdown.Html.withAttribute "icon"
+            |> Markdown.Html.withOptionalAttribute "text"
+            |> Markdown.Html.withOptionalAttribute "style"
         ]
 
 

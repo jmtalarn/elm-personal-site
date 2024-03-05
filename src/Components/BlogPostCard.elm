@@ -2,13 +2,12 @@ module Components.BlogPostCard exposing (..)
 
 -- https://elmprogramming.com/commands.html#wiring-everything-up Sandbox
 
-import Browser
+import Components.Icon as Icon
 import DataModel.BlogPosts exposing (BlogPost)
 import Date
-import Effect exposing (Effect)
 import Html exposing (Html)
 import Html.Attributes as Attribute
-import Html.Events
+import Phosphor
 import Route
 import Util.MarkdownProcessor as MarkdownProcessor
 
@@ -64,6 +63,17 @@ whiteLinksStyle =
     ]
 
 
+taggedContentStyle : List (Html.Attribute msg)
+taggedContentStyle =
+    [ Attribute.style "font-size" "0.8rem"
+    , Attribute.style "margin" "0.5rem 1rem"
+    , Attribute.style "display" "flex"
+    , Attribute.style "aling-items" "center"
+    , Attribute.style "gap" ".4rem"
+    , Attribute.style "flex-wrap" "wrap"
+    ]
+
+
 blogPostCardContentStyle : List (Html.Attribute msg)
 blogPostCardContentStyle =
     [ Attribute.style "text-align" "justify"
@@ -84,14 +94,25 @@ headerImageStyle =
     ]
 
 
+iconSizeStyle : List (Html.Attribute msg)
+iconSizeStyle =
+    [ Attribute.style "min-width" "1.2rem"
+    , Attribute.style "max-width" "1.2rem"
+    ]
+
+
 blogPostCard : BlogPost -> Html msg
-blogPostCard { title, slug, date, cover, body } =
+blogPostCard { title, slug, date, cover, body, tags, category } =
     Html.article
         [ Attribute.class "blog-post-card" ]
         [ blogPostCardStyle
         , Html.header
             []
             [ Html.img (Attribute.src cover :: headerImageStyle) []
+            , Html.div taggedContentStyle
+                [ Icon.light Phosphor.folderOpen (Just iconSizeStyle)
+                , Html.text (String.join ", " category)
+                ]
             , Route.Blog__Post__Post_ { post = slug }
                 |> Route.link whiteLinksStyle
                     [ Html.h3 [ Attribute.style "margin" "0 1rem" ] [ Html.text title ]
@@ -101,16 +122,30 @@ blogPostCard { title, slug, date, cover, body } =
             blogPostCardContentStyle
             [ Html.p [] [ Html.text (MarkdownProcessor.markdownToText (getAbstract body)) ] ]
         , Html.footer []
-            [ Html.div
+            [ Html.div taggedContentStyle
+                (List.map
+                    (\tag ->
+                        Html.span
+                            [ Attribute.style "display" "flex"
+                            , Attribute.style "align-items" "center"
+                            , Attribute.style "gap" "3px"
+                            ]
+                            [ Icon.fill Phosphor.tag (Just [ Attribute.style "color" "Orange", Attribute.style "font-size" "1rem" ])
+                            , Html.text tag
+                            ]
+                    )
+                    tags
+                )
+            , Html.div
                 [ Attribute.style "display" "flex"
                 , Attribute.style "align-items" "center"
                 , Attribute.style "justify-content" "flex-start"
                 ]
                 [ Html.span
-                    [ Attribute.style "font-size" "0.8rem"
-                    , Attribute.style "margin" "1rem"
+                    taggedContentStyle
+                    [ Icon.light Phosphor.calendar (Just iconSizeStyle)
+                    , Html.text (Date.format "d, MMMM y" date)
                     ]
-                    [ Html.text ("📅 " ++ Date.format "d, MMMM y" date) ]
                 ]
             ]
         ]
