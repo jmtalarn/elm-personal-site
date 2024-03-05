@@ -5,17 +5,18 @@
 -   [x] Show Header on Posts
     -   [x] Show date
 -   [x] Review Markdown files <p ...> tags without endind </p>
--   [ ] Show additional data on blog index for posts
-    -   [ ] Add tags and categories info
-    -   [ ] Icons on tags and categories
+-   [x] Show additional data on blog index for posts
+    -   [x] Add tags and categories info
+    -   [x] Icons on tags and categories
 -   [x] Paginate Blog index
     -   [x] Pagination component
 -   [x] Sort Blog posts
--   [x] NavBar
+-   [ ] NavBar
+    -   [ ] Style it white text
 -   [ ] Footer
     -   [ ] Social icons on footer
 -   [x] Add icons
-    -   [ x ] Add drop shadow to icon on Header
+    -   [x] Add drop shadow to icon on Header
 -   [ ] CV Page
 -   [ ] Book page
 -   [ ] About me page
