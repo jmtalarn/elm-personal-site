@@ -2,9 +2,11 @@ module Components.NavBar exposing (..)
 
 -- import Effect exposing (Effect)
 
+import Components.Icon as Icon
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Html.Events
+import Phosphor
 import Route exposing (Route)
 
 
@@ -17,6 +19,13 @@ navBarStyle =
     , Attribute.style "align-items" "center"
     , Attribute.style "justify-content" "space-between"
     , Attribute.style "flex-wrap" "wrap"
+    ]
+
+
+whiteLinksStyle : List (Html.Attribute msg)
+whiteLinksStyle =
+    [ Attribute.style "text-decoration" "none"
+    , Attribute.style "color" "inherit"
     ]
 
 
@@ -33,20 +42,49 @@ menuStyle =
 view : { a | showMenu : Bool } -> msg -> Html msg
 view model menuClickedMsg =
     Html.nav navBarStyle
-        [ Html.h1 [ Attribute.style "margin" "0" ] [ Route.Index |> Route.link [] [ Html.text "🏠 jmtalarn.com" ] ]
+        [ Html.h1
+            [ Attribute.style "margin" "0"
+            ]
+            [ Route.Index
+                |> Route.link
+                    (whiteLinksStyle
+                        ++ [ Attribute.style "display" "flex"
+                           , Attribute.style "align-items" "center"
+                           , Attribute.style "gap" "1rem"
+                           ]
+                    )
+                    [ Icon.light Phosphor.houseLine Nothing
+                    , Html.text "jmtalarn.com"
+                    ]
+            ]
         , Html.div
             [ Attribute.style "margin-left" "auto" ]
-            [ Html.button
-                [ Html.Events.onClick menuClickedMsg ]
-                [ Html.text
-                    (if model.showMenu then
-                        "Close Menu"
-
-                     else
-                        "Open Menu"
-                    )
+            [ Html.div
+                [ Attribute.style "display" "flex"
+                , Attribute.style "align-items" "center"
+                , Attribute.style "gap" "1rem"
                 ]
-            , Route.Blog__Page__ { page = Nothing } |> Route.link [] [ Html.text "Blog" ]
+                [ Html.button
+                    [ Html.Events.onClick menuClickedMsg
+                    , Attribute.style "background" "none"
+                    , Attribute.style "border" "none"
+                    , Attribute.style "color" "inherit"
+                    , Attribute.style "cursor" "pointer"
+                    , Attribute.style "display" "flex"
+                    , Attribute.style "align-items" "center"
+                    , Attribute.style "font-size" "inherit"
+                    , Attribute.style "font-weight" "inherit"
+                    ]
+                    ([]
+                        ++ (if model.showMenu then
+                                [ Html.text "Less things", Icon.light Phosphor.caretUp Nothing ]
+
+                            else
+                                [ Html.text "More things", Icon.light Phosphor.caretDown Nothing ]
+                           )
+                    )
+                , Route.Blog__Page__ { page = Nothing } |> Route.link whiteLinksStyle [ Html.text "Blog" ]
+                ]
             , if model.showMenu then
                 Html.ul menuStyle
                     [ Html.li [] [ Html.text "Menu item 1" ]

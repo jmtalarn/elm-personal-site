@@ -412,7 +412,7 @@ codeBlock { body, language } =
     Html.div [ Attribute.class "code-block" ]
         [ Html.node "style"
             []
-            [ Html.text ".code-block pre code { display: block; text-wrap: wrap; padding: 1rem;}" ]
+            [ Html.text ".code-block pre code { display: block; text-wrap: wrap; padding: 1rem; overflow: auto;}" ]
         , SyntaxHighlight.useTheme
             SyntaxHighlight.oneDark
         , body
@@ -428,6 +428,7 @@ codeBlockStyle =
     [ Attribute.style "width" "100%"
     , Attribute.style "display" "block"
     , Attribute.style "text-wrap" "wrap"
+    , Attribute.style "overflow" "auto"
     ]
 
 

@@ -99,13 +99,18 @@ data { page } =
         )
 
 
+title : String
+title =
+    "jmtalarn.com ~ web dev notes blog"
+
+
 head :
     App Data ActionData RouteParams
     -> List Head.Tag
 head app =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "jmtalarn.com ~ web dev notes blog "
+        , siteName = title
         , image =
             { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "elm-pages logo"
@@ -114,7 +119,7 @@ head app =
             }
         , description = "Welcome to elm-pages!"
         , locale = Nothing
-        , title = "jmtalarn.com ~ web dev notes blog"
+        , title = title
         }
         |> Seo.website
 
@@ -168,7 +173,7 @@ view app shared =
         totalPages =
             app.data.totalPages
     in
-    { title = "elm-pages is running"
+    { title = title
     , body =
         [ Html.h1 [] [ Html.text "This is the blog index" ]
         , Html.div blogPostGridStyle (List.map blogPostCard blogPosts)

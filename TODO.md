@@ -11,10 +11,10 @@
 -   [x] Paginate Blog index
     -   [x] Pagination component
 -   [x] Sort Blog posts
--   [ ] NavBar
-    -   [ ] Style it white text
--   [ ] Footer
-    -   [ ] Social icons on footer
+-   [x] NavBar
+    -   [x] Style it white text
+-   [x] Footer
+    -   [x] Social icons on footer
 -   [x] Add icons
     -   [x] Add drop shadow to icon on Header
 -   [ ] CV Page

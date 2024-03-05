@@ -1,6 +1,7 @@
 module Components.BlogPagination exposing (..)
 
 import Browser
+import Components.Icon as Icon
 import DataModel.BlogPosts exposing (BlogPost)
 import Date
 import Effect exposing (Effect)
@@ -8,6 +9,7 @@ import ErrorPage exposing (Msg)
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Html.Events
+import Phosphor
 import Route
 
 
@@ -49,8 +51,22 @@ paginationStyle =
 pagination : Int -> Int -> Html msg
 pagination currentPage numberOfPages =
     Html.div [ Attribute.class "posts-pagination" ]
-        (paginationStyle
-            :: List.map
+        ([ paginationStyle
+         , Html.span
+            [ Attribute.style "display" "flex"
+            , Attribute.style "align-items" "center"
+            ]
+            [ Html.text "Page"
+            , Icon.duotone
+                Phosphor.bookOpenText
+                (Just
+                    [ Attribute.style "font-size" "2rem"
+                    , Attribute.style "color" "CornflowerBlue"
+                    ]
+                )
+            ]
+         ]
+            ++ List.map
                 (\number ->
                     if number == currentPage then
                         Html.div
