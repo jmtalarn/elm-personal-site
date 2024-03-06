@@ -1,16 +1,20 @@
-module Route.Index exposing (ActionData, Data, Model, Msg, route)
+module Route.CV exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.Http
+import DataModel.CV exposing (CV, cvDecoder)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html
+import Json.Decode as Decode
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Route
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import UrlPath
+import Util.MarkdownProcessor exposing (markdownToView)
 import View exposing (View)
 
 
@@ -27,12 +31,24 @@ type alias RouteParams =
 
 
 type alias Data =
-    { message : String
+    { cv : CV
     }
 
 
 type alias ActionData =
     {}
+
+
+
+-- (Decode.at [ "aboutMe", "profile", "name" ] Decode.field))
+
+
+getRequest : BackendTask FatalError CV
+getRequest =
+    BackendTask.Http.getJson
+        "https://raw.githubusercontent.com/jmtalarn/manfred-cv-json/main/CV/MAC.json"
+        cvDecoder
+        |> BackendTask.allowFatal
 
 
 route : StatelessRoute RouteParams Data ActionData
@@ -46,9 +62,12 @@ route =
 
 data : BackendTask FatalError Data
 data =
-    BackendTask.succeed Data
-        |> BackendTask.andMap
-            (BackendTask.succeed "Hello!")
+    BackendTask.succeed Data |> BackendTask.andMap getRequest
+
+
+
+-- |> BackendTask.andMap
+--     (BackendTask.succeed "Hello!")
 
 
 head :
@@ -64,9 +83,9 @@ head app =
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Welcome to elm-pages!"
+        , description = "Web developer"
         , locale = Nothing
-        , title = "jmtalarn.com ~ Home "
+        , title = "jmtalarn.com ~ CV web developer "
         }
         |> Seo.website
 
@@ -76,33 +95,19 @@ view :
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app shared =
-    { title = "elm-pages is running"
+    let
+        pi =
+            app.data.cv.personalInfo
+
+        experience =
+            app.data.cv.experience
+    in
+    { title = "jmtalarn CV"
     , body =
-        [ Html.h1 [] [ Html.text "elm-pages is up and running!" ]
-        , Html.p []
-            [ Html.text <| "The message is: " ++ app.data.message
-            ]
-        , Html.ul []
-            [ Html.li []
-                [ Route.Greet
-                    |> Route.link [] [ Html.text "Greetings" ]
-                ]
-            , Html.li []
-                [ Route.Hello
-                    |> Route.link [] [ Html.text "Hello from Dillon T. Kearns" ]
-                ]
-            , Html.li []
-                [ Route.Sluggy__Slug_ { slug = "hello" }
-                    |> Route.link [] [ Html.text "Sluggy link" ]
-                ]
-            , Html.li []
-                [ Route.Blog__Page__ { page = Nothing }
-                    |> Route.link [] [ Html.text "Web dev notes" ]
-                ]
-            , Html.li []
-                [ Route.CV
-                    |> Route.link [] [ Html.text "CV" ]
-                ]
-            ]
+        [ Html.h1 [] [ Html.text "jmtalarn CV" ]
+        , Html.h2 [] [ Html.text (pi.name ++ " " ++ pi.surnames) ]
+        , Html.h3 [] [ Html.text pi.title ]
+        , Html.p [] (markdownToView pi.description_md)
+        , Html.ul [] (List.map (\xp -> Html.li [] [ Html.text xp.company.name ]) experience)
         ]
     }
