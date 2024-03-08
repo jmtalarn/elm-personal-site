@@ -44,9 +44,10 @@ type alias Job =
     }
 
 
-type EducationCategory
-    = Degree
-    | Certification
+
+-- type EducationCategory
+--     = Degree
+--     | Certification
 
 
 type alias Institution =
@@ -57,7 +58,7 @@ type alias Institution =
 
 
 type alias Education =
-    { category : Maybe EducationCategory
+    { category : String
     , name : String
     , description_md : Maybe String
     , date : Date
@@ -71,18 +72,16 @@ educationDecoder =
     Decode.map6 Education
         (Decode.field "studyType"
             Decode.string
-            |> Decode.andThen
-                (\str ->
-                    case str of
-                        "certification" ->
-                            Decode.succeed (Just Certification)
-
-                        "officialDegree" ->
-                            Decode.succeed (Just Degree)
-
-                        _ ->
-                            Decode.succeed Nothing
-                )
+         -- |> Decode.andThen
+         --     (\str ->
+         --         case str of
+         --             "certification" ->
+         --                 Decode.succeed (Just Certification)
+         --             "officialDegree" ->
+         --                 Decode.succeed (Just Degree)
+         --             _ ->
+         --                 Decode.succeed Nothing
+         --     )
         )
         (Decode.field "name" Decode.string)
         (Decode.maybe (Decode.at [ "institution", "description" ] Decode.string))
