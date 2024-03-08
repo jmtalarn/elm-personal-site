@@ -1,7 +1,7 @@
 module Route.Blog.Post.Post_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
-import Components.PostHeader as PostHeader
+import Components.Blog.PostHeader as PostHeader
 import DataModel.BlogPosts exposing (..)
 import Date
 import Dict

@@ -1,4 +1,4 @@
-module Components.PostHeader exposing (..)
+module Components.Blog.PostHeader exposing (..)
 
 import Components.Icon as Icon
 import Date exposing (Date)

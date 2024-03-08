@@ -10,6 +10,7 @@ import Time
 type alias CV =
     { personalInfo : PersonalInfo
     , experience : List Job
+    , education : List Education
     }
 
 
@@ -41,6 +42,61 @@ type alias Job =
     { company : Company
     , roles : List Role
     }
+
+
+type EducationCategory
+    = Degree
+    | Certification
+
+
+type alias Institution =
+    { name : String
+    , logo : Maybe String
+    , url : Maybe String
+    }
+
+
+type alias Education =
+    { category : Maybe EducationCategory
+    , name : String
+    , description_md : Maybe String
+    , date : Date
+    , institution : Institution
+    , skills : Maybe (List String)
+    }
+
+
+educationDecoder : Decoder Education
+educationDecoder =
+    Decode.map6 Education
+        (Decode.field "studyType"
+            Decode.string
+            |> Decode.andThen
+                (\str ->
+                    case str of
+                        "certification" ->
+                            Decode.succeed (Just Certification)
+
+                        "officialDegree" ->
+                            Decode.succeed (Just Degree)
+
+                        _ ->
+                            Decode.succeed Nothing
+                )
+        )
+        (Decode.field "name" Decode.string)
+        (Decode.maybe (Decode.at [ "institution", "description" ] Decode.string))
+        (Decode.field "startDate" decodeDate)
+        (Decode.field "institution" institutionDecoder)
+        (Decode.maybe (Decode.field "linkedCompetences" (Decode.list (Decode.field "name" Decode.string))))
+
+
+institutionDecoder : Decoder Institution
+institutionDecoder =
+    Decode.map3 Institution
+        (Decode.field "name" Decode.string)
+        (Decode.maybe (Decode.field "URL" Decode.string))
+        (Decode.maybe (Decode.at [ "image", "link" ] Decode.string))
 
 
 jobDecoder : Decoder Job
@@ -88,6 +144,7 @@ personalInfoDecoder =
 
 cvDecoder : Decoder CV
 cvDecoder =
-    Decode.map2 CV
+    Decode.map3 CV
         (Decode.at [ "aboutMe", "profile" ] personalInfoDecoder)
         (Decode.at [ "experience", "jobs" ] (Decode.list jobDecoder))
+        (Decode.at [ "knowledge", "studies" ] (Decode.list educationDecoder))

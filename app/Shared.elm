@@ -7,6 +7,7 @@ import Components.NavBar as NavBar
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import Html exposing (Html)
+import Html.Attributes as Attribute
 import Pages.Flags
 import Pages.PageUrl exposing (PageUrl)
 import Route exposing (Route)
@@ -98,7 +99,7 @@ view sharedData page model toMsg pageView =
     { body =
         [ NavBar.view model MenuClicked
             |> Html.map toMsg
-        , Html.main_ [] pageView.body
+        , Html.main_ [ Attribute.style "margin" "0 2rem" ] pageView.body
         , Footer.footer sharedData.now
         ]
     , title = pageView.title
