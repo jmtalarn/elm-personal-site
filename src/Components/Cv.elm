@@ -3,7 +3,7 @@ module Components.Cv exposing (..)
 import Components.Icon as Icon
 import DataModel.CV exposing (Company, Education, Job, PersonalInfo, Role)
 import Date
-import ErrorPage exposing (Msg)
+import Dict exposing (..)
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Phosphor
@@ -132,15 +132,51 @@ education data =
 
 educationSection : List Education -> Html msg
 educationSection educations =
-    Html.section
-        [ Attribute.style "display" "flex"
-        , Attribute.style "flex-direction" "column"
-        , Attribute.style "max-width" "960px"
-        , Attribute.style "margin" "0 auto"
+    let
+        dict =
+            List.foldl reduceEducation Dict.empty educations
+    in
+    Html.div []
+        [ Html.section
+            [ Attribute.style "display" "flex"
+            , Attribute.style "flex-direction" "column"
+            , Attribute.style "max-width" "960px"
+            , Attribute.style "margin" "0 auto"
 
-        --, Attribute.style "align-items" "center"
+            --, Attribute.style "align-items" "center"
+            ]
+            (Html.h4 [] [ Html.text "Degrees" ]
+                :: List.map education (Maybe.withDefault [] (Dict.get "officialDegree" dict))
+            )
+        , Html.section
+            [ Attribute.style "display" "flex"
+            , Attribute.style "flex-direction" "column"
+            , Attribute.style "max-width" "960px"
+            , Attribute.style "margin" "0 auto"
+
+            --, Attribute.style "align-items" "center"
+            ]
+            (Html.h4 [] [ Html.text "Certification" ]
+                :: List.map education (Maybe.withDefault [] (Dict.get "certification" dict))
+            )
         ]
-        (List.map education educations)
+
+
+reduceEducation : Education -> Dict String (List Education) -> Dict String (List Education)
+reduceEducation a dict =
+    let
+        list =
+            Dict.get a.category dict
+
+        toInsert =
+            case list of
+                Just b ->
+                    b ++ [ a ]
+
+                Nothing ->
+                    [ a ]
+    in
+    Dict.insert a.category toInsert dict
 
 
 experienceSection : List Job -> Html msg
