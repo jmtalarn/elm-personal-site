@@ -1,4 +1,4 @@
-module Components.BlogPagination exposing (..)
+module Components.Blog.Pagination exposing (..)
 
 import Browser
 import Components.Icon as Icon

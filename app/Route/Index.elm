@@ -100,7 +100,7 @@ view app shared =
                     |> Route.link [] [ Html.text "Web dev notes" ]
                 ]
             , Html.li []
-                [ Route.CV
+                [ Route.Cv
                     |> Route.link [] [ Html.text "CV" ]
                 ]
             ]

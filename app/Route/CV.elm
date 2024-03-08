@@ -1,20 +1,21 @@
-module Route.CV exposing (ActionData, Data, Model, Msg, route)
+module Route.Cv exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Http
+import Components.Cv exposing (educationSection, experienceSection, personalInfoSection)
 import DataModel.CV exposing (CV, cvDecoder)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
-import Html
-import Json.Decode as Decode
+import Html exposing (Html)
+import Html.Attributes as Attribute
+import MimeType exposing (MimeType(..))
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Route
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import UrlPath
-import Util.MarkdownProcessor exposing (markdownToView)
 import View exposing (View)
 
 
@@ -96,18 +97,14 @@ view :
     -> View (PagesMsg Msg)
 view app shared =
     let
-        pi =
-            app.data.cv.personalInfo
-
-        experience =
-            app.data.cv.experience
+        { personalInfo, experience, education } =
+            app.data.cv
     in
     { title = "jmtalarn CV"
     , body =
         [ Html.h1 [] [ Html.text "jmtalarn CV" ]
-        , Html.h2 [] [ Html.text (pi.name ++ " " ++ pi.surnames) ]
-        , Html.h3 [] [ Html.text pi.title ]
-        , Html.p [] (markdownToView pi.description_md)
-        , Html.ul [] (List.map (\xp -> Html.li [] [ Html.text xp.company.name ]) experience)
+        , personalInfoSection personalInfo
+        , experienceSection experience
+        , educationSection education
         ]
     }

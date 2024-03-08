@@ -1,4 +1,4 @@
-module Components.BlogPostCard exposing (..)
+module Components.Blog.PostCard exposing (..)
 
 -- https://elmprogramming.com/commands.html#wiring-everything-up Sandbox
 

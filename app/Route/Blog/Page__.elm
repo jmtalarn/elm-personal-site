@@ -1,8 +1,8 @@
 module Route.Blog.Page__ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
-import Components.BlogPagination exposing (pagination)
-import Components.BlogPostCard exposing (blogPostCard)
+import Components.Blog.Pagination exposing (pagination)
+import Components.Blog.PostCard exposing (blogPostCard)
 import DataModel.BlogPosts exposing (..)
 import Date
 import FatalError exposing (FatalError)
