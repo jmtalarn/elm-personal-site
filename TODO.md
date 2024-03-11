@@ -18,10 +18,11 @@
 -   [x] Add icons
     -   [x] Add drop shadow to icon on Header
 -   [ ] CV Page
-    -   [ ] Fill data for education items
-    -   [ ] Fix headers for sections
-    -   [ ] Order by date education items
-    -   [ ] Add "Powered by Manfred"
+    -   [x] Fill data for education items
+    -   [x] Fix headers for sections
+    -   [x] Order by date education items
+    -   [x] Add "Powered by Manfred"
+    -   [ ] Filtering by clicking tags ??
 -   [ ] Book page
 -   [ ] About me page
 -   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)

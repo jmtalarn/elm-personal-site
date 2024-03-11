@@ -87,8 +87,26 @@ view model menuClickedMsg =
                 ]
             , if model.showMenu then
                 Html.ul menuStyle
-                    [ Html.li [] [ Html.text "Menu item 1" ]
-                    , Html.li [] [ Html.text "Menu item 2" ]
+                    [ Html.li []
+                        [ Route.Greet
+                            |> Route.link whiteLinksStyle [ Html.text "Greetings" ]
+                        ]
+                    , Html.li []
+                        [ Route.Hello
+                            |> Route.link whiteLinksStyle [ Html.text "Hello from Dillon T. Kearns" ]
+                        ]
+                    , Html.li []
+                        [ Route.Sluggy__Slug_ { slug = "hello" }
+                            |> Route.link whiteLinksStyle [ Html.text "Sluggy link" ]
+                        ]
+                    , Html.li []
+                        [ Route.Blog__Page__ { page = Nothing }
+                            |> Route.link whiteLinksStyle [ Html.text "Web dev notes" ]
+                        ]
+                    , Html.li []
+                        [ Route.Cv
+                            |> Route.link whiteLinksStyle [ Html.text "CV" ]
+                        ]
                     ]
 
               else
