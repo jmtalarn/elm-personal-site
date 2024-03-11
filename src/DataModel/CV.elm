@@ -94,8 +94,8 @@ institutionDecoder : Decoder Institution
 institutionDecoder =
     Decode.map3 Institution
         (Decode.field "name" Decode.string)
-        (Decode.maybe (Decode.field "URL" Decode.string))
         (Decode.maybe (Decode.at [ "image", "link" ] Decode.string))
+        (Decode.maybe (Decode.field "URL" Decode.string))
 
 
 jobDecoder : Decoder Job
@@ -147,3 +147,20 @@ cvDecoder =
         (Decode.at [ "aboutMe", "profile" ] personalInfoDecoder)
         (Decode.at [ "experience", "jobs" ] (Decode.list jobDecoder))
         (Decode.at [ "knowledge", "studies" ] (Decode.list educationDecoder))
+
+
+sortEducation : List Education -> List Education
+sortEducation education =
+    List.sortWith
+        (\a b ->
+            case compare (Date.toRataDie a.date) (Date.toRataDie b.date) of
+                LT ->
+                    GT
+
+                EQ ->
+                    EQ
+
+                GT ->
+                    LT
+        )
+        education

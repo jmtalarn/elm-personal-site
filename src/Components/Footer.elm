@@ -1,7 +1,7 @@
 module Components.Footer exposing (..)
 
+import Components.ElmLogo as Logo
 import Components.Icon as Icon
-import Components.Logo as Logo
 import Date exposing (Date)
 import Html exposing (Html)
 import Html.Attributes as Attribute
