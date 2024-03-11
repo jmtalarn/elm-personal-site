@@ -1,12 +1,14 @@
 module Components.Cv exposing (..)
 
 import Components.Icon as Icon
+import Components.ManfredLogo as ManfredLogo
 import DataModel.CV exposing (Company, Education, Job, PersonalInfo, Role)
 import Date
 import Dict exposing (..)
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Phosphor
+import Svg
 import Util.MarkdownProcessor exposing (markdownToView)
 
 
@@ -19,7 +21,7 @@ role { startDate, endDate, name, skills, description_md } =
             , Attribute.style "align-items" "center"
             , Attribute.style "justify-content" "space-between"
             ]
-            [ Html.h3 [ Attribute.style "margin" "0" ] [ Html.text name ]
+            [ Html.h4 [ Attribute.style "margin" "0" ] [ Html.text name ]
             , Html.div [ Attribute.class "dates", Attribute.style "font-size" "0.8rem" ]
                 [ Html.span
                     [ Attribute.class "start-date" ]
@@ -69,7 +71,7 @@ companyInfo { name, image, url } =
         [ Attribute.class "company"
         , Attribute.style "flex" "1 0 10rem"
         ]
-        [ Html.h2
+        [ Html.h3
             [ Attribute.style "margin-top" "0" ]
             [ Html.text name ]
         , Html.div
@@ -97,8 +99,9 @@ jobExperience { company, roles } =
         [ Attribute.style "display" "flex"
         , Attribute.style "gap" "1rem"
         , Attribute.style "flex-wrap" "wrap"
-        , Attribute.style "margin" "2rem"
+        , Attribute.style "margin-bottom" "4rem"
 
+        --, Attribute.style "margin" "2rem"
         --grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
         ]
         [ companyInfo company
@@ -117,17 +120,88 @@ personalInfoSection pi =
 
 
 education : Education -> Html msg
-education data =
+education { category, name, description_md, date, institution, skills } =
     Html.article
         [ Attribute.style "display" "flex"
-        , Attribute.style "gap" "1rem"
+        , Attribute.style "max-width" "960px"
         , Attribute.style "flex-wrap" "wrap"
-        , Attribute.style "margin" "2rem"
+
+        --, Attribute.style "gap" "1rem"
+        -- , Attribute.style "flex-wrap" "wrap"
+        , Attribute.style "margin" "auto 0 4rem"
 
         --grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
         ]
-        [ Html.h1 [] [ Html.text data.name ]
-        ]
+        (List.append
+            [ Html.div [ Attribute.style "flex" "1 1 70%" ]
+                (Html.header []
+                    [ Html.h4
+                        [ Attribute.style "margin" "0" ]
+                        [ Html.text name ]
+                    , Html.div
+                        [ Attribute.style "margin" "0"
+                        , Attribute.style "display" "flex"
+                        , Attribute.style "flex-wrap" "wrap"
+                        , Attribute.style "align-items" "center"
+                        , Attribute.style "gap" "1rem"
+                        ]
+                        [ Html.div
+                            [ Attribute.style "display" "flex"
+                            , Attribute.style "align-items" "center"
+                            ]
+                            (List.append
+                                [ Html.h4
+                                    [ Attribute.style "margin" "0" ]
+                                    [ Html.text institution.name ]
+                                ]
+                                (case institution.url of
+                                    Just url ->
+                                        [ Html.a
+                                            [ Attribute.href url ]
+                                            [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem" ]) ]
+                                        ]
+
+                                    Nothing ->
+                                        [ Html.span [] [ Html.text " " ] ]
+                                )
+                            )
+                        , Html.div [ Attribute.style "font-size" "0.8rem" ] [ Html.text (Date.format "MMMM y" date) ]
+                        ]
+                    ]
+                    :: markdownToView
+                        (case description_md of
+                            Just text ->
+                                text
+
+                            Nothing ->
+                                ""
+                        )
+                    ++ [ Html.footer
+                            [ Attribute.class "skills"
+                            , Attribute.style "display" "flex"
+                            , Attribute.style "align-items" "center"
+                            , Attribute.style "gap" "4px"
+                            , Attribute.style "flex-wrap" "wrap"
+                            ]
+                            (List.map skillTag (Maybe.withDefault [] skills))
+                       ]
+                )
+            ]
+            (case institution.logo of
+                Just l ->
+                    [ Html.img
+                        [ Attribute.src l
+                        , Attribute.style "width" "10rem"
+                        , Attribute.style "align-self" "center"
+                        , Attribute.style "flex" "0 0 auto"
+                        ]
+                        []
+                    ]
+
+                Nothing ->
+                    []
+            )
+        )
 
 
 educationSection : List Education -> Html msg
@@ -145,7 +219,7 @@ educationSection educations =
 
             --, Attribute.style "align-items" "center"
             ]
-            (Html.h4 [] [ Html.text "Degrees" ]
+            (Html.h3 [] [ Html.text "Degrees" ]
                 :: List.map education (Maybe.withDefault [] (Dict.get "officialDegree" dict))
             )
         , Html.section
@@ -156,7 +230,7 @@ educationSection educations =
 
             --, Attribute.style "align-items" "center"
             ]
-            (Html.h4 [] [ Html.text "Certification" ]
+            (Html.h3 [] [ Html.text "Certifications" ]
                 :: List.map education (Maybe.withDefault [] (Dict.get "certification" dict))
             )
         ]
@@ -190,3 +264,16 @@ experienceSection experience =
         --, Attribute.style "align-items" "center"
         ]
         (List.map jobExperience experience)
+
+
+poweredByManfred : Html msg
+poweredByManfred =
+    Html.div
+        [ Attribute.style "display" "flex"
+        , Attribute.style "align-items" "start"
+        , Attribute.style "gap" "0.5rem"
+        , Attribute.style "justify-content" "end"
+        ]
+        [ Html.span [] [ Html.text "Data powered by" ]
+        , Html.div [ Attribute.style "width" "8rem" ] [ ManfredLogo.logo [ Attribute.style "width" "100%", Attribute.style "height" "100%" ] ]
+        ]

@@ -21,6 +21,7 @@
     -   [ ] Fill data for education items
     -   [ ] Fix headers for sections
     -   [ ] Order by date education items
+    -   [ ] Add "Powered by Manfred"
 -   [ ] Book page
 -   [ ] About me page
 -   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)

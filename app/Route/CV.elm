@@ -2,8 +2,8 @@ module Route.Cv exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Http
-import Components.Cv exposing (educationSection, experienceSection, personalInfoSection)
-import DataModel.CV exposing (CV, cvDecoder)
+import Components.Cv exposing (educationSection, experienceSection, personalInfoSection, poweredByManfred)
+import DataModel.CV exposing (CV, cvDecoder, sortEducation)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -104,7 +104,11 @@ view app shared =
     , body =
         [ Html.h1 [] [ Html.text "jmtalarn CV" ]
         , personalInfoSection personalInfo
+        , Html.h2 [] [ Html.text "Working experience" ]
         , experienceSection experience
-        , educationSection education
+        , Html.h2 [] [ Html.text "Education" ]
+        , educationSection (sortEducation education)
+        , Html.h2 [] [ Html.text "Aside projects" ]
+        , poweredByManfred
         ]
     }

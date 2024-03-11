@@ -1,4 +1,4 @@
-module Components.Logo exposing
+module Components.ElmLogo exposing
     ( Model
     , Pattern
     , bird
