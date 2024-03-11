@@ -7,10 +7,26 @@ import Json.Decode.Extra as Decode
 import Time
 
 
+type AsideProjects
+    = AsideProject Project
+    | AsidePublicArtifact PublicArtifact
+
+
+asidePublicArtifactDecoder : Decoder AsideProjects
+asidePublicArtifactDecoder =
+    Decode.map AsidePublicArtifact publicArtifactDecoder
+
+
+asideProjectDecoder : Decoder AsideProjects
+asideProjectDecoder =
+    Decode.map AsideProject projectDecoder
+
+
 type alias CV =
     { personalInfo : PersonalInfo
     , experience : List Job
     , education : List Education
+    , asideProjects : List AsideProjects
     }
 
 
@@ -19,6 +35,7 @@ type alias PersonalInfo =
     , surnames : String
     , title : String
     , description_md : String
+    , desiredPosition : String
     }
 
 
@@ -65,6 +82,49 @@ type alias Education =
     , institution : Institution
     , skills : Maybe (List String)
     }
+
+
+type alias Project =
+    { name : String
+    , description_md : String
+    , url : Maybe String
+    , skills : List String
+    , dates : ( Date, Maybe Date )
+    }
+
+
+projectDecoder : Decoder Project
+projectDecoder =
+    Decode.map5 Project
+        (Decode.at [ "details", "name" ] Decode.string)
+        (Decode.at [ "details", "description" ] Decode.string)
+        (Decode.maybe (Decode.at [ "details", "URL" ] Decode.string))
+        (Decode.field "roles" (Decode.index 0 (Decode.field "competences" (Decode.list (Decode.field "name" Decode.string)))))
+        (Decode.map2 Tuple.pair
+            (Decode.field "roles" (Decode.index 0 (Decode.field "startDate" decodeDate)))
+            (Decode.maybe (Decode.field "roles" (Decode.index 0 (Decode.field "finishDate" decodeDate))))
+        )
+
+
+type alias PublicArtifact =
+    { name : String
+    , description_md : String
+    , url : Maybe String
+    , skills : List String
+    , image : Maybe String
+    , date : Date
+    }
+
+
+publicArtifactDecoder : Decoder PublicArtifact
+publicArtifactDecoder =
+    Decode.map6 PublicArtifact
+        (Decode.at [ "details", "name" ] Decode.string)
+        (Decode.at [ "details", "description" ] Decode.string)
+        (Decode.maybe (Decode.at [ "details", "URL" ] Decode.string))
+        (Decode.field "relatedCompetences" (Decode.list (Decode.field "name" Decode.string)))
+        (Decode.maybe (Decode.at [ "details", "image", "link" ] Decode.string))
+        (Decode.field "publishingDate" decodeDate)
 
 
 educationDecoder : Decoder Education
@@ -134,19 +194,30 @@ roleDecoder =
 
 personalInfoDecoder : Decoder PersonalInfo
 personalInfoDecoder =
-    Decode.map4 PersonalInfo
+    Decode.map5 PersonalInfo
         (Decode.field "name" Decode.string)
         (Decode.field "surnames" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "description" Decode.string)
+        (Decode.succeed "")
 
 
 cvDecoder : Decoder CV
 cvDecoder =
-    Decode.map3 CV
-        (Decode.at [ "aboutMe", "profile" ] personalInfoDecoder)
+    Decode.map4 CV
+        (Decode.map2 (\pi d -> { pi | desiredPosition = d }) (Decode.at [ "aboutMe", "profile" ] personalInfoDecoder) (Decode.at [ "manfredSpecificData", "desiredJobDescription" ] Decode.string))
         (Decode.at [ "experience", "jobs" ] (Decode.list jobDecoder))
         (Decode.at [ "knowledge", "studies" ] (Decode.list educationDecoder))
+        --(Decode.map2 (\a b -> List.map (\a1 -> AsidePublicArtifact a1) a ++ List.map (\b1 -> AsideProject b1) b)
+        (Decode.map2 (\a b -> a ++ b)
+            (Decode.at [ "experience", "publicArtifacts" ] (Decode.list asidePublicArtifactDecoder))
+            (Decode.at [ "experience", "projects" ] (Decode.list asideProjectDecoder))
+        )
+
+
+
+--(Decode.list (Decode.at [ "experience", "projects" ] projectDecoder))
+-- )
 
 
 sortEducation : List Education -> List Education

@@ -2,7 +2,7 @@ module Components.Cv exposing (..)
 
 import Components.Icon as Icon
 import Components.ManfredLogo as ManfredLogo
-import DataModel.CV exposing (Company, Education, Job, PersonalInfo, Role)
+import DataModel.CV exposing (AsideProjects(..), Company, Education, Job, PersonalInfo, Role)
 import Date
 import Dict exposing (..)
 import Html exposing (Html)
@@ -112,10 +112,12 @@ jobExperience { company, roles } =
 personalInfoSection : PersonalInfo -> Html msg
 personalInfoSection pi =
     Html.section
-        []
-        [ Html.h2 [] [ Html.text (pi.name ++ " " ++ pi.surnames) ]
-        , Html.h3 [] [ Html.text pi.title ]
+        [ Attribute.style "margin-bottom" "5rem" ]
+        [ Html.h1 [] [ Html.text ("~ CV ~ " ++ pi.name ++ " " ++ pi.surnames) ]
+        , Html.h2 [] [ Html.text pi.title ]
         , Html.p [] (markdownToView pi.description_md)
+        , Html.h4 [] [ Html.text "What I would looking for ? " ]
+        , Html.p [] (markdownToView pi.desiredPosition)
         ]
 
 
@@ -277,3 +279,120 @@ poweredByManfred =
         [ Html.span [] [ Html.text "Data powered by" ]
         , Html.div [ Attribute.style "width" "8rem" ] [ ManfredLogo.logo [ Attribute.style "width" "100%", Attribute.style "height" "100%" ] ]
         ]
+
+
+asideProjectsSection : List AsideProjects -> Html msg
+asideProjectsSection list =
+    let
+        listStyle =
+            [ Attribute.style "list-style-type" "none"
+            , Attribute.style "margin" "0"
+            , Attribute.style "padding" "0"
+            , Attribute.style "display" "grid"
+            , Attribute.style "grid-template-columns" "repeat(auto-fit, minmax(15rem, 1fr))"
+            , Attribute.style "gap" "1rem"
+            ]
+    in
+    Html.section
+        [ Attribute.style "max-width" "960px"
+        , Attribute.style "margin" "0 auto"
+        ]
+        [ Html.ul
+            listStyle
+            (List.map
+                asideProject
+                list
+            )
+        ]
+
+
+asideProject : AsideProjects -> Html msg
+asideProject thing =
+    let
+        title =
+            \t -> Html.h4 [ Attribute.style "margin" "0" ] [ Html.text t ]
+
+        link =
+            \l ->
+                Html.a
+                    [ Attribute.href (Maybe.withDefault "" l)
+                    ]
+                    [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem" ]) ]
+
+        tags =
+            \t ->
+                Html.div
+                    [ Attribute.class "skills"
+                    , Attribute.style "display" "flex"
+                    , Attribute.style "align-items" "center"
+                    , Attribute.style "gap" "4px"
+                    , Attribute.style "flex-wrap" "wrap"
+                    , Attribute.style "margin-top" "1rem"
+                    ]
+                    (List.map skillTag t)
+
+        header =
+            \name url ->
+                Html.header
+                    [ Attribute.style "display" "flex"
+                    , Attribute.style "align-items" "center"
+                    , Attribute.style "gap" "1rem"
+                    ]
+                    [ title name
+                    , link url
+                    ]
+
+        itemStyle =
+            [ Attribute.style "margin" "2rem 0" ]
+    in
+    case thing of
+        AsideProject { name, description_md, dates, skills, url } ->
+            let
+                ( startDate, maybeEndDate ) =
+                    dates
+            in
+            Html.li
+                itemStyle
+                [ header name url
+                , Html.p [] (markdownToView description_md)
+                , Html.div [ Attribute.style "font-size" "0.8rem" ]
+                    [ Html.text (Date.format "MMMM y" startDate)
+                    , Html.text " ~ "
+                    , Html.text
+                        (case maybeEndDate of
+                            Just endDate ->
+                                Date.format "MMMM y" endDate
+
+                            Nothing ->
+                                "Currently"
+                        )
+                    ]
+                , tags skills
+                ]
+
+        AsidePublicArtifact { date, description_md, image, name, skills, url } ->
+            Html.li
+                itemStyle
+                (header name url
+                    :: (case image of
+                            Just i ->
+                                [ Html.img
+                                    [ Attribute.src i
+                                    , Attribute.style "width" "8rem"
+                                    , Attribute.style "display" "block"
+                                    , Attribute.style "margin" "0 auto"
+                                    , Attribute.style "filter" "drop-shadow(5px 5px 5px dimgray)"
+                                    ]
+                                    []
+                                ]
+
+                            Nothing ->
+                                []
+                       )
+                    ++ [ Html.p [] (markdownToView description_md)
+                       , Html.div [ Attribute.style "font-size" "0.8rem" ]
+                            [ Html.text (Date.format "MMMM y" date)
+                            ]
+                       , tags skills
+                       ]
+                )
