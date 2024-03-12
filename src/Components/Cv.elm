@@ -7,13 +7,15 @@ import Date
 import Dict exposing (..)
 import Html exposing (Html)
 import Html.Attributes as Attribute
+import Html.Events
 import Phosphor
+import Route.Cv exposing (Msg)
 import Svg
 import Util.MarkdownProcessor exposing (markdownToView)
 
 
-role : Role -> Html msg
-role { startDate, endDate, name, skills, description_md } =
+role : (Msg -> msg) -> Role -> Html msg
+role toggleSkill { startDate, endDate, name, skills, description_md } =
     Html.div
         [ Attribute.class "role" ]
         [ Html.header
@@ -48,12 +50,12 @@ role { startDate, endDate, name, skills, description_md } =
             , Attribute.style "gap" "4px"
             , Attribute.style "flex-wrap" "wrap"
             ]
-            (List.map skillTag skills)
+            (List.map skillTag toggleSkill skills)
         ]
 
 
-skillTag : String -> Html msg
-skillTag tag =
+skillTag : (Msg -> msg) -> String -> Html msg
+skillTag toggleSKill tag =
     Html.span
         [ Attribute.style "border" "1px solid orange"
         , Attribute.style "border-radius" "10px"
@@ -61,6 +63,7 @@ skillTag tag =
         , Attribute.style "padding" "0 4px"
         , Attribute.style "text-wrap" "nowrap"
         , Attribute.style "display" "inline-block"
+        , Html.Events.onClick (toggleSKill tag)
         ]
         [ Html.text tag ]
 
@@ -93,8 +96,8 @@ companyInfo { name, image, url } =
         ]
 
 
-jobExperience : Job -> Html msg
-jobExperience { company, roles } =
+jobExperience : (Msg -> msg) -> Job -> Html msg
+jobExperience toggleSkill { company, roles } =
     Html.article
         [ Attribute.style "display" "flex"
         , Attribute.style "gap" "1rem"
@@ -105,7 +108,7 @@ jobExperience { company, roles } =
         --grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
         ]
         [ companyInfo company
-        , Html.div [ Attribute.class "roles", Attribute.style "flex" "1 1 30rem" ] (List.map role roles)
+        , Html.div [ Attribute.class "roles", Attribute.style "flex" "1 1 30rem" ] (List.map role toggleSkill roles)
         ]
 
 
@@ -121,18 +124,13 @@ personalInfoSection pi =
         ]
 
 
-education : Education -> Html msg
-education { category, name, description_md, date, institution, skills } =
+education : (Msg -> msg) -> Education -> Html msg
+education toggleSkill { category, name, description_md, date, institution, skills } =
     Html.article
         [ Attribute.style "display" "flex"
         , Attribute.style "max-width" "960px"
         , Attribute.style "flex-wrap" "wrap"
-
-        --, Attribute.style "gap" "1rem"
-        -- , Attribute.style "flex-wrap" "wrap"
         , Attribute.style "margin" "auto 0 4rem"
-
-        --grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
         ]
         (List.append
             [ Html.div [ Attribute.style "flex" "1 1 70%" ]
@@ -185,7 +183,7 @@ education { category, name, description_md, date, institution, skills } =
                             , Attribute.style "gap" "4px"
                             , Attribute.style "flex-wrap" "wrap"
                             ]
-                            (List.map skillTag (Maybe.withDefault [] skills))
+                            (List.map skillTag toggleSkill (Maybe.withDefault [] skills))
                        ]
                 )
             ]
@@ -206,8 +204,8 @@ education { category, name, description_md, date, institution, skills } =
         )
 
 
-educationSection : List Education -> Html msg
-educationSection educations =
+educationSection : (Msg -> msg) -> List Education -> Html msg
+educationSection toggleSkill educations =
     let
         dict =
             List.foldl reduceEducation Dict.empty educations
@@ -233,7 +231,7 @@ educationSection educations =
             --, Attribute.style "align-items" "center"
             ]
             (Html.h3 [] [ Html.text "Certifications" ]
-                :: List.map education (Maybe.withDefault [] (Dict.get "certification" dict))
+                :: List.map education toggleSkill (Maybe.withDefault [] (Dict.get "certification" dict))
             )
         ]
 
@@ -255,8 +253,8 @@ reduceEducation a dict =
     Dict.insert a.category toInsert dict
 
 
-experienceSection : List Job -> Html msg
-experienceSection experience =
+experienceSection : (Msg -> msg) -> List Job -> Html msg
+experienceSection toggleSkill experience =
     Html.section
         [ Attribute.style "display" "flex"
         , Attribute.style "flex-direction" "column"
@@ -265,7 +263,7 @@ experienceSection experience =
 
         --, Attribute.style "align-items" "center"
         ]
-        (List.map jobExperience experience)
+        (List.map jobExperience toggleSkill experience)
 
 
 poweredByManfred : Html msg
@@ -281,8 +279,8 @@ poweredByManfred =
         ]
 
 
-asideProjectsSection : List AsideProjects -> Html msg
-asideProjectsSection list =
+asideProjectsSection : (Msg -> msg) -> List AsideProjects -> Html msg
+asideProjectsSection toggleSkill list =
     let
         listStyle =
             [ Attribute.style "list-style-type" "none"
@@ -301,13 +299,14 @@ asideProjectsSection list =
             listStyle
             (List.map
                 asideProject
+                toggleSkill
                 list
             )
         ]
 
 
-asideProject : AsideProjects -> Html msg
-asideProject thing =
+asideProject : (Msg -> msg) -> AsideProjects -> Html msg
+asideProject toggleSkill thing =
     let
         title =
             \t -> Html.h4 [ Attribute.style "margin" "0" ] [ Html.text t ]
@@ -329,7 +328,7 @@ asideProject thing =
                     , Attribute.style "flex-wrap" "wrap"
                     , Attribute.style "margin-top" "1rem"
                     ]
-                    (List.map skillTag t)
+                    (List.map skillTag toggleSkill t)
 
         header =
             \name url ->
