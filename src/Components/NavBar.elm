@@ -36,6 +36,7 @@ menuStyle =
     , Attribute.style "margin" "0"
     , Attribute.style "right" "0"
     , Attribute.style "padding" "1rem 2rem"
+    , Attribute.style "z-index" "1"
     ]
 
 
@@ -89,23 +90,23 @@ view model menuClickedMsg =
                 Html.ul menuStyle
                     [ Html.li []
                         [ Route.Greet
-                            |> Route.link whiteLinksStyle [ Html.text "Greetings" ]
+                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Greetings" ]
                         ]
                     , Html.li []
                         [ Route.Hello
-                            |> Route.link whiteLinksStyle [ Html.text "Hello from Dillon T. Kearns" ]
+                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Hello from Dillon T. Kearns" ]
                         ]
                     , Html.li []
                         [ Route.Sluggy__Slug_ { slug = "hello" }
-                            |> Route.link whiteLinksStyle [ Html.text "Sluggy link" ]
+                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Sluggy link" ]
                         ]
                     , Html.li []
                         [ Route.Blog__Page__ { page = Nothing }
-                            |> Route.link whiteLinksStyle [ Html.text "Web dev notes" ]
+                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Web dev notes" ]
                         ]
                     , Html.li []
                         [ Route.Cv
-                            |> Route.link whiteLinksStyle [ Html.text "CV" ]
+                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "CV" ]
                         ]
                     ]
 
