@@ -46,7 +46,10 @@ footer now =
     Html.footer
         footerStyle
         [ Html.div
-            []
+            [ Attribute.style "display" "flex"
+            , Attribute.style "align-items" "center"
+            , Attribute.style "gap" "4px"
+            ]
             [ socialLink "https://www.linkedin.com/in/jmtalarn/" Phosphor.linkedinLogo
             , socialLink "https://github.com/jmtalarn" Phosphor.githubLogo
             , socialLink "https://codepen.io/jmtalarn" Phosphor.codepenLogo

@@ -17,12 +17,13 @@
     -   [x] Social icons on footer
 -   [x] Add icons
     -   [x] Add drop shadow to icon on Header
--   [ ] CV Page
+-   [x] CV Page
     -   [x] Fill data for education items
     -   [x] Fix headers for sections
     -   [x] Order by date education items
     -   [x] Add "Powered by Manfred"
-    -   [ ] Filtering by clicking tags ??
+    -   [x] Filtering by clicking tags ??
+    -   [x] Link to section and Hide and show content
 -   [ ] Book page
 -   [ ] About me page
 -   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)

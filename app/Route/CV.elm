@@ -27,12 +27,26 @@ import Util.MarkdownProcessor exposing (markdownToView)
 import View exposing (View)
 
 
+type alias ShowSections =
+    { showEducation : Bool
+    , showExperience : Bool
+    , showProjects : Bool
+    , showPersonalInformation : Bool
+    }
+
+
 type alias Model =
-    { selectedSkills : List String }
+    { selectedSkills : List String
+    , show : ShowSections
+    }
 
 
 type Msg
     = ToggleSkill String
+    | ToggleEducation
+    | ToggleWorkExperience
+    | ToggleProjects
+    | TogglePersonalInfo
 
 
 update :
@@ -42,6 +56,10 @@ update :
     -> Model
     -> ( Model, Effect.Effect Msg )
 update app shared msg model =
+    let
+        oldShow =
+            model.show
+    in
     case msg of
         ToggleSkill tag ->
             ( { model
@@ -54,6 +72,34 @@ update app shared msg model =
               }
             , Effect.none
             )
+
+        TogglePersonalInfo ->
+            let
+                newShow =
+                    { oldShow | showPersonalInformation = not oldShow.showPersonalInformation }
+            in
+            ( { model | show = newShow }, Effect.none )
+
+        ToggleEducation ->
+            let
+                newShow =
+                    { oldShow | showEducation = not oldShow.showEducation }
+            in
+            ( { model | show = newShow }, Effect.none )
+
+        ToggleWorkExperience ->
+            let
+                newShow =
+                    { oldShow | showExperience = not oldShow.showExperience }
+            in
+            ( { model | show = newShow }, Effect.none )
+
+        ToggleProjects ->
+            let
+                newShow =
+                    { oldShow | showProjects = not oldShow.showProjects }
+            in
+            ( { model | show = newShow }, Effect.none )
 
 
 type alias RouteParams =
@@ -100,7 +146,16 @@ init :
     -> Shared.Model
     -> ( Model, Effect.Effect Msg )
 init app shared =
-    ( { selectedSkills = [] }, Effect.none )
+    ( { selectedSkills = []
+      , show =
+            { showEducation = True
+            , showExperience = True
+            , showProjects = True
+            , showPersonalInformation = True
+            }
+      }
+    , Effect.none
+    )
 
 
 data : BackendTask FatalError Data
@@ -138,29 +193,140 @@ view :
     -> Shared.Model
     -> Model
     -> View (PagesMsg Msg)
-view app shared { selectedSkills } =
+view app shared { selectedSkills, show } =
     let
         { personalInfo, experience, education, asideProjects } =
             app.data.cv
+
+        { showEducation, showExperience, showProjects, showPersonalInformation } =
+            show
+
+        skillsOnAllJobs =
+            List.concat (List.map (\a -> a.skills) (List.concat (List.map .roles experience)))
+
+        skillsOnAllEducation =
+            List.concat
+                (List.map
+                    (\e ->
+                        case e.skills of
+                            Just l ->
+                                l
+
+                            Nothing ->
+                                []
+                    )
+                    education
+                )
+
+        hideSection list =
+            isItemHidden selectedSkills list
+
+        hideExperienceSection =
+            List.length selectedSkills > 0 && hideSection skillsOnAllJobs
+
+        hideEducationSection =
+            List.length selectedSkills > 0 && hideSection skillsOnAllEducation
+
+        bodyElements =
+            [ ( True, cvHeader show (personalInfo.name ++ " " ++ personalInfo.surnames) selectedSkills )
+            , ( showPersonalInformation, personalInfoSection personalInfo )
+            , ( showExperience && not hideExperienceSection, Html.h2 [] [ Html.text "Working experience" ] )
+            , ( showExperience && not hideExperienceSection, experienceSection experience selectedSkills )
+            , ( showEducation && not hideEducationSection, Html.h2 [] [ Html.text "Education" ] )
+            , ( showEducation && not hideEducationSection, educationSection (sortEducation education) selectedSkills )
+            , ( showProjects, Html.h2 [] [ Html.text "Aside projects" ] )
+            , ( showProjects, asideProjectsSection asideProjects selectedSkills )
+            , ( True, poweredByManfred )
+            ]
     in
     { title = "jmtalarn ~ Web developer { Frontend developer } CV"
-    , body =
-        [ Html.h1 [] [ Html.text ("~ CV ~ " ++ personalInfo.name ++ " " ++ personalInfo.surnames) ]
-        , selectedTags selectedSkills
-        , personalInfoSection personalInfo
-        , Html.h2 [] [ Html.text "Working experience" ]
-        , experienceSection experience selectedSkills
-        , Html.h2 [] [ Html.text "Education" ]
-        , educationSection (sortEducation education) selectedSkills
-        , Html.h2 [] [ Html.text "Aside projects" ]
-        , asideProjectsSection asideProjects selectedSkills
-        , poweredByManfred
-        ]
+    , body = List.map Tuple.second (List.filter Tuple.first bodyElements)
     }
 
 
 
 -- COMPONENTS
+
+
+cvHeader : ShowSections -> String -> List String -> Html (PagesMsg Msg)
+cvHeader showSections name selectedSkills =
+    Html.header
+        [ Attribute.style "position" "sticky"
+        , Attribute.style "top" "0"
+        , Attribute.style "background-color" "white"
+        , Attribute.style "background" "linear-gradient(rgb(255, 255, 255) 95%, rgba(0, 212, 255, 0) 100%)"
+        , Attribute.style "margin" "0 -2rem"
+        , Attribute.style "padding" "1rem"
+        ]
+        [ Html.h1
+            [ Attribute.style "font-size" "min(calc(18px + 1.8vw),2rem)"
+            , Attribute.style "display" "flex"
+            , Attribute.style "align-items" "center"
+            , Attribute.style "flex-wrap" "wrap"
+            , Attribute.style "gap" "1rem"
+            , Attribute.style "margin" "0 0 0.6rem 0"
+            , Attribute.style "padding" "0 0 0.6rem 0"
+            ]
+            [ Html.span [] [ Html.text "CV" ]
+            , Icon.duotone Phosphor.readCvLogo Nothing
+            , Html.span [] [ Html.text name ]
+            ]
+        , sectionLinks showSections
+        , selectedTags selectedSkills
+        ]
+
+
+sectionLinks : ShowSections -> Html (PagesMsg Msg)
+sectionLinks showSections =
+    let
+        sectionLinkStyle =
+            [ Attribute.style "color" "white"
+            , Attribute.style "background-color" "lightgreen"
+            , Attribute.style "text-decoration" "none"
+            , Attribute.style "padding" "4px 1rem"
+            , Attribute.style "border-radius" "10px"
+            , Attribute.style "flex" "1 1 0"
+            , Attribute.style "font-size" "0.8rem"
+            , Attribute.style "display" "flex"
+            , Attribute.style "align-items" "center"
+            , Attribute.style "justify-content" "space-between"
+            ]
+
+        showEye condition msg =
+            if condition then
+                Icon.duotone Phosphor.eye
+                    (Just [ Html.Events.onClick msg ])
+
+            else
+                Icon.duotone Phosphor.eyeClosed
+                    (Just [ Html.Events.onClick msg ])
+    in
+    Html.div
+        [ Attribute.style "display" "flex"
+        , Attribute.style "align-items" "stretch"
+        , Attribute.style "flex-wrap" "wrap"
+        , Attribute.style "justify-content" "space-between"
+        , Attribute.style "overflow-x" "auto"
+        , Attribute.style "gap" "1rem"
+        , Attribute.style "scrollbar-width" "thin"
+        ]
+        [ Html.a (sectionLinkStyle ++ [ Attribute.href ("#" ++ personalInfoSectionId) ])
+            [ Html.text "Personal Information"
+            , showEye showSections.showPersonalInformation (PagesMsg.fromMsg <| TogglePersonalInfo)
+            ]
+        , Html.a (sectionLinkStyle ++ [ Attribute.href ("#" ++ experienceSectionId) ])
+            [ Html.text "Working experience"
+            , showEye showSections.showExperience (PagesMsg.fromMsg <| ToggleWorkExperience)
+            ]
+        , Html.a (sectionLinkStyle ++ [ Attribute.href ("#" ++ educationSectionId) ])
+            [ Html.text "Education"
+            , showEye showSections.showEducation (PagesMsg.fromMsg <| ToggleEducation)
+            ]
+        , Html.a (sectionLinkStyle ++ [ Attribute.href ("#" ++ asideProjectsSectionId) ])
+            [ Html.text "Aside projects"
+            , showEye showSections.showProjects (PagesMsg.fromMsg <| ToggleProjects)
+            ]
+        ]
 
 
 selectedTags : List String -> Html (PagesMsg Msg)
@@ -170,31 +336,38 @@ selectedTags selectedSkills =
             List.length selectedSkills > 0
     in
     Html.div
-        [ if areThereSkillsSelected then
-            Attribute.style "position" "sticky"
-
-          else
-            Attribute.style "position" "relative"
-        , Attribute.style "min-height" "2rem"
+        [ Attribute.style "min-height" "2rem"
         , Attribute.style "width" "100%"
-        , Attribute.style "top" "0"
-        , Attribute.style "background" "transparent"
+        , Attribute.style "top" "1rem"
         , Attribute.style "display" "flex"
         , Attribute.style "align-items" "center"
         , Attribute.style "gap" "4px"
         , Attribute.style "flex-wrap" "wrap"
-        , Attribute.style "background" "linear-gradient(180deg, rgba(255,255,255,1) 75%, rgba(0,212,255,0) 100%)"
         , Attribute.style "padding" ".4rem 0 1rem 0"
-
-        --, Attribute.style "border" "1px dotted red"
         ]
         (List.append
-            (if areThereSkillsSelected then
-                [ Icon.fill Phosphor.tag (Just [ Attribute.style "color" "Orange", Attribute.style "font-size" "1rem" ]) ]
+            [ Icon.fill Phosphor.tag
+                (Just
+                    [ Attribute.style "color" "Orange"
+                    , Attribute.style "font-size" "1rem"
+                    ]
+                )
+            , if areThereSkillsSelected then
+                Html.span
+                    [ Attribute.style "color" "Orange"
+                    , Attribute.style "font-size" "0.8rem"
+                    , Attribute.title "click to unselect"
+                    ]
+                    [ Html.text "Showing content related with these tags" ]
 
-             else
-                []
-            )
+              else
+                Html.span
+                    [ Attribute.style "color" "Orange"
+                    , Attribute.style "font-size" "0.8rem"
+                    , Attribute.title "click to unselect"
+                    ]
+                    [ Html.text "Click on tags below to see CV content related with the selected tags" ]
+            ]
             (List.map skillTag selectedSkills)
         )
 
@@ -241,7 +414,18 @@ role selectedSkills { startDate, endDate, name, skills, description_md } =
             , Attribute.style "gap" "4px"
             , Attribute.style "flex-wrap" "wrap"
             ]
-            (List.map skillTag skills)
+            (if List.length skills > 0 then
+                Icon.fill Phosphor.tag
+                    (Just
+                        [ Attribute.style "color" "Orange"
+                        , Attribute.style "font-size" "1rem"
+                        ]
+                    )
+                    :: List.map skillTag skills
+
+             else
+                []
+            )
         ]
 
 
@@ -255,6 +439,7 @@ skillTag tag =
         , Attribute.style "cursor" "pointer"
         , Attribute.style "text-wrap" "nowrap"
         , Attribute.style "display" "inline-block"
+        , Attribute.style "color" "orange"
         , Html.Events.onClick (PagesMsg.fromMsg <| ToggleSkill tag)
         ]
         [ Html.text tag ]
@@ -318,10 +503,17 @@ jobExperience selectedSkills { company, roles } =
         ]
 
 
+personalInfoSectionId : String
+personalInfoSectionId =
+    "personal-information"
+
+
 personalInfoSection : PersonalInfo -> Html (PagesMsg Msg)
 personalInfoSection pi =
     Html.section
-        [ Attribute.style "margin-bottom" "5rem" ]
+        [ Attribute.style "margin-bottom" "5rem"
+        , Attribute.id personalInfoSectionId
+        ]
         [ Html.h2 [] [ Html.text pi.title ]
         , Html.p [] (markdownToView pi.description_md)
         , Html.h4 [] [ Html.text "What I would looking for ? " ]
@@ -393,7 +585,18 @@ educationItem selectedSkills { category, name, description_md, date, institution
                             , Attribute.style "gap" "4px"
                             , Attribute.style "flex-wrap" "wrap"
                             ]
-                            (List.map skillTag (Maybe.withDefault [] skills))
+                            (if List.length (Maybe.withDefault [] skills) > 0 then
+                                Icon.fill Phosphor.tag
+                                    (Just
+                                        [ Attribute.style "color" "Orange"
+                                        , Attribute.style "font-size" "1rem"
+                                        ]
+                                    )
+                                    :: List.map skillTag (Maybe.withDefault [] skills)
+
+                             else
+                                []
+                            )
                        ]
                 )
             ]
@@ -414,33 +617,68 @@ educationItem selectedSkills { category, name, description_md, date, institution
         )
 
 
+educationSectionId : String
+educationSectionId =
+    "education"
+
+
 educationSection : List Education -> List String -> Html (PagesMsg Msg)
 educationSection educations selectedSkills =
     let
         dict =
             List.foldl reduceEducation Dict.empty educations
+
+        officialDegrees =
+            Maybe.withDefault [] (Dict.get "officialDegree" dict)
+
+        certifications =
+            Maybe.withDefault [] (Dict.get "certification" dict)
+
+        hideSection list =
+            isItemHidden selectedSkills list
+
+        skillsOnOfficialDegrees =
+            List.concat (List.map (\d -> Maybe.withDefault [] d.skills) officialDegrees)
+
+        skillsOnCertifications =
+            List.concat (List.map (\c -> Maybe.withDefault [] c.skills) certifications)
+
+        hideDegrees =
+            List.length selectedSkills > 0 && hideSection skillsOnOfficialDegrees
+
+        hideCertifications =
+            List.length selectedSkills > 0 && hideSection skillsOnCertifications
     in
     Html.div []
-        [ Html.section
-            [ Attribute.style "display" "flex"
-            , Attribute.style "flex-direction" "column"
-            , Attribute.style "max-width" "960px"
-            , Attribute.style "margin" "0 auto"
+        [ if not hideDegrees then
+            Html.section
+                [ Attribute.style "display" "flex"
+                , Attribute.style "flex-direction" "column"
+                , Attribute.style "max-width" "960px"
+                , Attribute.style "margin" "0 auto"
+                , Attribute.id educationSectionId
 
-            --, Attribute.style "align-items" "center"
-            ]
-            (Html.h3 [] [ Html.text "Degrees" ]
-                :: List.map (educationItem selectedSkills) (Maybe.withDefault [] (Dict.get "officialDegree" dict))
-            )
-        , Html.section
-            [ Attribute.style "display" "flex"
-            , Attribute.style "flex-direction" "column"
-            , Attribute.style "max-width" "960px"
-            , Attribute.style "margin" "0 auto"
-            ]
-            (Html.h3 [] [ Html.text "Certifications" ]
-                :: List.map (educationItem selectedSkills) (Maybe.withDefault [] (Dict.get "certification" dict))
-            )
+                --, Attribute.style "align-items" "center"
+                ]
+                (Html.h3 [] [ Html.text "Degrees" ]
+                    :: List.map (educationItem selectedSkills) officialDegrees
+                )
+
+          else
+            Html.section [] []
+        , if not hideCertifications then
+            Html.section
+                [ Attribute.style "display" "flex"
+                , Attribute.style "flex-direction" "column"
+                , Attribute.style "max-width" "960px"
+                , Attribute.style "margin" "0 auto"
+                ]
+                (Html.h3 [] [ Html.text "Certifications" ]
+                    :: List.map (educationItem selectedSkills) certifications
+                )
+
+          else
+            Html.section [] []
         ]
 
 
@@ -461,6 +699,11 @@ reduceEducation a dict =
     Dict.insert a.category toInsert dict
 
 
+experienceSectionId : String
+experienceSectionId =
+    "experience"
+
+
 experienceSection : List Job -> List String -> Html (PagesMsg Msg)
 experienceSection experience selectedSkills =
     Html.section
@@ -468,6 +711,7 @@ experienceSection experience selectedSkills =
         , Attribute.style "flex-direction" "column"
         , Attribute.style "max-width" "960px"
         , Attribute.style "margin" "0 auto"
+        , Attribute.id experienceSectionId
 
         --, Attribute.style "align-items" "center"
         ]
@@ -487,6 +731,11 @@ poweredByManfred =
         ]
 
 
+asideProjectsSectionId : String
+asideProjectsSectionId =
+    "aside-projects"
+
+
 asideProjectsSection : List AsideProjects -> List String -> Html (PagesMsg Msg)
 asideProjectsSection list selectedSkills =
     let
@@ -497,6 +746,7 @@ asideProjectsSection list selectedSkills =
             , Attribute.style "display" "grid"
             , Attribute.style "grid-template-columns" "repeat(auto-fit, minmax(15rem, 1fr))"
             , Attribute.style "gap" "1rem"
+            , Attribute.id asideProjectsSectionId
             ]
     in
     Html.section
@@ -535,7 +785,18 @@ asideProject selectedSkills thing =
                     , Attribute.style "flex-wrap" "wrap"
                     , Attribute.style "margin-top" "1rem"
                     ]
-                    (List.map skillTag t)
+                    (if List.length t > 0 then
+                        Icon.fill Phosphor.tag
+                            (Just
+                                [ Attribute.style "color" "Orange"
+                                , Attribute.style "font-size" "1rem"
+                                ]
+                            )
+                            :: List.map skillTag t
+
+                     else
+                        []
+                    )
 
         header =
             \name url ->
@@ -594,6 +855,8 @@ asideProject selectedSkills thing =
                                     , Attribute.style "display" "block"
                                     , Attribute.style "margin" "0 auto"
                                     , Attribute.style "filter" "drop-shadow(5px 5px 5px dimgray)"
+                                    , Attribute.style "position" "relative"
+                                    , Attribute.style "z-index" "-1"
                                     ]
                                     []
                                 ]
