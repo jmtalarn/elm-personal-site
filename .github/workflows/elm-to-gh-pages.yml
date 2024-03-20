@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build Elm artifact
-        uses: ./.github/workflows/setup-elm/action
+        uses: ./.github/workflows/setup-elm
         with:
           elm-version: 0.19.1
       - run: | 
