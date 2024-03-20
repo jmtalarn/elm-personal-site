@@ -1,6 +1,7 @@
-module Route.Index exposing (ActionData, Data, Model, Msg, route)
+module Route.NotFound exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import Components.NotFound
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -77,20 +78,5 @@ view :
     -> View (PagesMsg Msg)
 view app shared =
     { title = "Joan Maria Talarn ~ web developer"
-    , body =
-        [ Html.h1 [] [ Html.text "This is me! " ]
-        , Html.p []
-            [ Html.text <| "The message is: " ++ app.data.message
-            ]
-        , Html.ul []
-            [ Html.li []
-                [ Route.Blog__Page__ { page = Nothing }
-                    |> Route.link [] [ Html.text "Web dev notes" ]
-                ]
-            , Html.li []
-                [ Route.Cv
-                    |> Route.link [] [ Html.text "CV" ]
-                ]
-            ]
-        ]
+    , body = Components.NotFound.body
     }

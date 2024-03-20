@@ -1,7 +1,6 @@
 module Util.HTMLRender exposing (..)
 
 import Array
-import ErrorPage exposing (Msg)
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import SyntaxHighlight

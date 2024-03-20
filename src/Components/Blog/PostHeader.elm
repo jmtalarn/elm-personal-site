@@ -60,10 +60,6 @@ show title cover tags category date =
 
 headerStyle : String -> List (Html.Attribute msg)
 headerStyle cover =
-    let
-        _ =
-            Debug.log "cover" cover
-    in
     [ Attribute.style "min-height" "200px"
     , Attribute.style "display" "flex"
     , Attribute.style "flex-direction" "column"

@@ -156,10 +156,6 @@ markdownToView markdownString =
                         markdown
 
                     Err error ->
-                        let
-                            _ =
-                                Debug.log "Error" error
-                        in
                         [ Html.text "There was an error parsing the Markdown", Html.text error ]
            )
 

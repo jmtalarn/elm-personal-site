@@ -1,5 +1,6 @@
 module ErrorPage exposing (ErrorPage(..), Model, Msg, head, init, internalError, notFound, statusCode, update, view)
 
+import Components.NotFound
 import Effect exposing (Effect)
 import Head
 import Html exposing (Html)
@@ -52,18 +53,18 @@ internalError =
 view : ErrorPage -> Model -> View Msg
 view error model =
     { body =
-        [ Html.div []
-            [ Html.p []
-                [ Html.text <|
-                    case error of
-                        NotFound ->
-                            "Page not found. Maybe try another URL?"
+        case error of
+            NotFound ->
+                Components.NotFound.body
 
-                        InternalError string ->
-                            "Something went wrong.\n" ++ string
+            InternalError string ->
+                [ Html.div
+                    []
+                    [ Html.p []
+                        [ Html.text ("Something went wrong.\n" ++ string)
+                        ]
+                    ]
                 ]
-            ]
-        ]
     , title =
         case error of
             NotFound ->

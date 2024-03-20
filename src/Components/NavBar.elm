@@ -89,18 +89,6 @@ view model menuClickedMsg =
             , if model.showMenu then
                 Html.ul menuStyle
                     [ Html.li []
-                        [ Route.Greet
-                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Greetings" ]
-                        ]
-                    , Html.li []
-                        [ Route.Hello
-                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Hello from Dillon T. Kearns" ]
-                        ]
-                    , Html.li []
-                        [ Route.Sluggy__Slug_ { slug = "hello" }
-                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Sluggy link" ]
-                        ]
-                    , Html.li []
                         [ Route.Blog__Page__ { page = Nothing }
                             |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Web dev notes" ]
                         ]

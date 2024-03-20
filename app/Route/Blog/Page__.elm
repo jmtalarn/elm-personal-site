@@ -80,6 +80,13 @@ data { page } =
             Maybe.withDefault 1 <|
                 String.toInt <|
                     Maybe.withDefault "" page
+
+        totalPages =
+            blogPosts
+                |> BackendTask.map
+                    (\list ->
+                        ceiling (toFloat (List.length list) / toFloat pageSize)
+                    )
     in
     BackendTask.map3 Data
         (blogPosts
@@ -91,12 +98,7 @@ data { page } =
                 )
         )
         (BackendTask.succeed pageNumber)
-        (blogPosts
-            |> BackendTask.map
-                (\list ->
-                    ceiling (toFloat (List.length list) / toFloat pageSize)
-                )
-        )
+        totalPages
 
 
 title : String
