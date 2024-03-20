@@ -26,4 +26,6 @@
     -   [x] Link to section and Hide and show content
 -   [ ] Book page
 -   [ ] About me page
+-   [ ] Sitemap.xml
+-   [ ] SEO stuff
 -   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)

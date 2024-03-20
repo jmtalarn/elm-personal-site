@@ -153,21 +153,6 @@ view app sharedModel =
         { title, cover, tags, category, body, date } =
             app.data.blogPost
 
-        _ =
-            Debug.log "title" title
-
-        _ =
-            Debug.log "cover" cover
-
-        _ =
-            Debug.log "tags" tags
-
-        _ =
-            Debug.log "category" category
-
-        _ =
-            Debug.log "date" date
-
         -- markdownOptions =
         --     { githubFlavored = Just { tables = False, breaks = False }
         --     , defaultHighlighting = Nothing
