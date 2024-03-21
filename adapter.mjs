@@ -31,7 +31,7 @@ export default async function run({
 		const htmlFile = fs.readFileSync(file);
 		htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
 		htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
-
+		fs.writeFileSync(file, htmlFile, "utf-8");
 	})
 
 
