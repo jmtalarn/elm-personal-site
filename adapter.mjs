@@ -5,6 +5,14 @@ export default async function run({
 	routePatterns,
 	apiRoutePatterns,
 }) {
+	console.log("Running adapter to fix links relative to path");
+	const projectPath = "/elm-personal.site";
+	fs.readdirSync("dist").forEach(file => {
+		const htmlFile = fs.readFileSync(file);
+		htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
+		htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
+		fs.writeFileSync(file, htmlFile, "utf-8");
+	})
 
 	console.log("Running the adapter for 404 html page ");
 
@@ -24,15 +32,12 @@ export default async function run({
 		.replace(
 			/<script type="module" crossorigin src="\/assets\/index-.{8}\.js"><\/script>/,
 			""
-		);
+		)
+		.replace(/href="(.*)"/g, `href="${projectPath}$1"`)
+		.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
+
 	fs.writeFileSync(_404Path, fixedHtml, "utf-8");
-	const projectPath = "/elm-personal.site";
-	fs.readdirSync("dist").forEach(file => {
-		const htmlFile = fs.readFileSync(file);
-		htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
-		htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
-		fs.writeFileSync(file, htmlFile, "utf-8");
-	})
+
 
 
 	console.log("Running Netlify adapter");
