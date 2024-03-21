@@ -9,6 +9,7 @@ export default async function run({
 	const projectPath = "/elm-personal.site";
 	fs.readdirSync("dist").forEach(file => {
 		if (file.endsWith(".html")) {
+			console.log(file);
 			const htmlFile = fs.readFileSync(file);
 			htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
 			htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
