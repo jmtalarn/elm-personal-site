@@ -8,10 +8,12 @@ export default async function run({
 	console.log("Running adapter to fix links relative to path");
 	const projectPath = "/elm-personal.site";
 	fs.readdirSync("dist").forEach(file => {
-		const htmlFile = fs.readFileSync(file);
-		htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
-		htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
-		fs.writeFileSync(file, htmlFile, "utf-8");
+		if (file.endsWith(".html")) {
+			const htmlFile = fs.readFileSync(file);
+			htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
+			htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
+			fs.writeFileSync(file, htmlFile, "utf-8");
+		}
 	})
 
 	console.log("Running the adapter for 404 html page ");
