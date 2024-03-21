@@ -5,6 +5,7 @@
 -   [x] Show Header on Posts
     -   [x] Show date
 -   [x] Review Markdown files <p ...> tags without endind </p>
+-   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)
 -   [x] Show additional data on blog index for posts
     -   [x] Add tags and categories info
     -   [x] Icons on tags and categories
@@ -24,8 +25,8 @@
     -   [x] Add "Powered by Manfred"
     -   [x] Filtering by clicking tags ??
     -   [x] Link to section and Hide and show content
+-   [ ] Relative path on github pages
 -   [ ] Book page
 -   [ ] About me page
 -   [ ] Sitemap.xml
 -   [ ] SEO stuff
--   [x] Why is dl dt dd rendering that black spot under the thing (Solved: Tabbing on markdown was painting as codeBlock)
