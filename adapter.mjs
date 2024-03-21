@@ -11,7 +11,7 @@ export default async function run({
 	const notFoundPath = "dist/page-not-found/index.html";
 	const _404Path = "dist/404.html";
 
-	const html = await readFile(notFoundPath, "utf-8");
+	const html = fs.readFileSync(notFoundPath, "utf-8");
 
 	// The tags look like this:
 	// <script defer src="/elm.fcba9bad.js" type="text/javascript"></script>
@@ -25,7 +25,7 @@ export default async function run({
 			/<script type="module" crossorigin src="\/assets\/index-.{8}\.js"><\/script>/,
 			""
 		);
-	await writeFile(_404Path, fixedHtml, "utf-8");
+	fs.writeFileSync(_404Path, fixedHtml, "utf-8");
 
 	console.log("Running Netlify adapter");
 	ensureDirSync("functions/render");
