@@ -8,7 +8,7 @@ export default async function run({
 
 	console.log("Running the adapter for 404 html page ");
 
-	const notFoundPath = "dist/page-not-found/index.html";
+	const notFoundPath = "dist/not-found/index.html";
 	const _404Path = "dist/404.html";
 
 	const html = fs.readFileSync(notFoundPath, "utf-8");
