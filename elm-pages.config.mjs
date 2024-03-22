@@ -9,7 +9,7 @@ export default {
   adapter,
   headTagsTemplate(context) {
     const basePath = process.env.BASE_PATH;
-
+    console.log({ context, basePath })
     return `
 <link rel="stylesheet" href="/style.css" />
 <meta name="generator" content="elm-pages v${context.cliVersion}" />
