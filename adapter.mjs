@@ -1,4 +1,9 @@
 import * as fs from "fs";
+import { Glob } from "glob";
+
+const endsWith = function (str, suffix) {
+	return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
 
 export default async function run({
 	renderFunctionFilePath,
@@ -6,16 +11,38 @@ export default async function run({
 	apiRoutePatterns,
 }) {
 	console.log("Running adapter to fix links relative to path");
-	const projectPath = "/elm-personal.site";
-	fs.readdirSync("dist").forEach(file => {
-		if (file.endsWith(".html")) {
-			console.log(file);
-			const htmlFile = fs.readFileSync(file);
-			htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
-			htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
-			fs.writeFileSync(file, htmlFile, "utf-8");
+	const projectPath = "/elm-personal-site";
+	const g3 = new Glob('dist/**/*.html', { withFileTypes: true })
+
+	const wd = process.cwd();
+
+	g3.stream().on('data', path => {
+
+		if (path.fullpath().endsWith(".html")) {
+			console.log(path.fullpath());
+			const htmlFile = fs.readFileSync(path.fullpath(), "utf-8");
+			console.log(htmlFile.replace(/href="(.*?)"/g, `href="${projectPath}$1"`));
+			htmlFile.replace(/src="(.*?)"/g, `src="${projectPath}$1"`);
+			fs.writeFileSync(path.fullpath(), htmlFile, "utf-8");
 		}
+		// console.log(
+		// 	'got a path object',
+		// 	path.fullpath(),
+		// 	path.isDirectory(),
+		// 	path.name,
+
+		// )
 	})
+
+	// fs.readdirSync("dist", { recursive: true } ).forEach(file => {
+	// 	if (file.endsWith(".html")) {
+	// 		console.log(file);
+	// 		const htmlFile = fs.readFileSync(file);
+	// 		htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
+	// 		htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
+	// 		fs.writeFileSync(file, htmlFile, "utf-8");
+	// 	}
+	// })
 
 	console.log("Running the adapter for 404 html page ");
 
