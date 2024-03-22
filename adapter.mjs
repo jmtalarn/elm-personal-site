@@ -62,9 +62,9 @@ export default async function run({
 		.replace(
 			/<script type="module" crossorigin src="\/assets\/index-.{8}\.js"><\/script>/,
 			""
-		)
-		.replace(/href="(.*)"/g, `href="${projectPath}$1"`)
-		.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
+		);
+	// .replace(/href="(.*)"/g, `href="${projectPath}$1"`)
+	// .replace(/src="(.*)"/g, `src="${projectPath}$1"`);
 
 	fs.writeFileSync(_404Path, fixedHtml, "utf-8");
 
