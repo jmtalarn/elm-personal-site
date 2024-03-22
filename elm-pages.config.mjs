@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 //import adapter from "elm-pages/adapter/netlify.js";
 import adapter from "./adapter.mjs"
 
+const basePath = process.env.BASE_PATH;
+
 export default {
   vite: defineConfig({}),
   adapter,
@@ -9,7 +11,7 @@ export default {
     return `
 <link rel="stylesheet" href="/style.css" />
 <meta name="generator" content="elm-pages v${context.cliVersion}" />
-<base href="./" />
+<base href="./${basePath}" />
 `;
   },
   preloadTagForFile(file) {
