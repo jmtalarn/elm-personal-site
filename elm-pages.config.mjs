@@ -9,6 +9,7 @@ export default {
     return `
 <link rel="stylesheet" href="/style.css" />
 <meta name="generator" content="elm-pages v${context.cliVersion}" />
+<base href="./" />
 `;
   },
   preloadTagForFile(file) {
