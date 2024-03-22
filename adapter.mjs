@@ -1,38 +1,34 @@
 import * as fs from "fs";
 import { Glob } from "glob";
 
-const endsWith = function (str, suffix) {
-	return str.indexOf(suffix, str.length - suffix.length) !== -1;
-};
-
 export default async function run({
 	renderFunctionFilePath,
 	routePatterns,
 	apiRoutePatterns,
 }) {
-	console.log("Running adapter to fix links relative to path");
-	const projectPath = process.env.BASEPATH;
-	const g3 = new Glob('dist/**/*.html', { withFileTypes: true })
+	// console.log("Running adapter to fix links relative to path");
+	// const projectPath = process.env.BASEPATH;
+	// const g3 = new Glob('dist/**/*.html', { withFileTypes: true })
 
-	const wd = process.cwd();
+	// const wd = process.cwd();
 
-	g3.stream().on('data', path => {
+	// g3.stream().on('data', path => {
 
-		if (path.fullpath().endsWith(".html")) {
-			console.log(path.fullpath());
-			const htmlFile = fs.readFileSync(path.fullpath(), "utf-8");
-			console.log(htmlFile.replace(/href="\/(.*?)"/g, `href="/${projectPath}/$1"`));
-			htmlFile.replace(/src="\/(.*?)"/g, `src="/${projectPath}/$1"`);
-			fs.writeFileSync(path.fullpath(), htmlFile, "utf-8");
-		}
-		// console.log(
-		// 	'got a path object',
-		// 	path.fullpath(),
-		// 	path.isDirectory(),
-		// 	path.name,
+	// 	if (path.fullpath().endsWith(".html")) {
+	// 		console.log(path.fullpath());
+	// 		const htmlFile = fs.readFileSync(path.fullpath(), "utf-8");
+	// 		//console.log(htmlFile.replace(/href="\/(.*?)"/g, `href="./$1"`));
+	// 		htmlFile.replace(/src="\/(.*?)"/g, `src="./$1"`);
+	// 		fs.writeFileSync(path.fullpath(), htmlFile, "utf-8");
+	// 	}
+	// 	// console.log(
+	// 	// 	'got a path object',
+	// 	// 	path.fullpath(),
+	// 	// 	path.isDirectory(),
+	// 	// 	path.name,
 
-		// )
-	})
+	// 	// )
+	// })
 
 	// fs.readdirSync("dist", { recursive: true } ).forEach(file => {
 	// 	if (file.endsWith(".html")) {
@@ -46,8 +42,8 @@ export default async function run({
 
 	console.log("Running the adapter for 404 html page ");
 
-	const notFoundPath = `dist/${process.env.BASEPATH}/not-found/index.html`;
-	const _404Path = `dist/${process.env.BASEPATH}/404.html`;
+	const notFoundPath = `dist/not-found/index.html`;
+	const _404Path = `dist/404.html`;
 
 	const html = fs.readFileSync(notFoundPath, "utf-8");
 
@@ -68,3 +64,10 @@ export default async function run({
 
 }
 
+function ensureDirSync(dirpath) {
+	try {
+		fs.mkdirSync(dirpath, { recursive: true });
+	} catch (err) {
+		if (err.code !== "EEXIST") throw err;
+	}
+}
