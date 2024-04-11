@@ -76,4 +76,5 @@ headerStyle cover =
     , Attribute.style "background-repeat" "no-repeat"
     , Attribute.style "background-position" "center"
     , Attribute.style "background-size" "cover"
+    , Attribute.style "margin" "0 -2rem"
     ]
