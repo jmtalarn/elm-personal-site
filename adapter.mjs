@@ -26,13 +26,6 @@ export default async function run({
 			""
 		);
 	fs.writeFileSync(_404Path, fixedHtml, "utf-8");
-	const projectPath = "/elm-personal.site";
-	fs.readdirSync("dist").forEach(file => {
-		const htmlFile = fs.readFileSync(file);
-		htmlFile.replace(/href="(.*)"/g, `href="${projectPath}$1"`);
-		htmlFile.replace(/src="(.*)"/g, `src="${projectPath}$1"`);
-		fs.writeFileSync(file, htmlFile, "utf-8");
-	})
 
 
 	console.log("Running Netlify adapter");
