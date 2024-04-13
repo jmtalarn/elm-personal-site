@@ -25,8 +25,11 @@
     -   [x] Add "Powered by Manfred"
     -   [x] Filtering by clicking tags ??
     -   [x] Link to section and Hide and show content
--   [ ] Relative path on github pages
--   [ ] Book page
--   [ ] About me page
 -   [ ] Sitemap.xml
 -   [ ] SEO stuff
+-   [ ] Home widget
+    -   [x] This is me
+    -   [x] Book
+    -   [ ] Copy
+    -   [ ] Interesting things
+    -   [ ] Rotate Companies and skills
