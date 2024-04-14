@@ -2,6 +2,8 @@ module Components.Home exposing (..)
 
 import Components.Icons.Home as HomeIcon
 import Components.Icons.Icon as Icon
+import DataModel.CV exposing (Job)
+import ErrorPage exposing (Msg)
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Phosphor
@@ -80,7 +82,7 @@ message =
                 ++ antonFontAttributeStyle
             )
             [ Html.text "I'm a web developer" ]
-        , Html.p ([ Attribute.class "hero-text", Attribute.style "text-align" "justify" ] ++ workSansAttributeStyle)
+        , Html.p (Attribute.class "hero-text" :: workSansAttributeStyle)
             [ Html.text "HTML"
             , HomeIcon.html5 [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
             , Html.text ", Javascript"
@@ -133,11 +135,11 @@ blog =
         [ Html.div [ Attribute.style "flex" "1 1 40%" ]
             [ Html.h2
                 []
-                [ Html.text "Check my blog"
+                [ Html.text "Web dev notes"
                 ]
-            , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Quis aute enim dolor excepteur ullamco Lorem ex occaecat commodo ut culpa culpa occaecat aliqua. Laboris laborum ex labore sunt exercitation sunt qui enim incididunt ad. Nostrud id veniam in quis consectetur velit labore dolor dolore voluptate exercitation dolor. Duis excepteur id cillum consequat do minim ut ullamco." ]
+            , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Web dev notes is my blog, a space where I share insights, experiences, and reflections on various topics related to technology, web development, and beyond. Through my blog, I aim to provide valuable resources, tutorials, and discussions to fellow developers, tech enthusiasts, and anyone passionate about the digital world.\nExplore a wealth of articles covering frontend development techniques, frameworks, JavaScript libraries, software engineering insights, and much more. Whether you're a seasoned developer seeking advanced tips or a newcomer eager to learn, there's something here for everyone.\nJoin me on this journey of exploration, discovery, and continuous learning. Let's dive into the exciting world of technology together!\n" ]
             , Route.Blog__Page__ { page = Nothing }
-                |> Route.link [] [ Html.text "Web dev notes" ]
+                |> Route.link [] [ Html.text "Click here to visit my blog Web dev notes" ]
             ]
         , Html.div [ Attribute.style "position" "relative", Attribute.style "padding" "1rem" ]
             [ Html.img
@@ -169,6 +171,7 @@ book =
         , Attribute.style "gap" "2rem"
         , Attribute.style "flex-wrap" "wrap"
         , Attribute.style "max-width" "640px"
+        , Attribute.style "margin" "0 auto"
         ]
         [ Html.node "style"
             []
@@ -249,15 +252,19 @@ book =
         , Html.div [ Attribute.style "flex" "1 1 40%" ]
             [ Html.h2
                 []
-                [ Html.text "Check my book"
+                [ Html.text "Uncover my book"
                 ]
-            , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Book published on Amazon about Web foundations. " ]
+            , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Review 'Fundamentos Web' on Amazon – your go-to guide for mastering the essentials of web development. This book provides clear definitions and explanations of key concepts in web foundations, making it an indispensable resource for both beginners and experienced developers alike. Get ready to enhance your understanding of CSS, HTML, and JavaScript as you embark on the journey into the exciting world of web development" ]
             , Html.a
                 [ Attribute.href "https://amzn.to/2UdkQyz"
                 , Attribute.target "_blank"
                 , Attribute.rel "noreferrer noopener"
+                , Attribute.style "display" "flex"
+                , Attribute.style "align-items" "center"
                 ]
-                [ Html.text "Check it out on Amazon" ]
+                [ Html.text "Check it out on Amazon"
+                , Icon.regular Phosphor.amazonLogo Nothing
+                ]
             ]
         , Html.a
             [ Attribute.class "model-book-container"
@@ -294,11 +301,11 @@ cv =
         [ Html.div [ Attribute.style "flex" "1 1 40%" ]
             [ Html.h2
                 []
-                [ Html.text "Check my CV"
+                [ Html.text "Explore My Work"
                 ]
             , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Please take a moment to explore my CV to learn more about my background, working experience, education, certifications, and aside projects. I'm excited to share my journey with you and showcase how my skills and expertise can add value to your team or project.\n            Thank you for considering my profile, and I look forward to the opportunity to connect and discuss how we can collaborate to achieve our goals." ]
             , Route.Cv
-                |> Route.link [] [ Html.text "Click here to view my CV." ]
+                |> Route.link [] [ Html.text "Take a look at my CV." ]
             ]
         , Html.div [ Attribute.style "position" "relative", Attribute.style "padding" "1rem" ]
             [ Html.img
@@ -399,3 +406,9 @@ animatedSvgBackground style =
                 ]
             ]
         ]
+
+
+companyHighlightSkills : List Job -> Html msg
+companyHighlightSkills jobs =
+    Html.div []
+        (List.map (\{ company } -> Html.p [ Attribute.style "border" "1px solid red" ] [ Html.text company.name ]) jobs)

@@ -1,14 +1,17 @@
 module Route.Index exposing (ActionData, Data, Model, Msg, route, view)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.Http
 import Components.Home exposing (..)
 import Components.Ribbon exposing (..)
+import DataModel.CV exposing (CV, cvDecoder)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import List exposing (reverse)
+import MimeType exposing (MimeType(..))
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Route
@@ -33,12 +36,20 @@ type alias RouteParams =
 
 
 type alias Data =
-    { message : String
+    { cv : CV
     }
 
 
 type alias ActionData =
     {}
+
+
+getRequest : BackendTask FatalError CV
+getRequest =
+    BackendTask.Http.getJson
+        "https://raw.githubusercontent.com/jmtalarn/manfred-cv-json/main/CV/MAC.json"
+        cvDecoder
+        |> BackendTask.allowFatal
 
 
 route : StatelessRoute RouteParams Data ActionData
@@ -53,8 +64,7 @@ route =
 data : BackendTask FatalError Data
 data =
     BackendTask.succeed Data
-        |> BackendTask.andMap
-            (BackendTask.succeed "Hello!")
+        |> BackendTask.andMap getRequest
 
 
 head :
@@ -82,6 +92,10 @@ view :
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app shared =
+    let
+        { experience } =
+            app.data.cv
+    in
     { title = "Joan Maria Talarn ~ web developer"
     , body =
         [ ribbon "This is me!"
@@ -93,6 +107,7 @@ view app shared =
             [ hero
             , blog
             , cv
+            , companyHighlightSkills experience
             , book
             ]
 
