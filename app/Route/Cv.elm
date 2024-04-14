@@ -2,8 +2,8 @@ module Route.Cv exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Http
-import Components.Icon as Icon
-import Components.ManfredLogo as ManfredLogo
+import Components.Icons.Icon as Icon
+import Components.Icons.ManfredLogo as ManfredLogo
 import DataModel.CV exposing (AsideProjects(..), CV, Company, Education, Job, PersonalInfo, Role, cvDecoder, sortEducation)
 import Date
 import Dict exposing (..)

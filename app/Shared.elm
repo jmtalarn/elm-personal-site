@@ -99,7 +99,7 @@ view sharedData page model toMsg pageView =
     { body =
         [ NavBar.view model MenuClicked
             |> Html.map toMsg
-        , Html.main_ [ Attribute.style "margin" "0 2rem" ] pageView.body
+        , Html.main_ [ Attribute.style "margin" "0 1rem", Attribute.style "position" "relative" ] pageView.body
         , Footer.footer sharedData.now
         ]
     , title = pageView.title

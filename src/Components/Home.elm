@@ -1,7 +1,10 @@
 module Components.Home exposing (..)
 
+import Components.Icons.Home as HomeIcon
+import Components.Icons.Icon as Icon
 import Html exposing (Html)
 import Html.Attributes as Attribute
+import Phosphor
 import Route
 import Svg exposing (path, svg)
 import Svg.Attributes as SvgAttr
@@ -12,7 +15,8 @@ caretoStyle =
     [ Attribute.style "border-radius" "50%"
     , Attribute.style "z-index" "1"
     , Attribute.style "position" "relative"
-    , Attribute.style "width" "22rem"
+    , Attribute.style "max-width" "22rem"
+    , Attribute.style "width" "100%"
     ]
 
 
@@ -20,20 +24,44 @@ portrait : List (Html msg)
 portrait =
     [ Html.div
         [ Attribute.style "position" "relative"
-        , Attribute.style "width" "22rem"
+        , Attribute.style "max-width" "22rem"
+        , Attribute.style "width" "100%"
         , Attribute.style "border-radius" "50%"
-        , Attribute.style "flex" "0 0 22rem"
+
+        --, Attribute.style "flex" "0 0 22rem"
         ]
         [ Html.img (Attribute.src "/images/home/careto_trucat-removebg-preview.png" :: caretoStyle) []
         , animatedSvgBackground
             [ Attribute.style "position" "absolute"
             , Attribute.style "height" "22rem"
-            , Attribute.style "width" "35rem"
-            , Attribute.style "left" "-8rem"
+            , Attribute.style "max-width" "35rem"
+            , Attribute.style "width" "100%"
+            , Attribute.style "left" "0rem"
             , Attribute.style "top" "0rem"
             , Attribute.style "filter" "blur(40px)"
             ]
         ]
+    ]
+
+
+antonFontAttributeStyle : List (Html.Attribute msg)
+antonFontAttributeStyle =
+    [ Attribute.style "font-family" "\"Anton\", sans-serif"
+    , Attribute.style "font-weight" "400"
+    , Attribute.style "font-style" "normal"
+    , Attribute.style "font-size" "3rem"
+    , Attribute.style "line-height" "3rem"
+    ]
+
+
+workSansAttributeStyle : List (Html.Attribute msg)
+workSansAttributeStyle =
+    [ Attribute.style "font-family" "\"Work Sans\", sans-serif"
+    , Attribute.style "font-optical-sizing" "auto"
+    , Attribute.style "font-weight" "300"
+    , Attribute.style "font-style" "normal"
+    , Attribute.style "font-size" "1.3rem"
+    , Attribute.style "line-height" "2"
     ]
 
 
@@ -42,15 +70,35 @@ message =
     Html.div
         [ Attribute.class "hero-message", Attribute.style "flex" "1 1 18rem" ]
         [ Html.h1
-            [ Attribute.class "hero-title "
-            , attributeLinearGradient
-            , Attribute.style "background-clip" "text"
-            , Attribute.style "color" "transparent"
-            , Attribute.style "filter" "url(#hue-rotate)"
-            ]
+            ([ Attribute.class "hero-title "
+             , attributeLinearGradient
+             , Attribute.style "background-clip" "text"
+             , Attribute.style "color" "transparent"
+             , Attribute.style "filter" "url(#hue-rotate)"
+             , Attribute.style "text-align" "right"
+             ]
+                ++ antonFontAttributeStyle
+            )
             [ Html.text "I'm a web developer" ]
-        , Html.p [ Attribute.class "hero-text" ]
-            [ Html.text "Javascript, Html and CSS. Decorating it often with React and Typescript. Quite a bit of Java and NodeJs. Amusing myself with Elm." ]
+        , Html.p (Attribute.class "hero-text" :: workSansAttributeStyle)
+            [ Html.text "HTML "
+            , HomeIcon.html5 [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text " Javascript "
+            , HomeIcon.javascript [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ", and CSS "
+            , HomeIcon.css3 [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ". Decorating it often with React "
+            , HomeIcon.react [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text " and Typescript "
+            , HomeIcon.typescript [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ". Quite a bit of Java "
+            , HomeIcon.java [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text " and NodeJs "
+            , HomeIcon.nodejs [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ". Amusing myself with Elm "
+            , HomeIcon.elm [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text "."
+            ]
         ]
 
 
@@ -91,10 +139,11 @@ blog =
             , Route.Blog__Page__ { page = Nothing }
                 |> Route.link [] [ Html.text "Web dev notes" ]
             ]
-        , Html.div [ Attribute.style "position" "relative" ]
+        , Html.div [ Attribute.style "position" "relative", Attribute.style "padding" "1rem" ]
             [ Html.img
                 [ Attribute.src "/images/home/openart-image_Ko4Z9KtJ_1712956581329_raw.jpg"
-                , Attribute.style "width" "20rem"
+                , Attribute.style "max-width" "20rem"
+                , Attribute.style "width" "100%"
                 , Attribute.style "flex" "0 0 20rem"
                 , Attribute.style "border-radius" "10px"
                 ]
@@ -251,10 +300,11 @@ cv =
             , Route.Cv
                 |> Route.link [] [ Html.text "CV" ]
             ]
-        , Html.div [ Attribute.style "position" "relative" ]
+        , Html.div [ Attribute.style "position" "relative", Attribute.style "padding" "1rem" ]
             [ Html.img
                 [ Attribute.src "/images/home/openart-image_LlRWZaUM_1712956596110_raw.jpg"
-                , Attribute.style "width" "20rem"
+                , Attribute.style "max-width" "20rem"
+                , Attribute.style "width" "100%"
                 , Attribute.style "flex" "0 0 20rem"
                 , Attribute.style "border-radius" "10px"
                 ]
@@ -267,11 +317,11 @@ cv =
 colorfulBlurredBackground : Html msg
 colorfulBlurredBackground =
     Html.div
-        [ Attribute.style "width" "100%"
-        , Attribute.style "height" "100%"
+        [ Attribute.style "width" "calc(100% - 2rem)"
+        , Attribute.style "height" "calc(100% - 2rem)"
         , Attribute.style "position" "absolute"
-        , Attribute.style "top" "1rem"
-        , Attribute.style "left" "1rem"
+        , Attribute.style "top" "2rem"
+        , Attribute.style "left" "2rem"
         , Attribute.style "z-index" "-1"
         , attributeLinearGradient
         , Attribute.style "filter" "url(#hue-rotate) blur(5px)"
@@ -359,8 +409,11 @@ ribbon text =
         , Attribute.style "height" "150px"
         , Attribute.style "overflow" "hidden"
         , Attribute.style "position" "absolute"
-        , Attribute.style "top" "3.8rem"
-        , Attribute.style "left" "1.3rem"
+        , Attribute.style "top" "1.4rem"
+        , Attribute.style "left" "-0.6rem"
+
+        -- , Attribute.style "top" "3.8rem"
+        -- , Attribute.style "left" "1.3rem"
         ]
         [ Html.node "style"
             []

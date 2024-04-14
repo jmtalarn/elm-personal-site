@@ -2,7 +2,7 @@ module Components.Blog.PostCard exposing (..)
 
 -- https://elmprogramming.com/commands.html#wiring-everything-up Sandbox
 
-import Components.Icon as Icon
+import Components.Icons.Icon as Icon
 import DataModel.BlogPosts exposing (BlogPost)
 import Date
 import Html exposing (Html)

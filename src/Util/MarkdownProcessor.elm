@@ -1,6 +1,6 @@
 module Util.MarkdownProcessor exposing (markdownToText, markdownToView)
 
-import Components.Icon as Icon
+import Components.Icons.Icon as Icon
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
 import Html exposing (Html)
