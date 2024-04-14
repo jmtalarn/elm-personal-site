@@ -289,7 +289,9 @@ sectionLinks showSections =
     let
         sectionLinkStyle =
             [ Attribute.style "color" "white"
-            , Attribute.style "background-color" "lightgreen"
+
+            --, Attribute.style "background-color" "lightgreen"
+            , Attribute.style "background-color" "cornflowerblue"
             , Attribute.style "text-decoration" "none"
             , Attribute.style "padding" "4px 1rem"
             , Attribute.style "border-radius" "10px"

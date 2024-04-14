@@ -30,8 +30,9 @@
 -   [ ] Home widget
     -   [x] This is me
     -   [x] Book
-    -   [ ] Copy
+    -   [x] Copy
     -   [ ] Interesting things
     -   [ ] Rotate Companies and skills
--   [] Header
--   [] Footer
+-   [x] Header
+-   [x] Footer
+-   [ ] Menu as popup
