@@ -38,7 +38,7 @@ It is used often to test React components and it comes configured by default in 
 Is quite common to have just-in-one-place projects, with both frontend components and backend controllers or API maybe just separated by folders.
 You can have a project with both React components in the frontend of the app and Node.js scripts in the backend providing your own API in the same application project.
 
-> > Jest can help you to test all together.
+> Jest can help you to test all together.
 
 ## Installing jest
 
@@ -56,9 +56,7 @@ or if you are using _yarn_ command
 yarn add -D jest
 ```
 
-<div style="margin: 1rem auto;">
-[Jest website](https://jestjs.io/" style="width: 100%; )
-</div>
+[Jest website](https://jestjs.io/")
 
 ## Generic and simple Jest configuration in your package.json
 

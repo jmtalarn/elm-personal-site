@@ -22,8 +22,8 @@ paginationStyle =
             .posts-pagination {
                 display: flex;
                 align-items: center;
-                justify-content: space-evenly;
-                margin: 2rem auto;
+                justify-content: space-between;
+                margin: 2rem;
             }
             .posts-pagination .page {
                 width: 2rem;
