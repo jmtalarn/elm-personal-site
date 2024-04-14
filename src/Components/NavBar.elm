@@ -2,7 +2,7 @@ module Components.NavBar exposing (..)
 
 -- import Effect exposing (Effect)
 
-import Components.Icon as Icon
+import Components.Icons.Icon as Icon
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Html.Events

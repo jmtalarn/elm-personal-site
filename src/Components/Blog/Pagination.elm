@@ -1,7 +1,7 @@
 module Components.Blog.Pagination exposing (..)
 
 import Browser
-import Components.Icon as Icon
+import Components.Icons.Icon as Icon
 import DataModel.BlogPosts exposing (BlogPost)
 import Date
 import Effect exposing (Effect)

@@ -1,4 +1,4 @@
-module Components.Icon exposing (..)
+module Components.Icons.Icon exposing (..)
 
 import Dict
 import Html exposing (Html)

@@ -1,6 +1,6 @@
 module Components.NotFound exposing (..)
 
-import Components.Icon as Icon
+import Components.Icons.Icon as Icon
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Phosphor

@@ -1,4 +1,4 @@
-module Components.ManfredLogo exposing (..)
+module Components.Icons.ManfredLogo exposing (..)
 
 import Html exposing (..)
 import Svg exposing (path, svg)

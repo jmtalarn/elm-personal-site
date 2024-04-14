@@ -86,7 +86,7 @@ view app shared =
         [ ribbon "This is me!"
         , Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
-            , Attribute.style "padding" "2rem"
+            , Attribute.style "padding" "5rem 1rem 1rem"
             , Attribute.style "margin" "2rem 0rem"
             ]
             [ hero
