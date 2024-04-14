@@ -36,7 +36,7 @@ menuStyle =
     , Attribute.style "margin" "0"
     , Attribute.style "right" "0"
     , Attribute.style "padding" "1rem 2rem"
-    , Attribute.style "z-index" "1"
+    , Attribute.style "z-index" "2"
     ]
 
 

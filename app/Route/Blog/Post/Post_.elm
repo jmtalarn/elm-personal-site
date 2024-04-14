@@ -2,6 +2,7 @@ module Route.Blog.Post.Post_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import Components.Blog.PostHeader as PostHeader
+import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
 import Dict
@@ -123,24 +124,26 @@ blogPostStyle : Html msg
 blogPostStyle =
     Html.node "style"
         []
-        [ Html.text ".blog-post {"
-        , Html.text "    padding: 0 1rem;"
-        , Html.text "    max-width: 960px;"
-        , Html.text "    margin: 0 auto;"
-        , Html.text "}"
-        , Html.text ".blog-post p {"
-        , Html.text "    text-align: justify;"
-        , Html.text "}"
-        , Html.text ".blog-post iframe {"
-        , Html.text "   max-width: 100%;"
-        , Html.text "}"
-        , Html.text ".blog-post img {"
-        , Html.text "   margin-bottom: 1rem"
-        , Html.text "}"
-        , Html.text ".blog-post figcaption {"
-        , Html.text "   font-weight: 100;"
-        , Html.text "   font-style: oblique;"
-        , Html.text "}"
+        [ Html.text """
+            .blog-post {
+                padding: 0 1rem;"
+                max-width: 960px;"
+                margin: 0 auto;"
+            }
+            .blog-post p {
+                text-align: justify;"
+            }
+            .blog-post iframe {
+                max-width: 100%;"
+            }
+            .blog-post img {
+                margin-bottom: 1rem"
+            }
+            .blog-post figcaption {
+                font-weight: 100;"
+                font-style: oblique;"
+            }
+        """
         ]
 
 
@@ -165,8 +168,15 @@ view app sharedModel =
       --     , EMarkdown.toHtmlWith markdownOptions [] body ] ++ markdownToView body
       body =
         [ blogPostStyle
-        , PostHeader.show title cover tags category date
-        , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView body)
+        , ribbonReverse "Blog post"
+        , Html.div
+            [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
+            , Attribute.style "padding" "0rem 1rem"
+            , Attribute.style "margin" "2rem 0rem"
+            ]
+            [ PostHeader.show title cover tags category date
+            , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView body)
+            ]
         ]
 
     --  , body = [ Html.text "You're on the page Blog.Post_", ExplorationsMarkdown.toHtmlWith { githubFlavored = Just { tables = True, breaks = False }, defaultHighlighting = Just "elm", sanitize = True, smartypants = False } [] body ]

@@ -80,23 +80,23 @@ message =
                 ++ antonFontAttributeStyle
             )
             [ Html.text "I'm a web developer" ]
-        , Html.p (Attribute.class "hero-text" :: workSansAttributeStyle)
-            [ Html.text "HTML "
+        , Html.p ([ Attribute.class "hero-text", Attribute.style "text-align" "justify" ] ++ workSansAttributeStyle)
+            [ Html.text "HTML"
             , HomeIcon.html5 [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text " Javascript "
-            , HomeIcon.javascript [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text ", and CSS "
+            , Html.text ", Javascript"
+            , HomeIcon.javascript [ Attribute.style "margin-left" "5px", Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ", and CSS"
             , HomeIcon.css3 [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text ". Decorating it often with React "
-            , HomeIcon.react [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text " and Typescript "
-            , HomeIcon.typescript [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text ". Quite a bit of Java "
-            , HomeIcon.java [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text " and NodeJs "
-            , HomeIcon.nodejs [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
-            , Html.text ". Amusing myself with Elm "
-            , HomeIcon.elm [ Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ". Decorating it often with React"
+            , HomeIcon.react [ Attribute.style "margin-left" "4px", Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text " and Typescript"
+            , HomeIcon.typescript [ Attribute.style "margin-left" "5px", Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ". Quite a bit of Java"
+            , HomeIcon.java [ Attribute.style "margin-left" "2px", Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text " and NodeJs"
+            , HomeIcon.nodejs [ Attribute.style "margin-left" "3px", Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
+            , Html.text ". Amusing myself with Elm"
+            , HomeIcon.elm [ Attribute.style "margin-left" "5px", Attribute.style "vertical-align" "text-bottom", Attribute.style "width" "2rem", Attribute.style "height" "2rem" ]
             , Html.text "."
             ]
         ]
@@ -296,9 +296,9 @@ cv =
                 []
                 [ Html.text "Check my CV"
                 ]
-            , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Quis aute enim dolor excepteur ullamco Lorem ex occaecat commodo ut culpa culpa occaecat aliqua. Laboris laborum ex labore sunt exercitation sunt qui enim incididunt ad. Nostrud id veniam in quis consectetur velit labore dolor dolore voluptate exercitation dolor. Duis excepteur id cillum consequat do minim ut ullamco." ]
+            , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Please take a moment to explore my CV to learn more about my background, working experience, education, certifications, and aside projects. I'm excited to share my journey with you and showcase how my skills and expertise can add value to your team or project.\n            Thank you for considering my profile, and I look forward to the opportunity to connect and discuss how we can collaborate to achieve our goals." ]
             , Route.Cv
-                |> Route.link [] [ Html.text "CV" ]
+                |> Route.link [] [ Html.text "Click here to view my CV." ]
             ]
         , Html.div [ Attribute.style "position" "relative", Attribute.style "padding" "1rem" ]
             [ Html.img
@@ -398,61 +398,4 @@ animatedSvgBackground style =
                     []
                 ]
             ]
-        ]
-
-
-ribbon : String -> Html msg
-ribbon text =
-    Html.div
-        [ Attribute.class "ribbon"
-        , Attribute.style "width" "150px"
-        , Attribute.style "height" "150px"
-        , Attribute.style "overflow" "hidden"
-        , Attribute.style "position" "absolute"
-        , Attribute.style "top" "1.4rem"
-        , Attribute.style "left" "-0.6rem"
-
-        -- , Attribute.style "top" "3.8rem"
-        -- , Attribute.style "left" "1.3rem"
-        ]
-        [ Html.node "style"
-            []
-            [ Html.text """
-                .ribbon::before,
-                .ribbon::after {
-                    position: absolute;
-                    z-index: -1;
-                    content: '';
-                    display: block;
-                    border: 5px solid #2980b9;
-                    border-top-color: transparent;
-                    border-left-color: transparent;
-                }
-                .ribbon::before {
-                    top: 0;
-                    right: 0;
-                }
-                .ribbon::after {
-                    bottom: 0;
-                    left: 0;
-                }
-                """
-            ]
-        , Html.span
-            [ Attribute.style "position" "absolute"
-            , Attribute.style "display" "block"
-            , Attribute.style "width" "225px"
-            , Attribute.style "padding" "15px 0"
-            , Attribute.style "background-color" "#3498db"
-            , Attribute.style "box-shadow" "0 5px 10px rgba(0,0,0,.1)"
-            , Attribute.style "color" "#fff"
-            , Attribute.style "font" "700 18px/1 'Lato', sans-serif"
-            , Attribute.style "text-shadow" "0 1px 1px rgba(0,0,0,.2)"
-            , Attribute.style "text-transform" "uppercase"
-            , Attribute.style "text-align" "center"
-            , Attribute.style "right" "-25px"
-            , Attribute.style "top" "30px"
-            , Attribute.style "transform" "rotate(-45deg)"
-            ]
-            [ Html.text text ]
         ]

@@ -2,6 +2,7 @@ module Route.Index exposing (ActionData, Data, Model, Msg, route, view)
 
 import BackendTask exposing (BackendTask)
 import Components.Home exposing (..)
+import Components.Ribbon exposing (..)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo

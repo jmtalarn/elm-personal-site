@@ -33,3 +33,5 @@
     -   [ ] Copy
     -   [ ] Interesting things
     -   [ ] Rotate Companies and skills
+-   [] Header
+-   [] Footer

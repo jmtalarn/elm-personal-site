@@ -3,6 +3,7 @@ module Route.Blog.Page__ exposing (ActionData, Data, Model, Msg, route)
 import BackendTask exposing (BackendTask)
 import Components.Blog.Pagination exposing (pagination)
 import Components.Blog.PostCard exposing (blogPostCard)
+import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
 import FatalError exposing (FatalError)
@@ -134,15 +135,6 @@ blogPostGridStyle =
     ]
 
 
-
--- [ Attribute.style "display" "grid"
--- , Attribute.style "grid-template-rows" "auto"
--- , Attribute.style "grid-template-columns" "repeat(auto-fit, minmax(20rem, 1fr))"
--- , Attribute.style "grid-gap" "1rem"
--- , Attribute.style "grid-auto-flow" "dense"
--- ]
-
-
 sortPosts : List BlogPost -> List BlogPost
 sortPosts posts =
     List.sortWith
@@ -158,6 +150,27 @@ sortPosts posts =
                     LT
         )
         posts
+
+
+antonFontAttributeStyle : List (Html.Attribute msg)
+antonFontAttributeStyle =
+    [ Attribute.style "font-family" "\"Anton\", sans-serif"
+    , Attribute.style "font-weight" "400"
+    , Attribute.style "font-style" "normal"
+    , Attribute.style "font-size" "3rem"
+    , Attribute.style "line-height" "3rem"
+    ]
+
+
+workSansAttributeStyle : List (Html.Attribute msg)
+workSansAttributeStyle =
+    [ Attribute.style "font-family" "\"Work Sans\", sans-serif"
+    , Attribute.style "font-optical-sizing" "auto"
+    , Attribute.style "font-weight" "300"
+    , Attribute.style "font-style" "normal"
+    , Attribute.style "font-size" "3rem"
+    , Attribute.style "line-height" "2"
+    ]
 
 
 view :
@@ -177,8 +190,22 @@ view app shared =
     in
     { title = title
     , body =
-        [ Html.h1 [] [ Html.text "This is the blog index" ]
-        , Html.div blogPostGridStyle (List.map blogPostCard blogPosts)
-        , pagination page totalPages
+        [ ribbon "blog"
+        , Html.div
+            [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
+            , Attribute.style "padding" "1rem"
+            , Attribute.style "margin" "2rem 0rem"
+            ]
+            [ Html.h1
+                [ Attribute.style "margin-left" "4rem" ]
+                [ Html.span antonFontAttributeStyle
+                    [ Html.text "Web dev notes" ]
+                , Html.span workSansAttributeStyle
+                    [ Html.text " blog" ]
+                ]
+            , pagination page totalPages
+            , Html.div blogPostGridStyle (List.map blogPostCard blogPosts)
+            , pagination page totalPages
+            ]
         ]
     }

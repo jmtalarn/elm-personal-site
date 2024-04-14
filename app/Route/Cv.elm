@@ -4,6 +4,7 @@ import BackendTask exposing (BackendTask)
 import BackendTask.Http
 import Components.Icons.Icon as Icon
 import Components.Icons.ManfredLogo as ManfredLogo
+import Components.Ribbon exposing (..)
 import DataModel.CV exposing (AsideProjects(..), CV, Company, Education, Job, PersonalInfo, Role, cvDecoder, sortEducation)
 import Date
 import Dict exposing (..)
@@ -240,7 +241,15 @@ view app shared { selectedSkills, show } =
             ]
     in
     { title = "jmtalarn ~ Web developer { Frontend developer } CV"
-    , body = List.map Tuple.second (List.filter Tuple.first bodyElements)
+    , body =
+        [ ribbonReverse "CV"
+        , Html.div
+            [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
+            , Attribute.style "padding" "3rem 2rem 2rem"
+            , Attribute.style "margin" "2rem 0rem"
+            ]
+            (List.map Tuple.second (List.filter Tuple.first bodyElements))
+        ]
     }
 
 
@@ -255,8 +264,7 @@ cvHeader showSections name selectedSkills =
         , Attribute.style "top" "0"
         , Attribute.style "background-color" "white"
         , Attribute.style "background" "linear-gradient(rgb(255, 255, 255) 95%, rgba(0, 212, 255, 0) 100%)"
-        , Attribute.style "margin" "0 -2rem"
-        , Attribute.style "padding" "1rem"
+        , Attribute.style "padding-top" "1rem"
         ]
         [ Html.h1
             [ Attribute.style "font-size" "min(calc(18px + 1.8vw),2rem)"

@@ -29,7 +29,9 @@ show title cover tags category date =
     in
     Html.header (headerStyle cover)
         [ Html.h1
-            [ Attribute.style "line-height" "2rem" ]
+            [ Attribute.style "line-height" "2rem"
+            , Attribute.style "width" "90%"
+            ]
             [ Html.text title
             ]
         , Html.div
@@ -76,5 +78,5 @@ headerStyle cover =
     , Attribute.style "background-repeat" "no-repeat"
     , Attribute.style "background-position" "center"
     , Attribute.style "background-size" "cover"
-    , Attribute.style "margin" "0 -2rem"
+    , Attribute.style "margin" "0 -1rem"
     ]
