@@ -12,12 +12,7 @@ caretoStyle =
     [ Attribute.style "border-radius" "50%"
     , Attribute.style "z-index" "1"
     , Attribute.style "position" "relative"
-
-    -- , Attribute.style "border" "2px dotted salmon"
-    -- , Attribute.style "box-shadow" "5px 5px 10px Dimgray"
     , Attribute.style "width" "22rem"
-
-    --, Attribute.style "height" "200px"
     ]
 
 
@@ -28,8 +23,6 @@ portrait =
         , Attribute.style "width" "22rem"
         , Attribute.style "border-radius" "50%"
         , Attribute.style "flex" "0 0 22rem"
-
-        -- , Attribute.style "z-index" "1"
         ]
         [ Html.img (Attribute.src "/images/home/careto_trucat-removebg-preview.png" :: caretoStyle) []
         , animatedSvgBackground
@@ -88,8 +81,6 @@ blog =
         , Attribute.style "flex-wrap" "wrap"
         , Attribute.style "margin" "4rem auto"
         , Attribute.style "max-width" "960px"
-
-        --, Attribute.style "flex-wrap" "wrap-reverse"
         ]
         [ Html.div [ Attribute.style "flex" "1 1 40%" ]
             [ Html.h2
@@ -128,8 +119,6 @@ book =
         , Attribute.style "position" "relative"
         , Attribute.style "gap" "2rem"
         , Attribute.style "flex-wrap" "wrap"
-
-        --, Attribute.style "margin" "4rem auto"
         , Attribute.style "max-width" "640px"
         ]
         [ Html.node "style"
@@ -252,8 +241,6 @@ cv =
         , Attribute.style "flex-wrap" "wrap"
         , Attribute.style "margin" "4rem auto"
         , Attribute.style "max-width" "960px"
-
-        --, Attribute.style "flex-wrap" "wrap-reverse"
         ]
         [ Html.div [ Attribute.style "flex" "1 1 40%" ]
             [ Html.h2
@@ -372,9 +359,6 @@ ribbon text =
         , Attribute.style "height" "150px"
         , Attribute.style "overflow" "hidden"
         , Attribute.style "position" "absolute"
-
-        -- , Attribute.style "top" "-10px"
-        -- , Attribute.style "left" "-10px"
         , Attribute.style "top" "3.8rem"
         , Attribute.style "left" "1.3rem"
         ]
