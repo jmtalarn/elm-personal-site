@@ -1,15 +1,20 @@
-module Route.Index exposing (ActionData, Data, Model, Msg, route)
+module Route.Index exposing (ActionData, Data, Model, Msg, route, view)
 
 import BackendTask exposing (BackendTask)
+import Components.Home exposing (..)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
-import Html
+import Html exposing (Html)
+import Html.Attributes as Attribute
+import List exposing (reverse)
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Route
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
+import Svg exposing (path, svg)
+import Svg.Attributes as SvgAttr
 import UrlPath
 import View exposing (View)
 
@@ -78,19 +83,20 @@ view :
 view app shared =
     { title = "Joan Maria Talarn ~ web developer"
     , body =
-        [ Html.h1 [] [ Html.text "This is me! " ]
-        , Html.p []
-            [ Html.text <| "The message is: " ++ app.data.message
+        [ ribbon "This is me!"
+        , Html.div
+            [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
+            , Attribute.style "padding" "2rem"
+            , Attribute.style "margin" "2rem 0rem"
             ]
-        , Html.ul []
-            [ Html.li []
-                [ Route.Blog__Page__ { page = Nothing }
-                    |> Route.link [] [ Html.text "Web dev notes" ]
-                ]
-            , Html.li []
-                [ Route.Cv
-                    |> Route.link [] [ Html.text "CV" ]
-                ]
+            [ hero
+            , blog
+            , cv
+            , book
             ]
+
+        -- , Html.p []
+        --     [ Html.text <| "The message is: " ++ app.data.message
+        --     ]
         ]
     }
