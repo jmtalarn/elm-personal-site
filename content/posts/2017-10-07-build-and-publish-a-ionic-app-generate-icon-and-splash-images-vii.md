@@ -53,26 +53,26 @@ If you want to generate specifically only one target system you can specify a th
 The best option is always getting a professional doing that work. This can be an expensive option but there are many affordable options like **[Fiverr marketplace](http://track.fiverr.com/visit/?bta=16718&nci=5456)** full of professionals with a low price initial packs starting at **5$** or **[Envato Market](https://graphicriver.net/category/logo-templates?sort=price-asc&ref=jmtalarn)** where you can find logo templates from **6$** (formerly [http://graphicriver.net](https://graphicriver.net/?osr=tn&_ga=2.63050665.76736797.1507416297-993347448.1504486834&ref=jmtalarn) )
 
 [![Fiverr link](http://fiverr.ck-cdn.com/tn/serve/?cid=415444)](http://track.fiverr.com/visit/?bta=16718&nci=5456)
-[![Envato link](../images/envato-300x243.jpg)](https://graphicriver.net/category/logo-templates?sort=price-asc&ref=jmtalarn)
+[![Envato link](/images/envato-300x243.jpg)](https://graphicriver.net/category/logo-templates?sort=price-asc&ref=jmtalarn)
 
 <h4>DIY resources</h4>
 But if you're a friend of the [DIY](https://en.wikipedia.org/wiki/Do_it_yourself), as I am, you could find interesting the following resources.
 
 -   **[Material Icon generator](https://android-material-icon-generator.bitdroid.de/)**. You can upload a custom svg file or use one from the default material icons collection to generate a nice rounded or squared materialized icon for your Android app.
-    [](../images/material-icon-generator.png)
+    [](/images/material-icon-generator.png)
 
 -   **[Pixabay](https://pixabay.com/)**. Thousands of images free to use, [Creative Commons](https://en.wikipedia.org/wiki/Creative_Commons_license) licensed.
-    [](../images/pixabay-search.png)
+    [](/images/pixabay-search.png)
 
 And if after all, you dare to edit and modify by your own the assets I recommend these two, widely known, open source programs, included in all repositories of any Linux distro.
 
--   [Gimp icon](../images/icon-gimp.png)
+-   [Gimp icon](/images/icon-gimp.png)
     **GIMP**
     <blockquote>
     GIMP is a cross-platform image editor available for GNU/Linux, OS X, Windows and more operating systems. It is free software, you can change its source code and distribute your changes.
     Whether you are a graphic designer, photographer, illustrator, or scientist, GIMP provides you with sophisticated tools to get your job done. You can further enhance your productivity with GIMP thanks to many customization options and 3rd party plugins.
     </blockquote>
--   [Inkscape icon](../images/icon-inkscape.png)
+-   [Inkscape icon](/images/icon-inkscape.png)
     **Inkscape**
     <blockquote>Inkscape is an open-source vector graphics editor similar to Adobe Illustrator, Corel Draw, Freehand, or Xara X. What sets Inkscape apart is its use of Scalable Vector Graphics (SVG), an open XML-based W3C standard, as the native format.
     </blockquote>

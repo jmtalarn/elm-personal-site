@@ -35,7 +35,8 @@
     -   [ ] Rotate Companies and skills
 -   [x] Header
 -   [x] Footer
+-   [x] Post max-width
 -   [ ] Menu as popup
--   [ ] Fix posts
-    -   [ ] Broken images on frameworks-for-testing-your-javascript-code
-    -   [ ] Big images on one-source-of-truth-for-all-Redux-javascript-components
+-   [x] Fix posts
+    -   [x] Broken images on frameworks-for-testing-your-javascript-code
+    -   [x] Big images on one-source-of-truth-for-all-Redux-javascript-components

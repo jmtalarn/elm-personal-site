@@ -126,22 +126,22 @@ blogPostStyle =
         []
         [ Html.text """
             .blog-post {
-                padding: 0 1rem;"
-                max-width: 960px;"
-                margin: 0 auto;"
+                padding: 0 1rem;
+                max-width: 960px;
+                margin: 0 auto;
             }
             .blog-post p {
-                text-align: justify;"
+                text-align: justify;
             }
             .blog-post iframe {
-                max-width: 100%;"
+                max-width: 100%;
             }
             .blog-post img {
                 margin-bottom: 1rem"
             }
             .blog-post figcaption {
-                font-weight: 100;"
-                font-style: oblique;"
+                font-weight: 100;
+                font-style: oblique;
             }
         """
         ]
@@ -168,14 +168,16 @@ view app sharedModel =
       --     , EMarkdown.toHtmlWith markdownOptions [] body ] ++ markdownToView body
       body =
         [ blogPostStyle
-        , ribbonReverse "Blog post"
         , Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
             , Attribute.style "padding" "0rem 1rem"
-            , Attribute.style "margin" "2rem 0rem"
+            , Attribute.style "margin" "2rem auto"
+            , Attribute.style "max-width" "960px"
+            , Attribute.style "position" "relative"
             ]
             [ PostHeader.show title cover tags category date
             , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView body)
+            , ribbonReverse "Blog post"
             ]
         ]
 

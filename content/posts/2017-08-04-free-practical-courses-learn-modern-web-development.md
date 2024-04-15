@@ -25,7 +25,7 @@ these cover from basic to advanced aspects of the web development, but necessary
 
 <!--more-->
 <h2> Shaping up with AngularJS</h2>
-[![](../images/Shaping-Up-With-AngularJS.png)](https://www.codeschool.com/courses/shaping-up-with-angularjs)
+[![](/images/Shaping-Up-With-AngularJS.png)](https://www.codeschool.com/courses/shaping-up-with-angularjs)
 <!--img class="aligncenter size-full" src="" alt="" width="1397" height="423" /-->
 
 This is a free course from [Code School a PluralSight company](https://www.codeschool.com/). I know Angular is about its 4 version but there is a lot of projects using the firsts versions of this framework. Also AngularJs is quite different than the Angular.io so it's good to learn about it. It's not necessary to learn AngularJs to learn Angular.io but it gives you an idea about from where is coming all of this and can give you an idea about how this kind of frameworks works.
@@ -35,7 +35,7 @@ This is a free course from [Code School a PluralSight company](https://www.codes
 **Link** [https://www.codeschool.com/courses/shaping-up-with-angularjs](https://www.codeschool.com/courses/shaping-up-with-angularjs)
 
 <h2>Progressive Web Applications training</h2>
-[![](../images/2017-07-31-16_18_47-Progressive-Web-Apps-Training-_-Web-_-Google-Developers.png)](https://developers.google.com/web/ilt/pwa/)
+[![](/images/2017-07-31-16_18_47-Progressive-Web-Apps-Training-_-Web-_-Google-Developers.png)](https://developers.google.com/web/ilt/pwa/)
   <!--img class="aligncenter size-full"
     src="" alt="" width="1671"
     height="562" /-->

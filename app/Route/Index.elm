@@ -98,17 +98,19 @@ view app shared =
     in
     { title = "Joan Maria Talarn ~ web developer"
     , body =
-        [ ribbon "This is me!"
-        , Html.div
+        [ Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
             , Attribute.style "padding" "5rem 1rem 1rem"
-            , Attribute.style "margin" "2rem 0rem"
+            , Attribute.style "margin" "2rem auto"
+            , Attribute.style "position" "relative"
+            , Attribute.style "max-width" "1024px"
             ]
             [ hero
             , blog
             , cv
             , companyHighlightSkills experience
             , book
+            , ribbon "This is me!"
             ]
 
         -- , Html.p []
