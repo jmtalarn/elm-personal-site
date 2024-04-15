@@ -21,9 +21,13 @@ navBarStyle =
     , Attribute.style "align-items" "center"
     , Attribute.style "justify-content" "space-between"
     , Attribute.style "flex-wrap" "wrap"
+    ]
+        ++ gradientColorEffect
 
-    --
-    , Attribute.style "background" "linear-gradient(90deg, rgb(255, 95, 109) 0%, rgb(255, 195, 113) 100%)"
+
+gradientColorEffect : List (Html.Attribute msg)
+gradientColorEffect =
+    [ Attribute.style "background" "linear-gradient(90deg, rgb(255, 95, 109) 0%, rgb(255, 195, 113) 100%)"
     , Attribute.style "background-clip" "text"
     , Attribute.style "color" "transparent"
     , Attribute.style "filter" "url(#hue-rotate)"
@@ -85,26 +89,6 @@ whiteLinksStyle =
     ]
 
 
-menuStyle : List (Html.Attribute msg)
-menuStyle =
-    [ Attribute.style "position" "absolute"
-    , Attribute.style "background-color" "white"
-
-    --, Attribute.style "background-color" "dimgray"
-    , Attribute.style "margin" "0"
-    , Attribute.style "right" "0"
-    , Attribute.style "padding" "1rem 2rem"
-    , Attribute.style "z-index" "2"
-
-    --
-    --
-    , Attribute.style "background" "linear-gradient(90deg, rgb(255, 95, 109) 0%, rgb(255, 195, 113) 100%)"
-    , Attribute.style "background-clip" "text"
-    , Attribute.style "color" "transparent"
-    , Attribute.style "filter" "url(#hue-rotate)"
-    ]
-
-
 antonFontAttributeStyle : List (Html.Attribute msg)
 antonFontAttributeStyle =
     [ Attribute.style "font-family" "\"Anton\", sans-serif"
@@ -126,75 +110,155 @@ workSansAttributeStyle =
     ]
 
 
+siteTitle : Html msg
+siteTitle =
+    Html.h1
+        ([ Attribute.style "margin" "0"
+         ]
+            ++ gradientColorEffect
+        )
+        [ Route.Index
+            |> Route.link
+                (whiteLinksStyle
+                    ++ [ Attribute.style "display" "flex"
+                       , Attribute.style "align-items" "center"
+                       , Attribute.style "gap" "1rem"
+                       ]
+                )
+                [ Icon.light
+                    Phosphor.houseLine
+                    (Just
+                        [ Attribute.style "font-size" "3rem"
+                        , Attribute.style "color" "dimgray"
+                        , Attribute.style "fill" "url(#gradient)"
+                        ]
+                    )
+                , Html.span antonFontAttributeStyle [ Html.text "jmtalarn.com" ]
+                ]
+        ]
+
+
 view : { a | showMenu : Bool } -> msg -> Html msg
 view model menuClickedMsg =
-    Html.nav navBarStyle
-        [ Html.h1
-            [ Attribute.style "margin" "0"
-            ]
-            [ Route.Index
-                |> Route.link
-                    (whiteLinksStyle
-                        ++ [ Attribute.style "display" "flex"
-                           , Attribute.style "align-items" "center"
-                           , Attribute.style "gap" "1rem"
-                           ]
-                    )
-                    [ Icon.light
-                        Phosphor.houseLine
-                        (Just
-                            [ Attribute.style "font-size" "3rem"
-                            , Attribute.style "color" "dimgray"
-                            , Attribute.style "fill" "url(#gradient)"
-                            ]
-                        )
-                    , Html.span antonFontAttributeStyle [ Html.text "jmtalarn.com" ]
-                    ]
-            ]
-        , Html.div
-            (Attribute.style "margin-left" "auto" :: workSansAttributeStyle)
-            [ Html.div
-                [ Attribute.style "display" "flex"
-                , Attribute.style "align-items" "center"
-                , Attribute.style "gap" "1rem"
-                ]
-                [ Html.button
-                    [ Html.Events.onClick menuClickedMsg
-                    , Attribute.style "background" "none"
-                    , Attribute.style "border" "none"
-                    , Attribute.style "color" "inherit"
-                    , Attribute.style "cursor" "pointer"
-                    , Attribute.style "display" "flex"
+    Html.header []
+        [ Html.nav navBarStyle
+            [ siteTitle
+            , Html.div
+                (Attribute.style "margin-left" "auto" :: workSansAttributeStyle)
+                [ Html.div
+                    [ Attribute.style "display" "flex"
                     , Attribute.style "align-items" "center"
-                    , Attribute.style "font-size" "inherit"
-                    , Attribute.style "font-weight" "inherit"
+                    , Attribute.style "gap" "1rem"
                     ]
-                    ([]
-                        ++ (if model.showMenu then
-                                [ Html.text "Less things", Icon.light Phosphor.caretUp Nothing ]
-
-                            else
-                                [ Html.text "More things", Icon.light Phosphor.caretDown Nothing ]
-                           )
-                    )
-                , Route.Blog__Page__ { page = Nothing } |> Route.link whiteLinksStyle [ Html.text "Blog" ]
+                    [ Html.button
+                        [ Html.Events.onClick menuClickedMsg
+                        , Attribute.style "background" "none"
+                        , Attribute.style "border" "none"
+                        , Attribute.style "color" "inherit"
+                        , Attribute.style "cursor" "pointer"
+                        , Attribute.style "display" "flex"
+                        , Attribute.style "align-items" "center"
+                        , Attribute.style "font-size" "inherit"
+                        , Attribute.style "font-weight" "inherit"
+                        ]
+                        [ Icon.light Phosphor.cards (Just [ Attribute.style "fill" "url(#gradient)" ]) ]
+                    , Route.Blog__Page__ { page = Nothing } |> Route.link whiteLinksStyle [ Html.text "Blog" ]
+                    ]
                 ]
-            , if model.showMenu then
-                Html.ul menuStyle
-                    [ Html.li []
-                        [ Route.Blog__Page__ { page = Nothing }
-                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Web dev notes" ]
-                        ]
-                    , Html.li []
-                        [ Route.Cv
-                            |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "CV" ]
-                        ]
-                    ]
+            , svgHueRotateFilter
+            ]
+        , dialog model.showMenu menuClickedMsg
+        ]
+
+
+dialogId : String
+dialogId =
+    "menu-dialog"
+
+
+
+-- menuStyle : List (Html.Attribute msg)
+-- menuStyle =
+--     [ Attribute.style "background-color" "white"
+--     , Attribute.style "margin" "0"
+--     , Attribute.style "right" "0"
+--     , Attribute.style "padding" "1rem 2rem"
+--     , Attribute.style "background" "linear-gradient(90deg, rgb(255, 95, 109) 0%, rgb(255, 195, 113) 100%)"
+--     , Attribute.style "background-clip" "text"
+--     , Attribute.style "color" "transparent"
+--     , Attribute.style "filter" "url(#hue-rotate)"
+--     ]
+
+
+dialog : Bool -> msg -> Html msg
+dialog open menuClickedMsg =
+    Html.section []
+        [ Html.node "style"
+            []
+            [ Html.text """
+                dialog::backdrop {
+                    background: rgba(0,0,0,.40);
+                    -webkit-backdrop-filter: blur(2px);
+                    backdrop-filter: blur(2px);
+                    z-index: 1;
+                }
+        """ ]
+        , Html.node "dialog"
+            ((if open then
+                [ Attribute.attribute "open" "open" ]
 
               else
-                Html.text ""
+                []
+             )
+                ++ [ Attribute.style "z-index" "2"
+                   , Attribute.style "position" "fixed"
+
+                   --, Attribute.style "background-color" "white"
+                   , Attribute.style "top" "5%"
+                   , Attribute.style "width" "90%"
+                   , Attribute.style "max-width" "840px"
+                   , Attribute.style "height" "50%"
+                   , Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.9)"
+                   , Attribute.style "border-radius" "15px"
+                   , Attribute.style "border" "none"
+                   , Attribute.id dialogId
+                   ]
+            )
+            [ Html.ul
+                (gradientColorEffect ++ [])
+                [ Html.li [] [ siteTitle ]
+                , Html.li [ Attribute.style "font-size" "2rem" ]
+                    [ Route.Blog__Page__ { page = Nothing }
+                        |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Web dev notes" ]
+                    ]
+                , Html.li [ Attribute.style "font-size" "2rem" ]
+                    [ Route.Cv
+                        |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "CV" ]
+                    ]
+                ]
+            , Html.button
+                [ Attribute.style "background" "none"
+                , Attribute.style "color" "inherit"
+                , Attribute.style "border" "none"
+                , Attribute.style "padding" "0"
+                , Attribute.style "font" "inherit"
+                , Attribute.style "cursor" "pointer"
+                , Attribute.style "outline" "inherit"
+                , Attribute.style "position" "absolute"
+                , Attribute.style "top" "1rem"
+                , Attribute.style "right" "1rem"
+                , Html.Events.onClick menuClickedMsg
+                ]
+                [ Icon.duotone
+                    Phosphor.xSquare
+                    (Just
+                        [ Attribute.style "color" "salmon"
+                        , Attribute.style "font-size" "2rem"
+                        ]
+                    )
+                ]
+            , svgHueRotateFilter
             ]
-        , svgHueRotateFilter
         ]
 
 
