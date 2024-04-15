@@ -341,7 +341,7 @@ showEasyLikeScore likeness easiness _ =
         like =
             Maybe.withDefault 0 <| String.toInt likeness
     in
-    Html.div [ Attribute.class "score" ]
+    Html.div [ Attribute.class "score", Attribute.style "display" "flex", Attribute.style "align-items" "center", Attribute.style "justify-content" "space-around", Attribute.style "margin" "2rem" ]
         [ Html.label []
             [ Html.text "Easiness"
             , Html.text (printStartsOutOf easy 5)
