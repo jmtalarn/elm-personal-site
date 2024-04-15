@@ -36,3 +36,6 @@
 -   [x] Header
 -   [x] Footer
 -   [ ] Menu as popup
+-   [ ] Fix posts
+    -   [ ] Broken images on frameworks-for-testing-your-javascript-code
+    -   [ ] Big images on one-source-of-truth-for-all-Redux-javascript-components
