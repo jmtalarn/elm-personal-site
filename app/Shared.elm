@@ -1,4 +1,4 @@
-module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
+port module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Time
@@ -72,7 +72,15 @@ update msg model =
             ( model, Effect.none )
 
         MenuClicked ->
-            ( { model | showMenu = not model.showMenu }, Effect.none )
+            ( { model | showMenu = not model.showMenu }, Effect.fromCmd (toggleDialog dialogId) )
+
+
+dialogId : String
+dialogId =
+    "menu-dialog"
+
+
+port toggleDialog : String -> Cmd msg
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
