@@ -242,13 +242,14 @@ view app shared { selectedSkills, show } =
     in
     { title = "jmtalarn ~ Web developer { Frontend developer } CV"
     , body =
-        [ ribbonReverse "CV"
-        , Html.div
+        [ Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
             , Attribute.style "padding" "3rem 2rem 2rem"
-            , Attribute.style "margin" "2rem 0rem"
+            , Attribute.style "margin" "2rem auto"
+            , Attribute.style "position" "relative"
+            , Attribute.style "max-width" "1024px"
             ]
-            (List.map Tuple.second (List.filter Tuple.first bodyElements))
+            (ribbonReverse "CV" :: List.map Tuple.second (List.filter Tuple.first bodyElements))
         ]
     }
 

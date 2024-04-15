@@ -33,7 +33,7 @@ Moreover, new JavaScript app development tools are being created and released al
 
 [TypeScript](https://www.typescriptlang.org/), one of Microsoft’s open-sourced programming languages, is a powerful compiler that can truly help you translate your source code into your target’s executable code. TypeScript needs to be in every app development toolbox! Other highly-regarded language compilers are CoffeeScript and Babel. I am a big fan of the latter tool since it is a wiz at translating the very precise ES2015 language into a code that is compatible across multiple browsers. Working, whenever possible, with code that is cross-browser compatible makes app development work much easier and therefore enjoyable.
 
-![Transpiling vs cross](../images/compiler-like-tools-js.png)
+![Transpiling vs cross](/images/compiler-like-tools-js.png)
 
 ## JavaScript HTML Template Engines
 
@@ -51,6 +51,6 @@ The tools shared above can truly help you avoid some of the more tedious and dif
 
 Nope, JavaScript ain’t going anywhere; you need to do what you can to embrace it.
 
-![Atwood's Law: Any application that can be written in Javascript, will eventually be written in JavaScript](../images/atwoods-law.png)
+![Atwood's Law: Any application that can be written in Javascript, will eventually be written in JavaScript](/images/atwoods-law.png)
 
 > This is a guest post. Michael loves to write on new and engaging technologies. Follow him on his [blog](https://fueled.com/blog).

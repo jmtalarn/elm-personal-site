@@ -60,7 +60,7 @@ I went throw some more issues with these steps.
 
 I tried first using a plugin that you can find in the Wordpress plugins repository.
 
-![A nice plugin to export from Wordpress to Jekyll](../images/jekyll-exporter.png)
+![A nice plugin to export from Wordpress to Jekyll](/images/jekyll-exporter.png)
 
 It's called [_Jekyll exporter_](https://github.com/benbalter/wordpress-to-jekyll-exporter/) and is developed by [Ben Balter](https://twitter.com/BenBalter)
 
@@ -72,7 +72,7 @@ It worked pretty well, because it exports the posts and a bunch of information l
 
 Then I exported using the included export tool from the Wordpress administration downloading a file called _wordpress.xml_
 
-![Export all the blog content to a xml file with the default export option in tools on the Wordpress Administration](../images/export-wordpress-xml.png)
+![Export all the blog content to a xml file with the default export option in tools on the Wordpress Administration](/images/export-wordpress-xml.png)
 After that I installed some gems to get a script able to do the importation
 
 ```bash

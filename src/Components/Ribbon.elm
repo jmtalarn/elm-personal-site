@@ -22,7 +22,7 @@ renderRibbon text reverse =
          , Attribute.style "height" "150px"
          , Attribute.style "overflow" "hidden"
          , Attribute.style "position" "absolute"
-         , Attribute.style "top" "1.4rem"
+         , Attribute.style "top" "-10px"
          , Attribute.style "z-index" "1"
          ]
             ++ (if reverse then

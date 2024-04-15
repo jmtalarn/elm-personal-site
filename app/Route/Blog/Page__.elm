@@ -190,11 +190,12 @@ view app shared =
     in
     { title = title
     , body =
-        [ ribbon "blog"
-        , Html.div
+        [ Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
             , Attribute.style "padding" "1rem"
-            , Attribute.style "margin" "2rem 0rem"
+            , Attribute.style "margin" "2rem auto"
+            , Attribute.style "position" "relative"
+            , Attribute.style "max-width" "1024px"
             ]
             [ Html.h1
                 [ Attribute.style "margin-left" "4rem" ]
@@ -206,6 +207,7 @@ view app shared =
             , pagination page totalPages
             , Html.div blogPostGridStyle (List.map blogPostCard blogPosts)
             , pagination page totalPages
+            , ribbon "blog"
             ]
         ]
     }

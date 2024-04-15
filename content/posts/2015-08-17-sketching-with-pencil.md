@@ -48,10 +48,10 @@ There is a FontAwesome stencil collection but its based on an earlier version of
 1. Install the Font Awesome as a font system. The True Type font can be downloaded from [http://fortawesome.github.io/Font-Awesome/](http://fortawesome.github.io/Font-Awesome/) inside the fonts folder in the zipped package.
 2. Look for the unicode value for the icon you want to include
 3. Search in a Characters map tool like the one in Windows or any equivalent in your Linux distro for the unicode value for the Font Awesome font
-   ![Characters map from Windows](../images/2015-04-09-11_57_23-Mapa-de-caracteres.png)
+   ![Characters map from Windows](/images/2015-04-09-11_57_23-Mapa-de-caracteres.png)
 4. Copy it to the clipboard
 5. Create a simple Plain text element from the common shapes collection
-   ![Plain text element](../images/2015-04-09-10_14_05-Plain-text-label_---Pencil-1.png)
+   ![Plain text element](/images/2015-04-09-10_14_05-Plain-text-label_---Pencil-1.png)
 6. Paste the content of the clipboard. You probably will see a non-character valid until you change the font to the FontAwesome installed in your OS.
 7. Right click over the element and choose the _'Add to my collections...'_ option. If you choose to autogenerate icon preview is probably that doesn't display it on your collection. It's up to you to provide a generated preview but I think naming it properly to identify it at a glance should be enough.
 8. Now you have the icon in your private collection. Repeat for all the needed icons.
@@ -61,6 +61,6 @@ There is a FontAwesome stencil collection but its based on an earlier version of
 Pencil also allows you to export in many formats like a PDF document, a collection of PNG images or an HTML project. There is some of them bundled in the application but you have also a repository with some more options [http://code.google.com/p/evoluspencil/downloads/list?q=label:Template](http://code.google.com/p/evoluspencil/downloads/list?q=label:Template)
 
 My favourite is the one that adds jQuery functionality to the HTML. This let's you to show all the interactions you designed to move from one page to other in the project. And if you forgot any of this jumps you can reach any page you want from the side pages index.
-![Indexed jQuery export](../images/2015-04-09-11_58_40-Wireframe-ep.png)
+![Indexed jQuery export](/images/2015-04-09-11_58_40-Wireframe-ep.png)
 
 > Check the webpage [http://pencil.evolus.vn/](http://pencil.evolus.vn/)

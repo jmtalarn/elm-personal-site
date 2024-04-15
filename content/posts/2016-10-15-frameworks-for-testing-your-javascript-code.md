@@ -18,8 +18,9 @@ author: jmtalarn
 
 ## Jasmine
 
-[http://jasmine.github.io/](http://jasmine.github.io/)  
-![Frameworks for testing your Javascript code](../images/jasmine-horizontal.svg)
+[http://jasmine.github.io/](http://jasmine.github.io/)
+
+![Frameworks for testing your Javascript code](/images/jasmine-horizontal.svg)
 
 > Jasmine is a behavior-driven development framework for testing JavaScript code. It does not depend on any other JavaScript frameworks. It does not require a DOM. And it has a clean, obvious syntax so that you can easily write tests.
 
@@ -30,7 +31,7 @@ Jasmine suits for testing any piece of callable javascript
 ## Karma
 
 [https://karma-runner.github.io](https://karma-runner.github.io)  
-![Frameworks for testing your Javascript code](../images/karma.png)
+![Frameworks for testing your Javascript code](/images/karma.png)
 
 > Karma is essentially a tool which spawns a web server that executes source code against test code for each of the browsers connected. The results of each test against each browser are examined and displayed via the command line to the developer such that they can see which browsers and tests passed or failed.
 
@@ -41,7 +42,7 @@ Karma let's you use the Jasmine framework, or any other, for unit testing your A
 ## Protractor
 
 [http://www.protractortest.org/#/](http://www.protractortest.org/#/)  
-![Frameworks for testing your Javascript code](../images/protractor-logo-450.png)
+![Frameworks for testing your Javascript code](/images/protractor-logo-450.png)
 
 > Protractor is an end-to-end test framework for AngularJS applications. Protractor runs tests against your application running in a real browser, interacting with it as a user would.
 
@@ -52,7 +53,7 @@ Protractor will run your configured tests, with the `describe` and `it` syntax f
 ## Mocha
 
 [https://mochajs.org/](https://mochajs.org/)  
-![Frameworks for testing your Javascript code](../images/mocha.svg)
+![Frameworks for testing your Javascript code](/images/mocha.svg)
 
 > Mocha is a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun. Mocha tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test cases.
 
