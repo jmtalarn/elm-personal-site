@@ -408,7 +408,16 @@ animatedSvgBackground style =
         ]
 
 
+companyHighlight : Job -> Html msg
+companyHighlight { company, roles } =
+    let
+        grabbedSkills =
+            List.concat (List.map .skills roles)
+    in
+    Html.p [] [ Html.img [ Attribute.alt company.name, Attribute.src company.image, Attribute.style "width" "15rem" ] [], Html.ul [] (List.map (\skill -> Html.li [] [ Html.text skill ]) grabbedSkills) ]
+
+
 companyHighlightSkills : List Job -> Html msg
 companyHighlightSkills jobs =
     Html.div []
-        (List.map (\{ company } -> Html.p [ Attribute.style "border" "1px solid red" ] [ Html.text company.name ]) jobs)
+        (List.map companyHighlight jobs)
