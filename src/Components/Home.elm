@@ -410,5 +410,15 @@ animatedSvgBackground style =
 
 companyHighlightSkills : List Job -> Html msg
 companyHighlightSkills jobs =
-    Html.div []
-        (List.map companySkillHighlight jobs)
+    Html.div
+        [ Attribute.style "display" "block"
+        , Attribute.style "white-space" "nowrap"
+
+        --, Attribute.style "transform" "translateX(calc(-n*100% - n*1rem))"
+        ]
+        [ Html.div
+            [ Attribute.style "display" "flex"
+            , Attribute.style "gap" "1rem"
+            ]
+            (List.map companySkillHighlight jobs)
+        ]

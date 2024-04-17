@@ -16,10 +16,13 @@ companySkillHighlight { company, roles } =
     Html.div
         [ Attribute.style "border" "1px solid salmon"
         , Attribute.style "border-radius" "15px"
-        , Attribute.style "margin" "1rem 0"
+
+        -- , Attribute.style "margin" "1rem 2rem 1rem 2rem"
         , Attribute.style "display" "flex"
         , Attribute.style "flex-direction" "column"
         , Attribute.style "align-items" "center"
+        , Attribute.style "width" "100%"
+        , Attribute.style "flex" "1 0 100%"
         ]
         [ Html.div
             [ Attribute.style "margin" "1rem"
@@ -39,7 +42,7 @@ companySkillHighlight { company, roles } =
             , Attribute.style "align-items" "center"
             , Attribute.style "justify-content" "center"
             , Attribute.style "gap" "1rem"
-            , Attribute.style "margin-bottom" "1rem"
+            , Attribute.style "padding" "1rem"
             ]
             (List.map
                 (\skill ->
