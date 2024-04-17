@@ -14,8 +14,8 @@ companySkillHighlight { company, roles } =
             List.concat (List.map .skills roles)
     in
     Html.div
-        [ Attribute.style "border" "1px solid salmon"
-        , Attribute.style "border-radius" "15px"
+        [ -- Attribute.style "border" "1px solid salmon",
+          Attribute.style "border-radius" "15px"
 
         -- , Attribute.style "margin" "1rem 2rem 1rem 2rem"
         , Attribute.style "display" "flex"
