@@ -110,12 +110,14 @@ workSansAttributeStyle =
     ]
 
 
-siteTitle : Html msg
-siteTitle =
+siteTitle : List (Html.Attribute msg) -> Html msg
+siteTitle style =
     Html.h1
         ([ Attribute.style "margin" "0"
+         , Attribute.style "display" "inline-block"
          ]
             ++ gradientColorEffect
+            ++ style
         )
         [ Route.Index
             |> Route.link
@@ -142,7 +144,7 @@ view : { a | showMenu : Bool } -> msg -> Html msg
 view model menuClickedMsg =
     Html.header []
         [ Html.nav navBarStyle
-            [ siteTitle
+            [ siteTitle []
             , Html.div
                 (Attribute.style "margin-left" "auto" :: workSansAttributeStyle)
                 [ Html.div
@@ -167,7 +169,7 @@ view model menuClickedMsg =
                 ]
             , svgHueRotateFilter
             ]
-        , dialog model.showMenu menuClickedMsg
+        , dialog menuClickedMsg
         ]
 
 
@@ -190,8 +192,17 @@ dialogId =
 --     ]
 
 
-dialog : Bool -> msg -> Html msg
-dialog open menuClickedMsg =
+regularDialogFont : List (Html.Attribute msg)
+regularDialogFont =
+    [ Attribute.style "font-family" "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\""
+    , Attribute.style "font-size" "1rem"
+    , Attribute.style "width" "25rem"
+    , Attribute.style "color" "dimGray"
+    ]
+
+
+dialog : msg -> Html msg
+dialog menuClickedMsg =
     Html.section []
         [ Html.node "style"
             []
@@ -204,36 +215,34 @@ dialog open menuClickedMsg =
                 }
         """ ]
         , Html.node "dialog"
-            ((if open then
-                [ Attribute.attribute "open" "open" ]
+            [ Attribute.style "z-index" "2"
+            , Attribute.style "position" "fixed"
 
-              else
-                []
-             )
-                ++ [ Attribute.style "z-index" "2"
-                   , Attribute.style "position" "fixed"
-
-                   --, Attribute.style "background-color" "white"
-                   , Attribute.style "top" "5%"
-                   , Attribute.style "width" "90%"
-                   , Attribute.style "max-width" "840px"
-                   , Attribute.style "height" "50%"
-                   , Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.9)"
-                   , Attribute.style "border-radius" "15px"
-                   , Attribute.style "border" "none"
-                   , Attribute.id dialogId
-                   ]
-            )
+            --, Attribute.style "background-color" "white"
+            , Attribute.style "top" "5%"
+            , Attribute.style "width" "90%"
+            , Attribute.style "max-width" "840px"
+            , Attribute.style "height" "50%"
+            , Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.9)"
+            , Attribute.style "border-radius" "15px"
+            , Attribute.style "border" "none"
+            , Attribute.id dialogId
+            ]
             [ Html.ul
                 (gradientColorEffect ++ [])
-                [ Html.li [] [ siteTitle ]
-                , Html.li [ Attribute.style "font-size" "2rem" ]
+                [ Html.li []
+                    [ siteTitle [ Html.Events.onClick menuClickedMsg ]
+                    , Html.p regularDialogFont [ Html.text "The site home index page." ]
+                    ]
+                , Html.li [ Attribute.style "font-size" "2rem", Attribute.style "margin-top" "3rem" ]
                     [ Route.Blog__Page__ { page = Nothing }
                         |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Web dev notes" ]
+                    , Html.p regularDialogFont [ Html.text "Web Dev Notes: Where I jot down tech insights, resources on technology and web development and handy tips to remember." ]
                     ]
-                , Html.li [ Attribute.style "font-size" "2rem" ]
+                , Html.li [ Attribute.style "font-size" "2rem", Attribute.style "margin-top" "3rem" ]
                     [ Route.Cv
                         |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "CV" ]
+                    , Html.p regularDialogFont [ Html.text "Explore my CV to learn about my background, experience, education, certifications, and projects." ]
                     ]
                 ]
             , Html.button

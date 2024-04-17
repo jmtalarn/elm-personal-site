@@ -6,7 +6,6 @@ type ElmPagesInit = {
 const config: ElmPagesInit = {
   load: async function (elmLoaded) {
     const app = await elmLoaded;
-    console.log("App loaded", app);
 
     app.ports.toggleDialog.subscribe(id => {
       const dialog = document.querySelector(`#${id}`)
