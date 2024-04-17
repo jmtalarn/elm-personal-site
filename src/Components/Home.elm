@@ -1,9 +1,9 @@
 module Components.Home exposing (..)
 
+import Components.CompanySkillHighlight exposing (companySkillHighlight)
 import Components.Icons.Home as HomeIcon
 import Components.Icons.Icon as Icon
 import DataModel.CV exposing (Job)
-import ErrorPage exposing (Msg)
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Phosphor
@@ -408,16 +408,7 @@ animatedSvgBackground style =
         ]
 
 
-companyHighlight : Job -> Html msg
-companyHighlight { company, roles } =
-    let
-        grabbedSkills =
-            List.concat (List.map .skills roles)
-    in
-    Html.p [] [ Html.img [ Attribute.alt company.name, Attribute.src company.image, Attribute.style "width" "15rem" ] [], Html.ul [] (List.map (\skill -> Html.li [] [ Html.text skill ]) grabbedSkills) ]
-
-
 companyHighlightSkills : List Job -> Html msg
 companyHighlightSkills jobs =
     Html.div []
-        (List.map companyHighlight jobs)
+        (List.map companySkillHighlight jobs)
