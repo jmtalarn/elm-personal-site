@@ -5,6 +5,7 @@ import BackendTask.Http
 import Components.Home exposing (..)
 import Components.Ribbon exposing (..)
 import DataModel.CV exposing (CV, cvDecoder)
+import Effect
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -15,7 +16,7 @@ import MimeType exposing (MimeType(..))
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Route
-import RouteBuilder exposing (App, StatelessRoute)
+import RouteBuilder exposing (App, StatefulRoute)
 import Shared
 import Svg exposing (path, svg)
 import Svg.Attributes as SvgAttr
@@ -24,11 +25,11 @@ import View exposing (View)
 
 
 type alias Model =
-    {}
+    { left : Int }
 
 
-type alias Msg =
-    ()
+type Msg
+    = SwiftLeft
 
 
 type alias RouteParams =
@@ -44,6 +45,18 @@ type alias ActionData =
     {}
 
 
+update :
+    RouteBuilder.App Data ActionData RouteParams
+    -> Shared.Model
+    -> Msg
+    -> Model
+    -> ( Model, Effect.Effect Msg )
+update app shared msg model =
+    case msg of
+        SwiftLeft ->
+            ( model, Effect.none )
+
+
 getRequest : BackendTask FatalError CV
 getRequest =
     BackendTask.Http.getJson
@@ -52,13 +65,28 @@ getRequest =
         |> BackendTask.allowFatal
 
 
-route : StatelessRoute RouteParams Data ActionData
+route : StatefulRoute RouteParams Data ActionData Model Msg
 route =
     RouteBuilder.single
         { head = head
         , data = data
         }
-        |> RouteBuilder.buildNoState { view = view }
+        |> RouteBuilder.buildWithLocalState
+            { view = view
+            , init = init
+            , update = update
+            , subscriptions = \_ _ _ _ -> Sub.none
+            }
+
+
+init :
+    RouteBuilder.App Data ActionData RouteParams
+    -> Shared.Model
+    -> ( Model, Effect.Effect Msg )
+init app shared =
+    ( { left = 0 }
+    , Effect.none
+    )
 
 
 data : BackendTask FatalError Data
@@ -90,8 +118,9 @@ head app =
 view :
     App Data ActionData RouteParams
     -> Shared.Model
+    -> Model
     -> View (PagesMsg Msg)
-view app shared =
+view app shared model =
     let
         { experience } =
             app.data.cv
