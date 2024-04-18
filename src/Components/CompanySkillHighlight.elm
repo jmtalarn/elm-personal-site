@@ -14,15 +14,13 @@ companySkillHighlight { company, roles } =
             List.concat (List.map .skills roles)
     in
     Html.div
-        [ -- Attribute.style "border" "1px solid salmon",
-          Attribute.style "border-radius" "15px"
-
-        -- , Attribute.style "margin" "1rem 2rem 1rem 2rem"
+        [ Attribute.style "border-radius" "15px"
         , Attribute.style "display" "flex"
         , Attribute.style "flex-direction" "column"
         , Attribute.style "align-items" "center"
         , Attribute.style "width" "100%"
         , Attribute.style "flex" "1 0 100%"
+        , Attribute.class "card"
         ]
         [ Html.div
             [ Attribute.style "margin" "1rem"
@@ -42,7 +40,7 @@ companySkillHighlight { company, roles } =
             , Attribute.style "align-items" "center"
             , Attribute.style "justify-content" "center"
             , Attribute.style "gap" "1rem"
-            , Attribute.style "padding" "1rem"
+            , Attribute.style "padding" "1rem 1rem 3rem 1rem"
             ]
             (List.map
                 (\skill ->
