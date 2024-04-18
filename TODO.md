@@ -33,8 +33,10 @@
     -   [x] Copy
     -   [ ] Interesting things
     -   [x] Rotate Companies and skills
-    -   [ ] Automatically rotate companies and skills
-    -   [ ] Amazon tag for the book
+    -   [x] Automatically rotate companies and skills
+    -   [x] Amazon tag for the book
+-   [ ] Sitemap
+
 -   [x] Header
 -   [x] Footer
 -   [x] Post max-width

@@ -18,9 +18,11 @@ import Html.Events as Events
 import MimeType exposing (MimeType(..))
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
+import Process
 import Route
 import RouteBuilder exposing (App, StatefulRoute)
 import Shared
+import Task
 import Time
 import UrlPath
 import View exposing (View)
@@ -62,6 +64,12 @@ type alias ActionData =
     {}
 
 
+sleepAndSwiftLeft : Int -> Cmd Msg
+sleepAndSwiftLeft length =
+    Process.sleep 4000
+        |> Task.perform (\_ -> SwiftLeft length)
+
+
 update :
     RouteBuilder.App Data ActionData RouteParams
     -> Shared.Model
@@ -82,11 +90,8 @@ update app shared msg model =
                             { position = modBy length ((Animator.current model.state |> .position) + 1), opacity = 1 }
                         ]
                         model.state
-
-                -- model.state
-                -- |> Animator.go Animator.slowly (modBy length (Animator.current model.position + 1))
               }
-            , Effect.none
+            , Effect.fromCmd (sleepAndSwiftLeft length)
             )
 
         Tick newTime ->
@@ -129,18 +134,13 @@ subscriptions routeParams path shared model =
         |> Animator.toSubscription Tick model
 
 
-initialState : State
-initialState =
-    { position = 0, opacity = 1 }
-
-
 init :
     RouteBuilder.App Data ActionData RouteParams
     -> Shared.Model
     -> ( Model, Effect.Effect Msg )
 init app shared =
     ( { state = Animator.init { position = 0, opacity = 1 } }
-    , Effect.none
+    , Effect.fromCmd (sleepAndSwiftLeft (List.length app.data.cv.experience))
     )
 
 
@@ -196,10 +196,6 @@ view app shared model =
             , book
             , ribbon "This is me!"
             ]
-
-        -- , Html.p []
-        --     [ Html.text <| "The message is: " ++ app.data.message
-        --     ]
         ]
     }
 

@@ -282,6 +282,7 @@ book =
                     []
                 ]
             ]
+        , featuredAvailableOnAmazonKindle
         ]
 
 
@@ -423,3 +424,32 @@ featuredSkillsAndCompaniesLabel =
             ++ workSansAttributeStyle
         )
         [ Html.text "Featured skills and companies" ]
+
+
+featuredAvailableOnAmazonKindle : Html msg
+featuredAvailableOnAmazonKindle =
+    Html.div
+        ([ Attribute.style "background-color" "#ffc600"
+         , Attribute.style "font-weight" "900"
+         , Attribute.style "transform-origin" "left center"
+         , Attribute.style "padding" "0.2rem 0rem 0.2rem 2rem"
+         , Attribute.style "bottom" "1rem"
+         , Attribute.style "right" "0rem"
+         , Attribute.style "position" "absolute"
+         , Attribute.style "z-index" "2"
+         , Attribute.style "box-shadow" "4px 4px 8px rgba(0, 0, 0, 0.8)"
+         ]
+            ++ workSansAttributeStyle
+            ++ [ Attribute.style "display" "flex"
+               , Attribute.style "align-items" "center"
+               , Attribute.style "width" "20rem"
+               , Attribute.style "paddo" "20rem"
+               ]
+        )
+        [ Html.text "Available on"
+        , HomeIcon.amazonKindle
+            [ Attribute.title "Amazon Kindle"
+            , Attribute.style "height" "2rem"
+            , Attribute.style "flex" "1"
+            ]
+        ]
