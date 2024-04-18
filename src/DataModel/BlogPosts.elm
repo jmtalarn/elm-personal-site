@@ -3,13 +3,14 @@ module DataModel.BlogPosts exposing (..)
 import BackendTask exposing (BackendTask)
 import BackendTask.File
 import BackendTask.Glob as Glob
+import Date exposing (Date)
+import Dict exposing (Dict)
+import FatalError exposing (FatalError)
 import Iso8601
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Extra as Decode
-import FatalError exposing (FatalError)
-import Date exposing (Date)
-import Dict exposing (Dict)
 import Time
+
 
 type alias BlogPost =
     { body : String
@@ -20,6 +21,7 @@ type alias BlogPost =
     , tags : List String
     , date : Date
     }
+
 
 blogPostsGlob : BackendTask error (List { fileName : String, filePath : String })
 blogPostsGlob =
@@ -40,7 +42,10 @@ blogPostsToDict : BackendTask FatalError (List BlogPost) -> BackendTask FatalErr
 blogPostsToDict blogPostList =
     blogPostList |> BackendTask.map (\list -> Dict.fromList (list |> List.map (\blogPost -> ( .slug blogPost, blogPost ))))
 
-type alias BlogPostList = List BlogPost
+
+type alias BlogPostList =
+    List BlogPost
+
 
 blogPosts : BackendTask FatalError (List BlogPost)
 blogPosts =
@@ -49,6 +54,7 @@ blogPosts =
         |> BackendTask.resolve
         |> BackendTask.allowFatal
 
+
 decodeDate : Decoder Date
 decodeDate =
     Iso8601.decoder
@@ -56,6 +62,8 @@ decodeDate =
             (\posix ->
                 Date.fromPosix Time.utc posix
             )
+
+
 
 -- decodeDate_ =
 --     Decode.string

@@ -9,7 +9,7 @@ import Html exposing (Html)
 import Html.Attributes as Attribute
 import Phosphor
 import Route
-import Util.MarkdownProcessor as MarkdownProcessor
+import Util.MarkdownProcessor exposing (getAbstract, markdownToText)
 
 
 blogPostCardStyle : Html msg
@@ -82,11 +82,6 @@ blogPostCardContentStyle =
     ]
 
 
-getAbstract : String -> String
-getAbstract body =
-    Maybe.withDefault "" <| List.head (String.split "<!--more-->" body)
-
-
 headerImageStyle : List (Html.Attribute msg)
 headerImageStyle =
     [ Attribute.style "width" "100%"
@@ -120,7 +115,7 @@ blogPostCard { title, slug, date, cover, body, tags, category } =
             ]
         , Html.div
             blogPostCardContentStyle
-            [ Html.p [] [ Html.text (MarkdownProcessor.markdownToText (getAbstract body)) ] ]
+            [ Html.p [] [ Html.text (markdownToText (getAbstract body)) ] ]
         , Html.footer []
             [ Html.div taggedContentStyle
                 (List.map
