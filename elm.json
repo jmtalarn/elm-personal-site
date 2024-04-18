@@ -16,6 +16,7 @@
             "dillonkearns/elm-form": "3.0.0",
             "dillonkearns/elm-markdown": "7.0.1",
             "dillonkearns/elm-pages": "10.0.3",
+            "dillonkearns/elm-sitemap": "1.0.2",
             "elm/browser": "1.0.2",
             "elm/bytes": "1.0.8",
             "elm/core": "1.0.5",
@@ -50,6 +51,7 @@
         },
         "indirect": {
             "Chadtech/elm-bool-extra": "2.4.2",
+            "billstclair/elm-xml-eeue56": "2.1.0",
             "dillonkearns/elm-cli-options-parser": "3.2.0",
             "dillonkearns/elm-date-or-date-time": "2.0.0",
             "elm/file": "1.0.5",
