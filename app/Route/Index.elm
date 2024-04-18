@@ -35,7 +35,7 @@ type alias State =
 
 
 type alias Model =
-    { state : Animator.Timeline State }
+    { state : Animator.Timeline State, tickCount : Int }
 
 
 animator : Animator.Animator Model
@@ -90,15 +90,26 @@ update app shared msg model =
                             { position = modBy length ((Animator.current model.state |> .position) + 1), opacity = 1 }
                         ]
                         model.state
+                , tickCount = initialTickCount
               }
-            , Effect.fromCmd (sleepAndSwiftLeft length)
+            , Effect.none
+              --Effect.fromCmd (sleepAndSwiftLeft length)
             )
 
         Tick newTime ->
-            ( model
-                |> Animator.update newTime animator
-            , Effect.none
-            )
+            let
+                { tickCount } =
+                    model
+            in
+            if tickCount == 0 then
+                update app shared (SwiftLeft (List.length app.data.cv.experience)) { model | tickCount = initialTickCount }
+                -- ( { model | tickCount = initialTickCount } |> Animator.update newTime animator, Effect.fromCmd (Cmd.map (always SwiftLeft (List.length app.data.cv.experience)) Cmd.none) )
+
+            else
+                ( { model | tickCount = model.tickCount - 1 }
+                    |> Animator.update newTime animator
+                , Effect.none
+                )
 
 
 getRequest : BackendTask FatalError CV
@@ -134,13 +145,19 @@ subscriptions routeParams path shared model =
         |> Animator.toSubscription Tick model
 
 
+initialTickCount : Int
+initialTickCount =
+    400
+
+
 init :
     RouteBuilder.App Data ActionData RouteParams
     -> Shared.Model
     -> ( Model, Effect.Effect Msg )
 init app shared =
-    ( { state = Animator.init { position = 0, opacity = 1 } }
-    , Effect.fromCmd (sleepAndSwiftLeft (List.length app.data.cv.experience))
+    ( { state = Animator.init { position = 0, opacity = 1 }, tickCount = initialTickCount }
+    , Effect.none
+      --fromCmd (sleepAndSwiftLeft (List.length app.data.cv.experience))
     )
 
 
