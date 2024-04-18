@@ -53,22 +53,6 @@ blogPost2RouteParams { slug } =
     RouteParams slug
 
 
-
--- BackendTask.succeed
--- [ { post = "hello2" }
--- , { post = "hello" }
--- ]
--- Markdown.Html.oneOf
---     [ Markdown.Html.tag "b" (Html.b [])
---     , Markdown.Html.tag "blockquote" (Html.blockquote [] )
---     , Markdown.Html.tag "p" (Html.p [])
---     , Markdown.Html.tag "a" (Html.a [])
---     , Markdown.Html.tag "span" (Html.span [])
---     , Markdown.Html.tag "div" (Html.div [])
---     , Markdown.Html.tag "iframe" (Html.iframe [])
---     ]
-
-
 type alias Data =
     { blogPost : BlogPost
     }
@@ -155,18 +139,9 @@ view app sharedModel =
     let
         { title, cover, tags, category, body, date } =
             app.data.blogPost
-
-        -- markdownOptions =
-        --     { githubFlavored = Just { tables = False, breaks = False }
-        --     , defaultHighlighting = Nothing
-        --     , sanitize = False
-        --     , smartypants = False
-        --    }
     in
     { title = app.data.blogPost.title ++ " 🗒️ web dev notes"
-    , -- , body = [ Html.text "You're on the page Blog.Post_"
-      --     , EMarkdown.toHtmlWith markdownOptions [] body ] ++ markdownToView body
-      body =
+    , body =
         [ blogPostStyle
         , Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
@@ -180,6 +155,4 @@ view app sharedModel =
             , ribbonReverse "Blog post"
             ]
         ]
-
-    --  , body = [ Html.text "You're on the page Blog.Post_", ExplorationsMarkdown.toHtmlWith { githubFlavored = Just { tables = True, breaks = False }, defaultHighlighting = Just "elm", sanitize = True, smartypants = False } [] body ]
     }

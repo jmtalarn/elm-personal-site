@@ -32,12 +32,14 @@
     -   [x] Book
     -   [x] Copy
     -   [ ] Interesting things
-    -   [ ] Rotate Companies and skills
+    -   [x] Rotate Companies and skills
+    -   [ ] Automatically rotate companies and skills
+    -   [ ] Amazon tag for the book
 -   [x] Header
 -   [x] Footer
 -   [x] Post max-width
 -   [x] Menu as popup
--   [ ] Add short copy to menu popup options
+-   [x] Add short copy to menu popup options
 -   [x] Fix posts
     -   [x] Broken images on frameworks-for-testing-your-javascript-code
     -   [x] Big images on one-source-of-truth-for-all-Redux-javascript-components

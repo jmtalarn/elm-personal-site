@@ -406,3 +406,20 @@ animatedSvgBackground style =
                 ]
             ]
         ]
+
+
+featuredSkillsAndCompaniesLabel : Html msg
+featuredSkillsAndCompaniesLabel =
+    Html.div
+        ([ Attribute.style "background-color" "#ffc600"
+         , Attribute.style "font-weight" "900"
+         , Attribute.style "transform-origin" "left center"
+         , Attribute.style "padding" "0 2rem"
+         , Attribute.style "bottom" "1rem"
+         , Attribute.style "position" "absolute"
+         , Attribute.style "z-index" "2"
+         , Attribute.style "box-shadow" "4px 4px 8px rgba(0, 0, 0, 0.8)"
+         ]
+            ++ workSansAttributeStyle
+        )
+        [ Html.text "Featured skills and companies" ]

@@ -26,27 +26,27 @@ import UrlPath
 import View exposing (View)
 
 
+type alias State =
+    { position : Int
+    , opacity : Int
+    }
+
+
 type alias Model =
-    { left : Animator.Timeline Int }
+    { state : Animator.Timeline State }
 
 
 animator : Animator.Animator Model
 animator =
     Animator.animator
         |> Animator.watching
-            .left
-            (\newLeft model -> { model | left = newLeft })
+            .state
+            (\newState model -> { model | state = newState })
 
 
 type Msg
     = SwiftLeft Int
     | Tick Time.Posix
-
-
-type StatesOfSwift
-    = HIDE
-    | MOVE Int
-    | SHOW
 
 
 type alias RouteParams =
@@ -72,14 +72,19 @@ update app shared msg model =
     case msg of
         SwiftLeft length ->
             ( { model
-                | left =
-                    model.left
-                        --|> Animator.go Animator.slowly (modBy length (Animator.current model.left + 1)) }, Effect.none )
-                        |> Animator.queue
-                            [ Animator.event Animator.quickly HIDE
-                            , Animator.event Animator.quickly <| MOVE (modBy length (Animator.current model.left + 1))
-                            , Animator.event Animator.quickly SHOW
-                            ]
+                | state =
+                    Animator.queue
+                        [ Animator.event (Animator.seconds 0.2)
+                            { position = Animator.current model.state |> .position, opacity = 0 }
+                        , Animator.event (Animator.seconds 0.1) { position = modBy length ((Animator.current model.state |> .position) + 1), opacity = 0 }
+                        , Animator.event
+                            (Animator.seconds 0.2)
+                            { position = modBy length ((Animator.current model.state |> .position) + 1), opacity = 1 }
+                        ]
+                        model.state
+
+                -- model.state
+                -- |> Animator.go Animator.slowly (modBy length (Animator.current model.position + 1))
               }
             , Effect.none
             )
@@ -124,12 +129,17 @@ subscriptions routeParams path shared model =
         |> Animator.toSubscription Tick model
 
 
+initialState : State
+initialState =
+    { position = 0, opacity = 1 }
+
+
 init :
     RouteBuilder.App Data ActionData RouteParams
     -> Shared.Model
     -> ( Model, Effect.Effect Msg )
 init app shared =
-    ( { left = Animator.init 0 }
+    ( { state = Animator.init { position = 0, opacity = 1 } }
     , Effect.none
     )
 
@@ -182,7 +192,7 @@ view app shared model =
             [ hero
             , blog
             , cv
-            , companyHighlightSkills experience model.left
+            , companyHighlightSkills experience model.state
             , book
             , ribbon "This is me!"
             ]
@@ -194,26 +204,42 @@ view app shared model =
     }
 
 
-companyHighlightSkills : List Job -> Animator.Timeline Int -> Html (PagesMsg Msg)
-companyHighlightSkills jobs swiftValueLeft =
+companyHighlightSkills : List Job -> Animator.Timeline State -> Html (PagesMsg Msg)
+companyHighlightSkills jobs state =
     Html.div
         [ Attribute.style "display" "block"
         , Attribute.style "white-space" "nowrap"
-
-        --, Attribute.style "transform" "translateX(calc(-n*100% - n*1rem))"
+        , Attribute.style "overflow" "hidden"
+        , Attribute.style "cursor" "pointer"
+        , Attribute.class "cards-container"
+        , Attribute.style "padding" "1rem"
+        , Attribute.title "Click to switch experience!"
+        , Attribute.style "position" "relative"
         ]
-        [ Html.div
+        [ Html.node "style" [] [ Html.text """
+            .cards-container .card {
+                box-sizing: border-box;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                transition: box-shadow 100ms ease-in;
+            }
+            .cards-container .card:hover {
+                box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.2);
+            }
+        """ ]
+        , Html.div
             [ Attribute.style "display" "flex"
-            , Attribute.style "gap" "1rem"
+            , Attribute.style "gap" "2rem"
             , Events.onClick (PagesMsg.fromMsg (SwiftLeft <| List.length jobs))
-            , Animator.Inline.style swiftValueLeft
+            , Animator.Inline.style
+                state
                 "transform"
-                --(\f -> "translate( calc( (" ++ String.fromFloat f ++ " * -100%) - " ++ String.fromFloat f ++ "*1rem - " ++ String.fromFloat f ++ "*2px ), 0) ")
-                (\f -> "translate( calc( (" ++ String.fromFloat f ++ " * -100%) - " ++ String.fromFloat f ++ "*1rem ), 0) ")
-                (\state ->
+                (\f -> "translate( calc( (" ++ String.fromFloat f ++ " * -100%) - " ++ String.fromFloat f ++ "*2rem ), 0) ")
+                (\state_ ->
                     Animator.at <|
-                        toFloat state
+                        toFloat state_.position
                 )
+            , Animator.Inline.opacity state (\state_ -> Animator.at <| toFloat state_.opacity)
             ]
             (List.map companySkillHighlight jobs)
+        , featuredSkillsAndCompaniesLabel
         ]
