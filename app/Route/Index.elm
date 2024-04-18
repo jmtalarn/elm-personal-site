@@ -7,6 +7,7 @@ import BackendTask.Http
 import Components.CompanySkillHighlight exposing (companySkillHighlight)
 import Components.Home exposing (..)
 import Components.Ribbon exposing (..)
+import Css exposing (flex)
 import DataModel.CV exposing (CV, Job, cvDecoder)
 import Effect
 import FatalError exposing (FatalError)
@@ -205,6 +206,9 @@ view app shared model =
             , Attribute.style "margin" "2rem auto"
             , Attribute.style "position" "relative"
             , Attribute.style "max-width" "1024px"
+            , Attribute.style "display" "flex"
+            , Attribute.style "flex-direction" "column"
+            , Attribute.style "gap" "5rem"
             ]
             [ hero
             , blog

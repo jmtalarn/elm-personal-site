@@ -1,4 +1,4 @@
-module Util.MarkdownProcessor exposing (markdownToText, markdownToView)
+module Util.MarkdownProcessor exposing (getAbstract, markdownToText, markdownToView)
 
 import Components.Icons.Icon as Icon
 import Components.TwitterTweet exposing (twitterTweet)
@@ -169,6 +169,11 @@ markdownToText markdownString =
         |> Result.withDefault []
         |> String.join " "
         |> String.replace "  " " "
+
+
+getAbstract : String -> String
+getAbstract body =
+    Maybe.withDefault "" <| List.head (String.split "<!--more-->" body)
 
 
 textRenderer : Renderer String
