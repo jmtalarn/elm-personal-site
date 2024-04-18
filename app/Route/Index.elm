@@ -147,7 +147,7 @@ subscriptions routeParams path shared model =
 
 initialTickCount : Int
 initialTickCount =
-    400
+    450
 
 
 init :
