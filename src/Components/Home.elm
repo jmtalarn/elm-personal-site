@@ -437,6 +437,7 @@ featuredAvailableOnAmazonKindle =
          , Attribute.style "right" "0rem"
          , Attribute.style "position" "absolute"
          , Attribute.style "z-index" "2"
+         , Attribute.style "width" "100%"
          , Attribute.style "box-shadow" "4px 4px 8px rgba(0, 0, 0, 0.8)"
          ]
             ++ workSansAttributeStyle

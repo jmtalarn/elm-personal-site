@@ -1,6 +1,7 @@
 module Components.CompanySkillHighlight exposing (companySkillHighlight)
 
 import Components.Icons.Home as HomeIcon
+import Css exposing (justifyContent)
 import DataModel.CV exposing (Job)
 import Dict
 import Html exposing (Html)
@@ -18,6 +19,7 @@ companySkillHighlight { company, roles } =
         , Attribute.style "display" "flex"
         , Attribute.style "flex-direction" "column"
         , Attribute.style "align-items" "center"
+        , Attribute.style "justifyContent" "center"
         , Attribute.style "width" "100%"
         , Attribute.style "flex" "1 0 100%"
         , Attribute.class "card"
