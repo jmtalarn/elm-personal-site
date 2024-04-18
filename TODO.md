@@ -25,7 +25,7 @@
     -   [x] Add "Powered by Manfred"
     -   [x] Filtering by clicking tags ??
     -   [x] Link to section and Hide and show content
--   [ ] Sitemap.xml
+-   [x] Sitemap.xml
 -   [ ] SEO stuff
 -   [ ] Home widget
     -   [x] This is me
@@ -34,9 +34,10 @@
     -   [ ] Interesting things
     -   [x] Rotate Companies and skills
     -   [x] Automatically rotate companies and skills
+        -   [x] To cancel current Sleep
     -   [x] Amazon tag for the book
--   [ ] Sitemap
-
+-   [x] Sitemap
+-   [ ] Rss
 -   [x] Header
 -   [x] Footer
 -   [x] Post max-width
