@@ -27,6 +27,7 @@
     -   [x] Link to section and Hide and show content
 -   [x] Sitemap.xml
 -   [ ] SEO stuff
+    -   [] Add social media info on head
 -   [ ] Home widget
     -   [x] This is me
     -   [x] Book

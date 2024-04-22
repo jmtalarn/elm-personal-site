@@ -60,12 +60,12 @@ head app =
         { canonicalUrlOverride = Nothing
         , siteName = "jmtalarn.com"
         , image =
-            { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
-            , alt = "elm-pages logo"
+            { url = [ "images", "favicon", "android-chrome-192x192.png" ] |> UrlPath.join |> Pages.Url.fromPath
+            , alt = "jmtalarn web dev notes blog logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Welcome to elm-pages!"
+        , description = "Page 404 due a Not Found error."
         , locale = Nothing
         , title = "jmtalarn.com ~ Home "
         }

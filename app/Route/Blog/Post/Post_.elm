@@ -16,7 +16,7 @@ import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import Time
-import Util.MarkdownProcessor as MarkdownProcessor
+import Util.MarkdownProcessor as MarkdownProcessor exposing (getAbstract, markdownToText)
 import View exposing (View)
 
 
@@ -85,7 +85,7 @@ head :
     -> List Head.Tag
 head app =
     let
-        { title, cover } =
+        { title, cover, body } =
             app.data.blogPost
     in
     Seo.summary
@@ -97,7 +97,7 @@ head app =
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "TODO"
+        , description = markdownToText (getAbstract body)
         , locale = Nothing
         , title = title
         }
