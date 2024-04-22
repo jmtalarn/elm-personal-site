@@ -14,6 +14,7 @@ import Rss
 import Site
 import Sitemap
 import Time
+import Util.Manifest exposing (manifest)
 import Util.MarkdownProcessor exposing (getAbstract, markdownToText)
 
 
@@ -52,17 +53,6 @@ routes getStaticRoutes htmlToString =
     --, Pages.Manifest.generator Site.canonicalUrl Manifest.config
     , Manifest.generator Site.config.canonicalUrl manifest
     ]
-
-
-manifest : BackendTask error Manifest.Config
-manifest =
-    Manifest.init
-        { name = "Site Name"
-        , description = "Description"
-        , startUrl = Route.Index |> Route.toPath
-        , icons = []
-        }
-        |> BackendTask.succeed
 
 
 postsBackendTask : BackendTask FatalError (List Rss.Item)
