@@ -41,7 +41,8 @@ routes getStaticRoutes htmlToString =
                                 , lastMod = Nothing
                                 }
                             )
-                        |> Sitemap.build { siteUrl = "https://elm-pages.com" }
+                        |> Sitemap.build { siteUrl = Site.config.canonicalUrl }
+                 --"https://elm-pages.com" }
                 )
         )
         |> ApiRoute.literal "sitemap.xml"
@@ -105,7 +106,7 @@ rss options itemsRequest =
                         , description = options.siteTagline
                         , url = options.siteUrl ++ "/" ++ String.join "/" options.indexPage
                         , lastBuildTime = options.builtAt
-                        , generator = Just "elm-pages"
+                        , generator = Just "jmtalarn" --"elm-pages"
                         , items = items
                         , siteUrl = options.siteUrl
                         }

@@ -115,12 +115,12 @@ head app =
         { canonicalUrlOverride = Nothing
         , siteName = title
         , image =
-            { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
-            , alt = "elm-pages logo"
+            { url = [ "images", "favicon", "android-chrome-192x192.png" ] |> UrlPath.join |> Pages.Url.fromPath
+            , alt = "jmtalarn web dev notes blog logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Welcome to elm-pages!"
+        , description = "Web Dev Notes, this is my blog. This is the index page."
         , locale = Nothing
         , title = title
         }
