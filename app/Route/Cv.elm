@@ -177,7 +177,7 @@ head app =
         { canonicalUrlOverride = Nothing
         , siteName = "jmtalarn.com"
         , image =
-            { url = [ "images", "favicon", "android-chrome-192x192.png" ] |> UrlPath.join |> Pages.Url.fromPath
+            { url = [ "images", "home", "openart-image_LlRWZaUM_1712956596110_raw.jpg" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "jmtalarn web dev notes blog logo"
             , dimensions = Nothing
             , mimeType = Nothing
@@ -240,7 +240,7 @@ view app shared { selectedSkills, show } =
             , ( True, poweredByManfred )
             ]
     in
-    { title = "jmtalarn ~ Web developer { Frontend developer } CV"
+    { title = "jmtalarn ~ Web developer { cv: \"Web developer\" } "
     , body =
         [ Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"

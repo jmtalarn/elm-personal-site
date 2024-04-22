@@ -7,7 +7,6 @@ import BackendTask.Http
 import Components.CompanySkillHighlight exposing (companySkillHighlight)
 import Components.Home exposing (..)
 import Components.Ribbon exposing (..)
-import Css exposing (flex)
 import DataModel.CV exposing (CV, Job, cvDecoder)
 import Effect
 import FatalError exposing (FatalError)
@@ -176,7 +175,7 @@ head app =
         { canonicalUrlOverride = Nothing
         , siteName = "jmtalarn.com"
         , image =
-            { url = [ "images", "favicon", "android-chrome-192x192.png" ] |> UrlPath.join |> Pages.Url.fromPath
+            { url = [ "images", "home", "careto_trucat-removebg-preview.png" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "jmtalarn web dev notes blog logo"
             , dimensions = Nothing
             , mimeType = Nothing
