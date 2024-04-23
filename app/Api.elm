@@ -15,7 +15,7 @@ import Site
 import Sitemap
 import Time
 import Util.Manifest exposing (manifest)
-import Util.MarkdownProcessor exposing (getAbstract, markdownToText)
+import Util.MarkdownProcessor exposing (getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
 
 
 routes :
@@ -24,7 +24,7 @@ routes :
     -> List (ApiRoute ApiRoute.Response)
 routes getStaticRoutes htmlToString =
     [ rss
-        { siteTagline = "Web dev notes tagline" -- SiteOld.tagline
+        { siteTagline = "Web Dev Notes: Where I jot down tech insights, resources on technology and web development and handy tips to remember." -- SiteOld.tagline
         , siteUrl = Site.config.canonicalUrl --SiteOld.canonicalUrl
         , title = "Web Dev Notes Blog"
         , builtAt = Pages.builtAt
@@ -43,7 +43,6 @@ routes getStaticRoutes htmlToString =
                                 }
                             )
                         |> Sitemap.build { siteUrl = Site.config.canonicalUrl }
-                 --"https://elm-pages.com" }
                 )
         )
         |> ApiRoute.literal "sitemap.xml"
@@ -53,6 +52,11 @@ routes getStaticRoutes htmlToString =
     --, Pages.Manifest.generator Site.canonicalUrl Manifest.config
     , Manifest.generator Site.config.canonicalUrl manifest
     ]
+
+
+wrapInCdata : String -> String
+wrapInCdata content =
+    "<![CDATA[" ++ content ++ "]]>"
 
 
 postsBackendTask : BackendTask FatalError (List Rss.Item)
@@ -67,8 +71,8 @@ postsBackendTask =
                     , categories = category
                     , author = "Joan Maria Talarn"
                     , pubDate = Rss.Date date
-                    , content = Just <| markdownToText body
-                    , contentEncoded = Nothing
+                    , content = Nothing
+                    , contentEncoded = Just (markdownToPlainHtml body) --Nothing
                     , enclosure = Nothing
                     }
                 )
@@ -96,7 +100,7 @@ rss options itemsRequest =
                         , description = options.siteTagline
                         , url = options.siteUrl ++ "/" ++ String.join "/" options.indexPage
                         , lastBuildTime = options.builtAt
-                        , generator = Just "jmtalarn" --"elm-pages"
+                        , generator = Just "jmtalarn.com" --"elm-pages"
                         , items = items
                         , siteUrl = options.siteUrl
                         }

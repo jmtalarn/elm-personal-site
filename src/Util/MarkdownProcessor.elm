@@ -1,4 +1,4 @@
-module Util.MarkdownProcessor exposing (getAbstract, markdownToText, markdownToView)
+module Util.MarkdownProcessor exposing (getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
 
 import Components.Icons.Icon as Icon
 import Components.TwitterTweet exposing (twitterTweet)
@@ -171,6 +171,17 @@ markdownToText markdownString =
         |> String.replace "  " " "
 
 
+markdownToPlainHtml : String -> String
+markdownToPlainHtml markdownString =
+    markdownString
+        |> Markdown.Parser.parse
+        |> Result.withDefault []
+        |> Markdown.Renderer.render plainHtmlRenderer
+        |> Result.withDefault []
+        |> String.join " "
+        |> String.replace "  " " "
+
+
 getAbstract : String -> String
 getAbstract body =
     Maybe.withDefault "" <| List.head (String.split "<!--more-->" body)
@@ -215,3 +226,186 @@ textRenderer =
     , tableCell = \_ _ -> ""
     , strikethrough = String.concat
     }
+
+
+plainHtmlRenderer : Renderer String
+plainHtmlRenderer =
+    { heading =
+        \{ level, children } ->
+            case level of
+                Markdown.Block.H1 ->
+                    "<h1>" ++ String.concat children ++ "</h1>"
+
+                Markdown.Block.H2 ->
+                    "<h2>" ++ String.concat children ++ "</h2>"
+
+                Markdown.Block.H3 ->
+                    "<h3>" ++ String.concat children ++ "</h3>"
+
+                Markdown.Block.H4 ->
+                    "<h4>" ++ String.concat children ++ "</h4>"
+
+                Markdown.Block.H5 ->
+                    "<h5>" ++ String.concat children ++ "</h5>"
+
+                Markdown.Block.H6 ->
+                    "<h6>" ++ String.concat children ++ "</h6>"
+    , paragraph = \text -> "<p>" ++ String.concat text ++ "</p>"
+    , hardLineBreak = "<br />"
+    , blockQuote = \children -> "<blockquote>" ++ String.concat children ++ "</blockquote>"
+    , strong = \children -> "<strong>" ++ String.concat children ++ "</strong>"
+    , emphasis = \children -> "<em>" ++ String.concat children ++ "</em>"
+    , codeSpan = \children -> "<code>" ++ children ++ "</code>"
+    , link = \{ title, destination } content -> "<a title=\"" ++ Maybe.withDefault "" title ++ "href=\"" ++ destination ++ "\">" ++ String.concat content ++ "</a>"
+    , image = \{ alt, src, title } -> "<img src=\"" ++ src ++ "\" alt=\"" ++ alt ++ "\" title=\"" ++ Maybe.withDefault "" title ++ "\" />"
+    , text = identity
+    , unorderedList =
+        \items ->
+            "<ul>"
+                ++ (items
+                        |> List.map
+                            (\(Markdown.Block.ListItem _ children) ->
+                                "<li>" ++ String.concat children ++ "</li>"
+                            )
+                        |> String.join " "
+                   )
+                ++ "</ul>"
+    , orderedList =
+        \startingIndex items ->
+            "<ol>"
+                ++ (items
+                        |> List.indexedMap
+                            (\idx itemBlocks ->
+                                String.fromInt (idx + startingIndex) ++ ") " ++ String.concat itemBlocks
+                            )
+                        |> String.join " "
+                   )
+                ++ "</ol>"
+    , html = processHtmlToHtmlCode |> Markdown.Html.map (always String.concat)
+    , codeBlock = \{ body, language } -> "<pre><code class=\"" ++ Maybe.withDefault "" language ++ "\">" ++ body ++ "</code></pre>"
+    , thematicBreak = "<hr />"
+    , table = \content -> "<table>" ++ String.concat content ++ "</table>"
+    , tableHeader = \content -> "<thead>" ++ String.concat content ++ "</tead>"
+    , tableBody = \content -> "<tbody>" ++ String.concat content ++ "</tbody>"
+    , tableRow = \content -> "<tr>" ++ String.concat content ++ "</tr>"
+    , tableHeaderCell = \_ content -> "<th>" ++ String.concat content ++ "</th>"
+    , tableCell = \_ content -> "<td>" ++ String.concat content ++ "</td>"
+    , strikethrough = \text -> "<s>" ++ String.concat text ++ "</s>"
+    }
+
+
+processHtmlToHtmlCode : Markdown.Html.Renderer (String -> String)
+processHtmlToHtmlCode =
+    Markdown.Html.oneOf
+        [ Markdown.Html.tag "div"
+            (\class style id children -> "<div class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</div>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "span"
+            (\class id children -> "<span class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</span>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "b" (\children -> "<b>" ++ children ++ "</b>")
+        , Markdown.Html.tag "em" (\class children -> "<em class=\"" ++ Maybe.withDefault "" class ++ "\"   >" ++ children ++ "</em>") |> Markdown.Html.withOptionalAttribute "class"
+        , Markdown.Html.tag "p" (\children -> "<p>" ++ children ++ "</p>")
+        , Markdown.Html.tag "blockquote" (\class children -> "<blockquote class=\"" ++ Maybe.withDefault "" class ++ "\"   >" ++ children ++ "</blockquote>") |> Markdown.Html.withOptionalAttribute "class"
+        , Markdown.Html.tag "script" (\children -> "<div>" ++ children ++ "</div>")
+        , Markdown.Html.tag "a" (\href id target rel children -> "<a href=\"" ++ Maybe.withDefault "" href ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" target=\"" ++ Maybe.withDefault "" target ++ "\" rel=\"" ++ Maybe.withDefault "" rel ++ "\"  >" ++ children ++ "</a>") |> Markdown.Html.withOptionalAttribute "href" |> Markdown.Html.withOptionalAttribute "id" |> Markdown.Html.withOptionalAttribute "target" |> Markdown.Html.withOptionalAttribute "rel"
+        , Markdown.Html.tag "iframe"
+            (\src width height allow scrolling frameborder style title _ -> "<iframe src=\"" ++ src ++ "\"></iframe>")
+            |> Markdown.Html.withAttribute "src"
+            |> Markdown.Html.withOptionalAttribute "width"
+            |> Markdown.Html.withOptionalAttribute "height"
+            |> Markdown.Html.withOptionalAttribute "allow"
+            |> Markdown.Html.withOptionalAttribute "scrolling"
+            |> Markdown.Html.withOptionalAttribute "frameborder"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "title"
+        , Markdown.Html.tag "h1"
+            (\class id children -> "<h1 class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</h1>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "h2"
+            (\class id children -> "<h2 class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</h2>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "h3"
+            (\class id children -> "<h3 class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</h3>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "h4"
+            (\class id children -> "<h4 class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</h4>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "h5"
+            (\class id children -> "<h5 class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</h5>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "h6"
+            (\class id children -> "<h6 class=\"" ++ Maybe.withDefault "" class ++ "\"  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</h6>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "table"
+            (\class style id children -> "<table class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</table>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "thead"
+            (\class style id children -> "<thead class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</thead>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "tbody"
+            (\class style id children -> "<tbody class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</tbody>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "th"
+            (\class id style colspan children -> "<th class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" colspan=\"" ++ Maybe.withDefault "" colspan ++ "\">" ++ children ++ "</th>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "colspan"
+        , Markdown.Html.tag "tr"
+            (\class style id children -> "<tr class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</tr>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "td"
+            (\class id style colspan children -> "<td class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" colSpan=\"" ++ Maybe.withDefault "" colspan ++ "\">" ++ children ++ "</td>")
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "colspan"
+        , Markdown.Html.tag "i" (\children -> "<i>" ++ children ++ "</i>")
+        , Markdown.Html.tag "strong" (\children -> "<strong>" ++ children ++ "</strong>")
+        , Markdown.Html.tag "br" (\_ -> "<br />")
+        , Markdown.Html.tag "li" (\id children -> "<li  id=\"" ++ Maybe.withDefault "" id ++ "\" >" ++ children ++ "</li>") |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "ol" (\children -> "<ol>" ++ children ++ "</ol>")
+        , Markdown.Html.tag "ul" (\children -> "<ul>" ++ children ++ "</ul>")
+        , Markdown.Html.tag "code" (\class children -> "<pre><code class=\"" ++ Maybe.withDefault "" class ++ "\">" ++ children ++ "</code></pre>") |> Markdown.Html.withOptionalAttribute "class"
+        , Markdown.Html.tag "img" (\alt title class style id src _ -> "<img src=\"" ++ src ++ "\" title=\"" ++ Maybe.withDefault "" title ++ "\" alt=\"" ++ Maybe.withDefault "" alt ++ "\" class=\"" ++ Maybe.withDefault "" class ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\" id=\"" ++ Maybe.withDefault "" id ++ "\" />")
+            |> Markdown.Html.withOptionalAttribute "alt"
+            |> Markdown.Html.withOptionalAttribute "title"
+            |> Markdown.Html.withOptionalAttribute "class"
+            |> Markdown.Html.withOptionalAttribute "style"
+            |> Markdown.Html.withOptionalAttribute "id"
+            |> Markdown.Html.withAttribute "src"
+        , Markdown.Html.tag "dl" (\children -> "<dl>" ++ children ++ "</dl>")
+        , Markdown.Html.tag "dd" (\children -> "<dd>" ++ children ++ "</dd>")
+        , Markdown.Html.tag "dt" (\id children -> "<dt id=\"" ++ Maybe.withDefault "" id ++ "\">" ++ children ++ "</dt>") |> Markdown.Html.withOptionalAttribute "id"
+        , Markdown.Html.tag "figure" (\children -> "<figure>" ++ children ++ "</figure>")
+        , Markdown.Html.tag "figcaption" (\children -> "<figcaption>" ++ children ++ "</figcaption>")
+        , Markdown.Html.tag "hr" (\_ -> "<hr />")
+        , Markdown.Html.tag "label" (\children -> "<label>" ++ children ++ "</label>")
+        , Markdown.Html.tag "easy-like-score" (\likeness easiness _ -> "<div><div>Likeness " ++ likeness ++ "</div><div>Easiness " ++ easiness ++ "</div></div>")
+            |> Markdown.Html.withAttribute "likeness"
+            |> Markdown.Html.withAttribute "easiness"
+        , Markdown.Html.tag "warning" (\children -> "<div class=\"warning-box\">" ++ children ++ "</div>")
+        , Markdown.Html.tag "twitter-tweet" (\children -> "<div class=\"tweet\">" ++ children ++ "</div>")
+        , Markdown.Html.tag "icon" (\icon text style _ -> "<div class=\"" ++ icon ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\">" ++ Maybe.withDefault "" text ++ "<div>")
+            |> Markdown.Html.withAttribute "icon"
+            |> Markdown.Html.withOptionalAttribute "text"
+            |> Markdown.Html.withOptionalAttribute "style"
+        ]

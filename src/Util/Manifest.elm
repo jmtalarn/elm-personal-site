@@ -13,7 +13,7 @@ manifest : BackendTask error Manifest.Config
 manifest =
     Manifest.init
         { name = "Joan Maria Talarn ~ Website, blog and CV"
-        , description = "Web dev notes tagline"
+        , description = "This is my website jmtalarn, where I put together my blog, my CV and other personal information. Build with Elm."
         , startUrl = Route.Index |> Route.toPath
         , icons =
             [ icon "android-chrome-192x192.png" MimeType.Png 192
