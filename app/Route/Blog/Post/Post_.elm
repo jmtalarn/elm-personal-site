@@ -5,7 +5,7 @@ import Components.Blog.PostHeader as PostHeader
 import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
-import Dict
+import DateOrDateTime
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -85,7 +85,7 @@ head :
     -> List Head.Tag
 head app =
     let
-        { title, cover, body } =
+        { title, cover, body, tags, category, date } =
             app.data.blogPost
     in
     Seo.summary
@@ -101,7 +101,13 @@ head app =
         , locale = Nothing
         , title = title
         }
-        |> Seo.website
+        |> Seo.article
+            { tags = tags
+            , section = Just String.join " " category
+            , publishedTime = Just (DateOrDateTime.Date date)
+            , modifiedTime = Nothing
+            , expirationTime = Nothing
+            }
 
 
 blogPostStyle : Html msg

@@ -180,7 +180,7 @@ head app =
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "This is my website jmtalarn, where I put together my blog, my CV and other personal information. Build with Elm."
+        , description = "This is my website jmtalarn, where I put together my blog, my CV and other personal information. Built with Elm."
         , locale = Nothing
         , title = "jmtalarn.com ~ Home "
         }
