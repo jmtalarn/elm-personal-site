@@ -178,11 +178,11 @@ head app =
         , siteName = "jmtalarn.com"
         , image =
             { url = [ "images", "home", "openart-image_LlRWZaUM_1712956596110_raw.jpg" ] |> UrlPath.join |> Pages.Url.fromPath
-            , alt = "jmtalarn web dev notes blog logo"
+            , alt = "An image illustrating my CV"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Check out my professional experience as web developer."
+        , description = "Check out my professional experience as web developer. Mostly Javascript, HTML and CSS. Also React and Typescript. "
         , locale = Nothing
         , title = "jmtalarn.com ~ CV web developer "
         }

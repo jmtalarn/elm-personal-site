@@ -26,8 +26,8 @@
     -   [x] Filtering by clicking tags ??
     -   [x] Link to section and Hide and show content
 -   [x] Sitemap.xml
--   [ ] SEO stuff
-    -   [] Add social media info on head
+-   [x] SEO stuff
+    -   [x] Add social media info on head
 -   [ ] Home widget
     -   [x] This is me
     -   [x] Book
@@ -38,7 +38,7 @@
         -   [x] To cancel current Sleep
     -   [x] Amazon tag for the book
 -   [x] Sitemap
--   [ ] Rss
+-   [x] Rss
 -   [x] Header
 -   [x] Footer
 -   [x] Post max-width

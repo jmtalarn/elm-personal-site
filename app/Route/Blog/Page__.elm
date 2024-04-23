@@ -116,11 +116,11 @@ head app =
         , siteName = title
         , image =
             { url = [ "images", "home", "openart-image_Ko4Z9KtJ_1712956581329_raw.jpg" ] |> UrlPath.join |> Pages.Url.fromPath
-            , alt = "jmtalarn web dev notes blog logo"
+            , alt = "jmtalarn an AI generated image to illustrate my blog, web dev notes"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Web Dev Notes, this is my blog. This is the index page."
+        , description = "Web Dev Notes, this is my blog. This is the paginated blog post list, concretely the page number " ++ String.fromInt app.data.page ++ "."
         , locale = Nothing
         , title = title
         }
