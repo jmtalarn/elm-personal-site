@@ -1,5 +1,6 @@
 module Route.Cv exposing (ActionData, Data, Model, Msg, route)
 
+import Accessibility.Aria
 import BackendTask exposing (BackendTask)
 import BackendTask.Http
 import Components.Icons.Icon as Icon
@@ -474,10 +475,12 @@ companyInfo { name, image, url } =
                 [ Attribute.src image
                 , Attribute.style "max-height" "4rem"
                 , Attribute.style "max-width" "6rem"
+                , Attribute.alt name
                 ]
                 []
             , Html.a
                 [ Attribute.href (Maybe.withDefault "" url)
+                , Accessibility.Aria.label name
                 ]
                 [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem" ]) ]
             ]
@@ -571,7 +574,7 @@ educationItem selectedSkills { category, name, description_md, date, institution
                                     Just url ->
                                         [ Html.a
                                             [ Attribute.href url ]
-                                            [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem" ]) ]
+                                            [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem", Accessibility.Aria.label name ]) ]
                                         ]
 
                                     Nothing ->
@@ -618,6 +621,7 @@ educationItem selectedSkills { category, name, description_md, date, institution
                         , Attribute.style "width" "10rem"
                         , Attribute.style "align-self" "center"
                         , Attribute.style "flex" "0 0 auto"
+                        , Attribute.alt institution.name
                         ]
                         []
                     ]
@@ -780,11 +784,11 @@ asideProject selectedSkills thing =
             \t -> Html.h4 [ Attribute.style "margin" "0" ] [ Html.text t ]
 
         link =
-            \l ->
+            \l label ->
                 Html.a
                     [ Attribute.href (Maybe.withDefault "" l)
                     ]
-                    [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem" ]) ]
+                    [ Icon.light Phosphor.linkSimple (Just [ Attribute.style "height" "1rem", Accessibility.Aria.label label ]) ]
 
         tags =
             \t ->
@@ -817,7 +821,7 @@ asideProject selectedSkills thing =
                     , Attribute.style "gap" "1rem"
                     ]
                     [ title name
-                    , link url
+                    , link url name
                     ]
 
         itemStyle skills =
@@ -868,6 +872,7 @@ asideProject selectedSkills thing =
                                     , Attribute.style "filter" "drop-shadow(5px 5px 5px dimgray)"
                                     , Attribute.style "position" "relative"
                                     , Attribute.style "z-index" "-1"
+                                    , Attribute.alt name
                                     ]
                                     []
                                 ]

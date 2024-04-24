@@ -2,6 +2,7 @@ module Components.Blog.PostCard exposing (..)
 
 -- https://elmprogramming.com/commands.html#wiring-everything-up Sandbox
 
+import Accessibility.Aria
 import Components.Icons.Icon as Icon
 import DataModel.BlogPosts exposing (BlogPost)
 import Date
@@ -86,6 +87,8 @@ headerImageStyle : List (Html.Attribute msg)
 headerImageStyle =
     [ Attribute.style "width" "100%"
     , Attribute.style "border-radius" "10px 10px 0 0"
+    , Attribute.alt ""
+    , Accessibility.Aria.roleDescription "presentation"
     ]
 
 

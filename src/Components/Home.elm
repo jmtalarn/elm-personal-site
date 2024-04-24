@@ -19,6 +19,7 @@ caretoStyle =
     , Attribute.style "position" "relative"
     , Attribute.style "max-width" "22rem"
     , Attribute.style "width" "100%"
+    , Attribute.alt "A retouched photo, to don't look too old or ugly, of my face"
     ]
 
 
@@ -148,6 +149,7 @@ blog =
                 , Attribute.style "width" "100%"
                 , Attribute.style "flex" "0 0 20rem"
                 , Attribute.style "border-radius" "10px"
+                , Attribute.alt "An AI generated image in a voxel style to decorate beside the blog copy text of a guy who works on a home office."
                 ]
                 []
             , colorfulBlurredBackground
@@ -276,7 +278,7 @@ book =
                 [ Attribute.class "model-book"
                 ]
                 [ Html.img
-                    [ Attribute.alt "Fundamentos web cover"
+                    [ Attribute.alt "Fundamentos web book cover"
                     , Attribute.src "https://m.media-amazon.com/images/I/71fMoOTr7sL._AC_UL320_.jpg"
                     ]
                     []
@@ -315,6 +317,7 @@ cv =
                 , Attribute.style "width" "100%"
                 , Attribute.style "flex" "0 0 20rem"
                 , Attribute.style "border-radius" "10px"
+                , Attribute.alt "An AI generated image in a child book illustration style to decorate beside the CV copy text of a guy who writes with a pencil on a paper with a keyboard drawed"
                 ]
                 []
             , colorfulBlurredBackground
