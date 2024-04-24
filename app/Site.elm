@@ -8,7 +8,7 @@ import SiteConfig exposing (SiteConfig)
 
 config : SiteConfig
 config =
-    { canonicalUrl = "https://jmtalarn-elm.netlify.app"
+    { canonicalUrl = "https://www.jmtalarn.com"
     , head = head
     }
 
