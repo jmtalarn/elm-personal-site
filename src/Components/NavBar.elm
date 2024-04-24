@@ -2,6 +2,7 @@ module Components.NavBar exposing (..)
 
 -- import Effect exposing (Effect)
 
+import Accessibility.Aria
 import Components.Icons.Icon as Icon
 import Html exposing (Html)
 import Html.Attributes as Attribute
@@ -162,6 +163,7 @@ view model menuClickedMsg =
                         , Attribute.style "align-items" "center"
                         , Attribute.style "font-size" "inherit"
                         , Attribute.style "font-weight" "inherit"
+                        , Accessibility.Aria.label "Website menu"
                         ]
                         [ Icon.light Phosphor.cards (Just [ Attribute.style "fill" "url(#gradient)" ]) ]
                     , Route.Blog__Page__ { page = Nothing } |> Route.link whiteLinksStyle [ Html.text "Blog" ]
@@ -222,7 +224,7 @@ dialog menuClickedMsg =
             , Attribute.style "top" "5%"
             , Attribute.style "width" "90%"
             , Attribute.style "max-width" "840px"
-            , Attribute.style "height" "50%"
+            , Attribute.style "height" "70%"
             , Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.9)"
             , Attribute.style "border-radius" "15px"
             , Attribute.style "border" "none"
@@ -256,6 +258,7 @@ dialog menuClickedMsg =
                 , Attribute.style "position" "absolute"
                 , Attribute.style "top" "1rem"
                 , Attribute.style "right" "1rem"
+                , Accessibility.Aria.label "Close the website menu"
                 , Html.Events.onClick menuClickedMsg
                 ]
                 [ Icon.duotone

@@ -25,18 +25,18 @@ The hard part (not at all if you continue reading) is that is a **typed function
 
 But here it comes the good part, **Elm** is developer focused. And that means that everything around the language is based on make a pleasant experience for the developer during the job of coding. Even you are working with a functional language, you can start with the simplest thing and you will see yourself going deep through all the related concepts gradually finding solutions about what you want to do.
 
-### Excellent documentation.
+## Excellent documentation.
 
 It has tons of documentation and examples in the official site where you can find from a getting started guide to examples and explanation about the Elm architecture
 [Elm Official Guide](https://guide.elm-lang.org/)
 and almost all of the libraries out there are the same with extended documentation about uses and examples.
 [Package Docs](https://package.elm-lang.org/)
 
-### Friendly error messages.
+## Friendly error messages.
 
 All messages from the compiler are exposed in a clear and concise way, assisting you and providing hints and suggestions about what can be wrong with really friendly error messages and it looks like the program can really guess which is your intention. The messages usually gives you the kind of error name, the file affected and prints out the line with the previous and next line and points exactly where the error occurred. Also it will try to guess what do you intended to do and suggest possible solutions.
 
-### No Runtime Exceptions
+## No Runtime Exceptions
 
 Elm uses type inference to detect corner cases and give friendly hints. You won't have to dig into the code to fix a confusing runtime exception in production.
 
@@ -58,11 +58,11 @@ But `drop` needs the 1st argument to be:
 Hint: Use Maybe.withDefault to handle possible errors.
 ```
 
-### Great maintainability
+## Great maintainability
 
 One of the features of the language is that uses static type checking, so that means that variables type is known at compile time. Any error in there, will raise an error on compilation time. Whenever you do a code refactoring the compiler knows all the places where the application is broke and will report it with nice error messages as we saw above.
 
-### Enforced Semantic Versioning
+## Enforced Semantic Versioning
 
 Again the type system will help Elm to detect all API changes automatically and tis information is used to guarantee that every single Elm package follows semantic versioning precisely. No surprises in PATCH releases. With the `elm diff` command we can get the differences in the changes and will tell you it it is a major, minor or patch change.
 
@@ -80,11 +80,11 @@ This is a MAJOR change.
       + parseValue : Value -> Result Error Node
 ```
 
-### No side effects
+## No side effects
 
 Also, as it is a **pure functional** language it implies that there are not side effects of any type inside the "safe" area. But still, we have to consider that the code is finally translated into Javascript and in many occasions it needs to interoperate with different browser APIs, for sure in Javascript, so we still need to know where the "unsafe" area is.
 
-### JavaScript Interop
+## JavaScript Interop
 
 As the final application needs to work together with the browser or other apps in the same environment there is the need of mechanisms to perform this interoperability with Javascript.
 
@@ -94,7 +94,7 @@ As the final application needs to work together with the browser or other apps i
 <dt>**custom elements**</dt><dd>From Elm we can use any custom element (a.k.a. web component) created so any value can be passed to the HTML.</dd>
 </dl>
 
-### Great Performance
+## Great Performance
 
 Elm has its own virtual DOM implementation, designed for simplicity and speed. All values are immutable in Elm, and the benchmarks show that this helps us generate particularly fast JavaScript code.
 
@@ -106,7 +106,7 @@ Elm has its own virtual DOM implementation, designed for simplicity and speed. A
 | Angular                                      |                   3494 ms |
 | Elm                                          |                   2480 ms |
 
-### Small Assets
+## Small Assets
 
 Smaller assets means faster downloads and faster page loads, so Elm does a bunch of optimizations to make small assets the default. Just compile with the `--optimize` flag and let the compiler do the rest. No complicated set up.
 

@@ -197,7 +197,7 @@ view app shared =
             , Attribute.style "position" "relative"
             , Attribute.style "max-width" "1024px"
             ]
-            [ Html.h1
+            [ Html.h2
                 [ Attribute.style "margin-left" "4rem" ]
                 [ Html.span antonFontAttributeStyle
                     [ Html.text "Web dev notes" ]

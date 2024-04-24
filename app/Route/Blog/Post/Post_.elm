@@ -6,6 +6,7 @@ import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
 import DateOrDateTime
+import Dict
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -16,6 +17,7 @@ import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import Time
+import UrlPath
 import Util.MarkdownProcessor as MarkdownProcessor exposing (getAbstract, markdownToText)
 import View exposing (View)
 
@@ -88,11 +90,11 @@ head app =
         { title, cover, body, tags, category, date } =
             app.data.blogPost
     in
-    Seo.summary
+    Seo.summaryLarge
         { canonicalUrlOverride = Nothing
         , siteName = "Web dev notes - jmtalarn blog"
         , image =
-            { url = Pages.Url.external cover
+            { url = cover |> UrlPath.fromString |> Pages.Url.fromPath
             , alt = title
             , dimensions = Nothing
             , mimeType = Nothing
@@ -103,7 +105,7 @@ head app =
         }
         |> Seo.article
             { tags = tags
-            , section = Just String.join " " category
+            , section = Just (String.join " " category)
             , publishedTime = Just (DateOrDateTime.Date date)
             , modifiedTime = Nothing
             , expirationTime = Nothing
@@ -151,7 +153,7 @@ view app sharedModel =
         [ blogPostStyle
         , Html.div
             [ Attribute.style "box-shadow" "0 0 15px rgba(0,0,0,.1)"
-            , Attribute.style "padding" "0rem 1rem"
+            , Attribute.style "padding" "0rem 1rem 1rem 1rem"
             , Attribute.style "margin" "2rem auto"
             , Attribute.style "max-width" "960px"
             , Attribute.style "position" "relative"

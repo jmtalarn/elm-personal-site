@@ -1,5 +1,6 @@
 module Components.Ribbon exposing (ribbon, ribbonReverse)
 
+import Color
 import Html exposing (Html)
 import Html.Attributes as Attribute
 
@@ -68,9 +69,9 @@ renderRibbon text reverse =
             --, Attribute.style "background-color" "#3498db"
             , Attribute.style "background-color" "CornflowerBlue"
             , Attribute.style "box-shadow" "0 5px 10px rgba(0,0,0,.1)"
-            , Attribute.style "color" "#fff"
+            , Attribute.style "color" <| Color.toCssString Color.black
             , Attribute.style "font" "700 18px/1 'Lato', sans-serif"
-            , Attribute.style "text-shadow" "0 1px 1px rgba(0,0,0,.2)"
+            , Attribute.style "text-shadow" "rgba(255, 255, 255, 0.3) 1px 1px 0px"
             , Attribute.style "text-transform" "uppercase"
             , Attribute.style "text-align" "center"
             , Attribute.style "right" "-25px"
