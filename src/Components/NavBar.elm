@@ -198,7 +198,7 @@ regularDialogFont : List (Html.Attribute msg)
 regularDialogFont =
     [ Attribute.style "font-family" "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\""
     , Attribute.style "font-size" "1rem"
-    , Attribute.style "width" "25rem"
+    , Attribute.style "max-width" "30rem"
     , Attribute.style "color" "dimGray"
     ]
 
@@ -219,8 +219,6 @@ dialog menuClickedMsg =
         , Html.node "dialog"
             [ Attribute.style "z-index" "2"
             , Attribute.style "position" "fixed"
-
-            --, Attribute.style "background-color" "white"
             , Attribute.style "top" "5%"
             , Attribute.style "width" "90%"
             , Attribute.style "max-width" "840px"
@@ -231,7 +229,12 @@ dialog menuClickedMsg =
             , Attribute.id dialogId
             ]
             [ Html.ul
-                (gradientColorEffect ++ [])
+                (gradientColorEffect
+                    ++ [ Attribute.style "margin" "0 auto"
+                       , Attribute.style "padding" "0"
+                       , Attribute.style "max-width" "35rem"
+                       ]
+                )
                 [ Html.li []
                     [ siteTitle [ Html.Events.onClick menuClickedMsg ]
                     , Html.p regularDialogFont [ Html.text "The site home index page." ]
