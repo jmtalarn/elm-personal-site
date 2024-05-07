@@ -47,3 +47,11 @@
 -   [x] Fix posts
     -   [x] Broken images on frameworks-for-testing-your-javascript-code
     -   [x] Big images on one-source-of-truth-for-all-Redux-javascript-components
+-   [ ] 404 page missing menu
+-   [ ] 404 page missing fonts
+-   [ ] CV on top, ribbon covers last eye for aside projects to be clickable
+-   [ ] CV eye icon min width
+-   [ ] Menu horizontal scroll for text on small screen.
+-   [ ] Add a margin to bottom.
+-   [ ] Code pen component
+-   [ ] Preview link component

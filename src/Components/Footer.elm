@@ -54,7 +54,7 @@ footer now =
             [ socialLink "Link to my profile on Linkedin" "https://www.linkedin.com/in/jmtalarn/" Phosphor.linkedinLogo
             , socialLink "Link to my user account on Github" "https://github.com/jmtalarn" Phosphor.githubLogo
             , socialLink "Link to my user profile on CodePen" "https://codepen.io/jmtalarn" Phosphor.codepenLogo
-            , socialLink "Link to my user profile on StackOverflow" "https://stackoverflow.com/cv/jmtalarn/" Phosphor.stackOverflowLogo
+            , socialLink "Link to my user profile on StackOverflow" "https://stackoverflow.com/users/4635829/jmtalarn" Phosphor.stackOverflowLogo
             , socialLink "Link to my user account on Twitter" "https://twitter.com/jmtalarn" Phosphor.twitterLogo
             , socialLink "Link to my author profile on Amazon" "https://amzn.to/3T0Xwlz" Phosphor.amazonLogo
             , socialLink "Link to open your default email client to send me an email" "mailto:jmtalarn+site@gmail.com?subject=Message%20from%20the%20site%20jmtalarn" Phosphor.envelope
