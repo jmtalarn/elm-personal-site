@@ -9,14 +9,11 @@ module Route.Book exposing (Model, Msg, RouteParams, route, Data, ActionData)
 import BackendTask exposing (BackendTask)
 import BackendTask.Env
 import BackendTask.Http
-import BackendTask.Time
 import Components.Book exposing (book3Danimated)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
 import Components.Ribbon exposing (ribbon)
-import Crypto.HMAC exposing (sha256, sha512)
+import Crypto.HMAC exposing (sha256)
 import Crypto.Hash
-import Date
-import Dict
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -31,7 +28,6 @@ import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
-import Time
 import UrlPath
 import View exposing (View)
 
@@ -114,13 +110,14 @@ type alias EnvVariables =
     }
 
 
+getEnvVariables : BackendTask FatalError EnvVariables
 getEnvVariables =
     BackendTask.map5 EnvVariables
         (BackendTask.Env.expect "PA_API_KINDLE_ASIN" |> BackendTask.allowFatal)
         (BackendTask.Env.expect "PA_API_BOOK_ASIN" |> BackendTask.allowFatal)
+        (BackendTask.Env.expect "PA_API_TAG" |> BackendTask.allowFatal)
         (BackendTask.Env.expect "PA_API_KEY" |> BackendTask.allowFatal)
         (BackendTask.Env.expect "PA_API_SECRET" |> BackendTask.allowFatal)
-        |> BackendTask.andThen getAmazonData
 
 
 getAmazonData : EnvVariables -> BackendTask FatalError String
@@ -130,16 +127,13 @@ getAmazonData vars =
             String.concat [ Maybe.withDefault "" (List.head <| String.split "." <| String.replace ":" "" <| String.replace "-" "" (Iso8601.fromTime <| Pages.builtAt)), "Z" ]
 
         nowShort =
-            List.head (String.split "T" now)
-
-        endpoint =
-            "webservices.amazon.es/paapi5/getitems"
+            Maybe.withDefault "YYYYMMDD" <|
+                List.head (String.split "T" now)
 
         jsonPayload =
-            """
-        {
+            """{
             "ItemIds": [
-            """ ++ vars.asinKindle ++ "," ++ vars.asinBook ++ """
+            \"""" ++ vars.asinKindle ++ "\",\"" ++ vars.asinBook ++ """"
             ],
             "Resources": [
             "BrowseNodeInfo.BrowseNodes.SalesRank",
@@ -169,71 +163,107 @@ getAmazonData vars =
             "Offers.Summaries.LowestPrice",
             "ParentASIN"
             ],
-            "PartnerTag": """ ++ vars.tag ++ """,
+            "PartnerTag": \"""" ++ vars.tag ++ """",
             "PartnerType": "Associates",
             "Marketplace": "www.amazon.es",
             "Operation": "GetItems"
             }
         """
 
+        _ =
+            Debug.log "Payload" jsonPayload
+
         canonicalRequest =
             """
-        POST
-        webservices.amazon.es/paapi5/getitems
-        host:webservices.amazon.es
-        """
+            POST
+            /paapi5/getitems
+
+            host:webservices.amazon.es
+            content-encoding:amz-1.0
+            content-type:application/json; charset=utf-8
+            X-Amz-Target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems3
+
+            host;content-encoding;content-type;X-Amz-Target
+
+            """ ++ Maybe.withDefault "" (Hex.Convert.toBytes jsonPayload |> Maybe.map Hex.Convert.toString |> Maybe.map String.toLower)
 
         hashCanonicalRequest =
-            Maybe.withDefault "" Hex.Convert.toBytes <| Crypto.Hash.sha256 canonicalRequest
+            Maybe.withDefault "" ((Hex.Convert.toBytes <| Crypto.Hash.sha256 canonicalRequest) |> Maybe.map Hex.Convert.toString |> Maybe.map String.toLower)
 
         stringtosign =
+            """AWS4-HMAC-SHA256
+            """ ++ now ++ """
+            """ ++ nowShort ++ """/eu-west-1/ProductAdvertisingAPI/aws4_request
+            """ ++ hashCanonicalRequest ++ """
             """
-        AWS4-HMAC-SHA256
-        """ ++ now ++ """
-        """ ++ nowShort ++ """/eu-west-1/execute-api/aws4_request
-        """ ++ hashCanonicalRequest ++ """
-        """
 
         dateKey =
-            Crypto.HMAC.digest sha256 "AWS4" + vars.secret nowShort
+            Crypto.HMAC.digest sha256 ("AWS4" ++ vars.secret) nowShort
 
         dateRegionKey =
             Crypto.HMAC.digest sha256 dateKey "eu-west-1"
 
         dateRegionServiceKey =
-            Crypto.HMAC.digest sha256 dateRegionKey "ProductAdvertisingAPIv1"
+            Crypto.HMAC.digest sha256 dateRegionKey "ProductAdvertisingAPI"
 
+        --"ProductAdvertisingAPIv1"
         signingKey =
             Crypto.HMAC.digest sha256 dateRegionServiceKey "aws4_request"
 
         signature =
-            Maybe.withDefault "" Hex.Convert.toBytes Crypto.HMAC.digest sha256 signingKey stringtosign
+            Maybe.withDefault "" <|
+                (Hex.Convert.toBytes (Crypto.HMAC.digest sha256 signingKey stringtosign) |> Maybe.map Hex.Convert.toString |> Maybe.map String.toLower)
 
         headers =
             [ ( "Host", "webservices.amazon.es" )
+            , ( "Content-Type", "application/json; charset=UTF-8" )
             , ( "X-Amz-Date", now )
             , ( "X-Amz-Target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
             , ( "Content-Encoding", "amz-1.0" )
-            , ( "Authorization", "AWS4-HMAC-SHA256 Credential=" ++ vars.key ++ "/" ++ nowShort ++ "/eu-west-1/ProductAdvertisingAPI/aws4_request, SignedHeaders=content-type;host;x-amz-date;x-amz-target, Signature=" ++ signature ++ "" )
+            , ( "Authorization", "AWS4-HMAC-SHA256 Credential=" ++ vars.key ++ "/" ++ nowShort ++ "/eu-west-1/ProductAdvertisingAPI/aws4_request, SignedHeaders=content-encoding;host;x-amz-date;x-amz-target, Signature=" ++ signature ++ "" )
             ]
     in
     BackendTask.Http.request
-        { url = "https://api.github.com/repos/dillonkearns/elm-pages"
+        { url = "https://webservices.amazon.es/paapi5/getitems"
         , method = "POST"
         , headers = headers
-        , body = jsonPayload
+        , body = BackendTask.Http.stringBody "application/json" jsonPayload
+        , retries = Just 1
+        , timeoutInMs = Just 3000
         }
         BackendTask.Http.expectString
-        |> BackendTask.allowFatal
+        |> BackendTask.onError
+            (\error ->
+                case error.recoverable of
+                    BackendTask.Http.BadStatus metadata string ->
+                        let
+                            _ =
+                                Debug.log "statusCode" metadata.statusCode
+
+                            _ =
+                                Debug.log "statusText" metadata.statusText
+
+                            _ =
+                                Debug.log "metadata" metadata
+
+                            _ =
+                                Debug.log "string" string
+                        in
+                        -- if metadata.statusCode == 401 || metadata.statusCode == 403 || metadata.statusCode == 404 then
+                        --     BackendTask.succeed "Either this repo doesn't exist or you don't have access to it."
+                        -- else
+                        --     -- we're only handling these expected error cases. In the case of an HTTP timeout,
+                        --     -- we'll let the error propagate as a FatalError
+                        BackendTask.fail error |> BackendTask.allowFatal
+
+                    _ ->
+                        BackendTask.fail error |> BackendTask.allowFatal
+            )
 
 
 data : BackendTask FatalError Data
 data =
-    let
-        _ =
-            Debug.log "getAmazonData" getAmazonData
-    in
-    getEnvVariables |> getAmazonData
+    BackendTask.map Data (getEnvVariables |> BackendTask.andThen getAmazonData)
 
 
 title : String
@@ -244,7 +274,7 @@ title =
 head :
     App Data ActionData RouteParams
     -> List Head.Tag
-head app =
+head _ =
     (Seo.summary
         { canonicalUrlOverride = Nothing
         , siteName = title
@@ -270,7 +300,7 @@ view :
     App Data ActionData RouteParams
     -> Shared.Model
     -> View (PagesMsg Msg)
-view app shared =
+view _ _ =
     { title = title
     , body =
         [ Html.div
