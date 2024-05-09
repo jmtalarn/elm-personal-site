@@ -7,16 +7,20 @@ module Route.Book exposing (Model, Msg, RouteParams, route, Data, ActionData)
 -}
 
 import BackendTask exposing (BackendTask)
+import BackendTask.Env
 import BackendTask.Http
 import BackendTask.Time
 import Components.Book exposing (book3Danimated)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
 import Components.Ribbon exposing (ribbon)
+import Crypto.HMAC exposing (sha256, sha512)
+import Crypto.Hash
 import Date
 import Dict
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
+import Hex.Convert
 import Html
 import Html.Attributes as Attribute
 import Iso8601
@@ -58,7 +62,7 @@ route =
 
 
 type alias Data =
-    {}
+    { result : String }
 
 
 
@@ -101,25 +105,124 @@ type alias Data =
 -- }
 
 
-getAmazonData : BackendTask FatalError String
-getAmazonData =
+type alias EnvVariables =
+    { asinKindle : String
+    , asinBook : String
+    , tag : String
+    , key : String
+    , secret : String
+    }
+
+
+getEnvVariables =
+    BackendTask.map5 EnvVariables
+        (BackendTask.Env.expect "PA_API_KINDLE_ASIN" |> BackendTask.allowFatal)
+        (BackendTask.Env.expect "PA_API_BOOK_ASIN" |> BackendTask.allowFatal)
+        (BackendTask.Env.expect "PA_API_KEY" |> BackendTask.allowFatal)
+        (BackendTask.Env.expect "PA_API_SECRET" |> BackendTask.allowFatal)
+        |> BackendTask.andThen getAmazonData
+
+
+getAmazonData : EnvVariables -> BackendTask FatalError String
+getAmazonData vars =
     let
         now =
             String.concat [ Maybe.withDefault "" (List.head <| String.split "." <| String.replace ":" "" <| String.replace "-" "" (Iso8601.fromTime <| Pages.builtAt)), "Z" ]
 
-        _ =
-            Debug.log "now" now
+        nowShort =
+            List.head (String.split "T" now)
+
+        endpoint =
+            "webservices.amazon.es/paapi5/getitems"
+
+        jsonPayload =
+            """
+        {
+            "ItemIds": [
+            """ ++ vars.asinKindle ++ "," ++ vars.asinBook ++ """
+            ],
+            "Resources": [
+            "BrowseNodeInfo.BrowseNodes.SalesRank",
+            "BrowseNodeInfo.WebsiteSalesRank",
+            "CustomerReviews.Count",
+            "CustomerReviews.StarRating",
+            "Images.Primary.Large",
+            "ItemInfo.ByLineInfo",
+            "ItemInfo.ContentInfo",
+            "ItemInfo.ContentRating",
+            "ItemInfo.Classifications",
+            "ItemInfo.ExternalIds",
+            "ItemInfo.Features",
+            "ItemInfo.ManufactureInfo",
+            "ItemInfo.ProductInfo",
+            "ItemInfo.TechnicalInfo",
+            "ItemInfo.Title",
+            "ItemInfo.TradeInInfo",
+            "Offers.Listings.Availability.Message",
+            "Offers.Listings.DeliveryInfo.IsAmazonFulfilled",
+            "Offers.Listings.DeliveryInfo.IsFreeShippingEligible",
+            "Offers.Listings.DeliveryInfo.IsPrimeEligible",
+            "Offers.Listings.MerchantInfo",
+            "Offers.Listings.Price",
+            "Offers.Listings.Promotions",
+            "Offers.Summaries.HighestPrice",
+            "Offers.Summaries.LowestPrice",
+            "ParentASIN"
+            ],
+            "PartnerTag": """ ++ vars.tag ++ """,
+            "PartnerType": "Associates",
+            "Marketplace": "www.amazon.es",
+            "Operation": "GetItems"
+            }
+        """
+
+        canonicalRequest =
+            """
+        POST
+        webservices.amazon.es/paapi5/getitems
+        host:webservices.amazon.es
+        """
+
+        hashCanonicalRequest =
+            Maybe.withDefault "" Hex.Convert.toBytes <| Crypto.Hash.sha256 canonicalRequest
+
+        stringtosign =
+            """
+        AWS4-HMAC-SHA256
+        """ ++ now ++ """
+        """ ++ nowShort ++ """/eu-west-1/execute-api/aws4_request
+        """ ++ hashCanonicalRequest ++ """
+        """
+
+        dateKey =
+            Crypto.HMAC.digest sha256 "AWS4" + vars.secret nowShort
+
+        dateRegionKey =
+            Crypto.HMAC.digest sha256 dateKey "eu-west-1"
+
+        dateRegionServiceKey =
+            Crypto.HMAC.digest sha256 dateRegionKey "ProductAdvertisingAPIv1"
+
+        signingKey =
+            Crypto.HMAC.digest sha256 dateRegionServiceKey "aws4_request"
+
+        signature =
+            Maybe.withDefault "" Hex.Convert.toBytes Crypto.HMAC.digest sha256 signingKey stringtosign
 
         headers =
-            Dict.fromList
-                [ ( "Host", "webservices.amazon.es" )
-                , ( "X-Amz-Date", now )
-                , ( "X-Amz-Target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
-                , ( "Content-Encoding", "amz-1.0" )
-                ]
+            [ ( "Host", "webservices.amazon.es" )
+            , ( "X-Amz-Date", now )
+            , ( "X-Amz-Target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
+            , ( "Content-Encoding", "amz-1.0" )
+            , ( "Authorization", "AWS4-HMAC-SHA256 Credential=" ++ vars.key ++ "/" ++ nowShort ++ "/eu-west-1/ProductAdvertisingAPI/aws4_request, SignedHeaders=content-type;host;x-amz-date;x-amz-target, Signature=" ++ signature ++ "" )
+            ]
     in
-    BackendTask.Http.get
-        "https://api.github.com/repos/dillonkearns/elm-pages"
+    BackendTask.Http.request
+        { url = "https://api.github.com/repos/dillonkearns/elm-pages"
+        , method = "POST"
+        , headers = headers
+        , body = jsonPayload
+        }
         BackendTask.Http.expectString
         |> BackendTask.allowFatal
 
@@ -130,7 +233,7 @@ data =
         _ =
             Debug.log "getAmazonData" getAmazonData
     in
-    BackendTask.succeed {}
+    getEnvVariables |> getAmazonData
 
 
 title : String
