@@ -9,6 +9,7 @@ module Route.Book exposing (Model, Msg, RouteParams, route, Data, ActionData)
 import BackendTask exposing (BackendTask)
 import BackendTask.Env
 import BackendTask.Http
+import BackendTask.Time
 import Bytes.Encode
 import Components.Book exposing (book3Danimated)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
@@ -29,6 +30,7 @@ import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import String.Extra
+import Time
 import UrlPath
 import View exposing (View)
 import Word.Bytes as Bytes
@@ -83,11 +85,11 @@ getEnvVariables =
         (BackendTask.Env.expect "PA_API_SECRET" |> BackendTask.allowFatal)
 
 
-getAmazonData : EnvVariables -> BackendTask FatalError String
-getAmazonData vars =
+getAmazonData : EnvVariables -> Time.Posix -> BackendTask FatalError String
+getAmazonData vars nowTask =
     let
         now =
-            String.concat [ Maybe.withDefault "" (List.head <| String.split "." <| String.replace ":" "" <| String.replace "-" "" (Iso8601.fromTime <| Pages.builtAt)), "Z" ]
+            String.concat [ Maybe.withDefault "" (List.head <| String.split "." <| String.replace ":" "" <| String.replace "-" "" (Iso8601.fromTime <| nowTask)), "Z" ]
 
         nowShort =
             Maybe.withDefault "YYYYMMDD" <|
@@ -224,7 +226,15 @@ getAmazonData vars =
 
 data : BackendTask FatalError Data
 data =
-    BackendTask.map Data (getEnvVariables |> BackendTask.andThen getAmazonData)
+    BackendTask.map Data
+        (getEnvVariables
+            |> BackendTask.andThen
+                (\envVariables ->
+                    BackendTask.Time.now
+                        |> BackendTask.andThen
+                            (\nowFromTask -> getAmazonData envVariables nowFromTask)
+                )
+        )
 
 
 title : String
