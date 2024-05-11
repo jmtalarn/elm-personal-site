@@ -9,6 +9,7 @@ module Route.Book exposing (Model, Msg, RouteParams, route, Data, ActionData)
 import BackendTask exposing (BackendTask)
 import BackendTask.Env
 import BackendTask.Http
+import Bytes.Encode
 import Components.Book exposing (book3Danimated)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
 import Components.Ribbon exposing (ribbon)
@@ -17,7 +18,6 @@ import Crypto.Hash
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
-import Hex.Convert
 import Html
 import Html.Attributes as Attribute
 import Iso8601
@@ -28,8 +28,11 @@ import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
+import String.Extra
 import UrlPath
 import View exposing (View)
+import Word.Bytes as Bytes
+import Word.Hex as Hex
 
 
 type alias Model =
@@ -59,46 +62,6 @@ route =
 
 type alias Data =
     { result : String }
-
-
-
--- ENDPOINT
--- webservices.amazon.es/paapi5/getitems
--- HEADERS
--- Host: webservices.amazon.es
--- X-Amz-Date: 20240507T215117Z
--- X-Amz-Target: com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems
--- Content-Encoding: amz-1.0
--- json payload
--- {
---  "ItemIds": [
---   "B08N5S5BHD"
---  ],
---  "Resources": [
---   "BrowseNodeInfo.BrowseNodes",
---   "BrowseNodeInfo.BrowseNodes.SalesRank",
---   "BrowseNodeInfo.WebsiteSalesRank",
---   "CustomerReviews.Count",
---   "CustomerReviews.StarRating",
---   "Images.Primary.Large",
---   "ItemInfo.ByLineInfo",
---   "ItemInfo.ContentInfo",
---   "ItemInfo.ContentRating",
---   "ItemInfo.Features",
---   "ItemInfo.ProductInfo",
---   "ItemInfo.TechnicalInfo",
---   "ItemInfo.Title",
---   "Offers.Listings.Availability.Message",
---   "Offers.Listings.Availability.Type",
---   "Offers.Listings.DeliveryInfo.IsFreeShippingEligible",
---   "Offers.Listings.DeliveryInfo.IsPrimeEligible",
---   "Offers.Listings.Price"
---  ],
---  "PartnerTag": "blog-jmtalarn-21",
---  "PartnerType": "Associates",
---  "Marketplace": "www.amazon.es",
---  "Operation": "GetItems"
--- }
 
 
 type alias EnvVariables =
@@ -168,65 +131,63 @@ getAmazonData vars =
             "Marketplace": "www.amazon.es",
             "Operation": "GetItems"
             }
-        """
+        """ |> String.Extra.clean
 
         _ =
-            Debug.log "Payload" jsonPayload
-
-        canonicalRequest =
-            """
-            POST
-            /paapi5/getitems
-
-            host:webservices.amazon.es
-            content-encoding:amz-1.0
-            content-type:application/json; charset=utf-8
-            X-Amz-Target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems3
-
-            host;content-encoding;content-type;X-Amz-Target
-
-            """ ++ Maybe.withDefault "" (Hex.Convert.toBytes jsonPayload |> Maybe.map Hex.Convert.toString |> Maybe.map String.toLower)
-
-        hashCanonicalRequest =
-            Maybe.withDefault "" ((Hex.Convert.toBytes <| Crypto.Hash.sha256 canonicalRequest) |> Maybe.map Hex.Convert.toString |> Maybe.map String.toLower)
-
-        stringtosign =
-            """AWS4-HMAC-SHA256
-            """ ++ now ++ """
-            """ ++ nowShort ++ """/eu-west-1/ProductAdvertisingAPI/aws4_request
-            """ ++ hashCanonicalRequest ++ """
-            """
-
-        dateKey =
-            Crypto.HMAC.digest sha256 ("AWS4" ++ vars.secret) nowShort
-
-        dateRegionKey =
-            Crypto.HMAC.digest sha256 dateKey "eu-west-1"
-
-        dateRegionServiceKey =
-            Crypto.HMAC.digest sha256 dateRegionKey "ProductAdvertisingAPI"
-
-        --"ProductAdvertisingAPIv1"
-        signingKey =
-            Crypto.HMAC.digest sha256 dateRegionServiceKey "aws4_request"
-
-        signature =
-            Maybe.withDefault "" <|
-                (Hex.Convert.toBytes (Crypto.HMAC.digest sha256 signingKey stringtosign) |> Maybe.map Hex.Convert.toString |> Maybe.map String.toLower)
+            Debug.log "JSON" jsonPayload
 
         headers =
             [ ( "Host", "webservices.amazon.es" )
-            , ( "Content-Type", "application/json; charset=UTF-8" )
+            , ( "Content-Type", "application/json" ) -- "application/json; charset=UTF-8" )
             , ( "X-Amz-Date", now )
+            , ( "X-Amz-Content-Sha256", jsonPayload |> Crypto.Hash.sha256 )
             , ( "X-Amz-Target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
+
+            --, ( "x-amz-target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
             , ( "Content-Encoding", "amz-1.0" )
-            , ( "Authorization", "AWS4-HMAC-SHA256 Credential=" ++ vars.key ++ "/" ++ nowShort ++ "/eu-west-1/ProductAdvertisingAPI/aws4_request, SignedHeaders=content-encoding;host;x-amz-date;x-amz-target, Signature=" ++ signature ++ "" )
             ]
+                |> List.sort
+
+        --|> List.map (\( key, value ) -> ( String.toLower key, value ))
+        signedHeaders =
+            String.join ";" <| List.map (\( key, _ ) -> String.toLower key) headers
+
+        canonicalRequest =
+            "POST\n/paapi5/getitems\n"
+                ++ (String.join "\n" <| List.map (\( key, value ) -> String.toLower key ++ ":" ++ value) headers)
+                ++ "\n"
+                ++ signedHeaders
+                ++ "\n"
+                ++ (jsonPayload |> Crypto.Hash.sha256)
+
+        hashCanonicalRequest =
+            canonicalRequest |> Crypto.Hash.sha256
+
+        stringtosign =
+            "AWS4-HMAC-SHA256\n" ++ now ++ "\n" ++ nowShort ++ "/eu-west-1/ProductAdvertisingAPI/aws4_request\n" ++ hashCanonicalRequest
+
+        digest =
+            \message key ->
+                Crypto.HMAC.digestBytes sha256
+                    key
+                    (Bytes.fromUTF8 message)
+
+        signature =
+            ("AWS4" ++ vars.secret) |> Bytes.fromUTF8 |> digest nowShort |> digest "eu-west-1" |> digest "ProductAdvertisingAPI" |> digest "aws4_request" |> digest stringtosign |> Hex.fromByteList
+
+        headersAndExtraHeaders =
+            headers
+                ++ [ ( "Authorization", "AWS4-HMAC-SHA256 Credential=" ++ vars.key ++ "/" ++ nowShort ++ "/eu-west-1/ProductAdvertisingAPI/aws4_request, SignedHeaders=" ++ signedHeaders ++ ", Signature=" ++ signature ++ "" )
+                   , ( "Content-Length", String.fromInt <| Bytes.Encode.getStringWidth jsonPayload )
+                   ]
+
+        _ =
+            Debug.log "Headers" headersAndExtraHeaders
     in
     BackendTask.Http.request
         { url = "https://webservices.amazon.es/paapi5/getitems"
         , method = "POST"
-        , headers = headers
+        , headers = headersAndExtraHeaders
         , body = BackendTask.Http.stringBody "application/json" jsonPayload
         , retries = Just 1
         , timeoutInMs = Just 3000
