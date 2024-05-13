@@ -12,6 +12,7 @@ import BackendTask.Http
 import BackendTask.Time
 import Bytes.Encode
 import Components.Book exposing (book3Danimated)
+import Components.Book.APIData exposing (..)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
 import Components.Ribbon exposing (ribbon)
 import Crypto.HMAC exposing (sha256)
@@ -63,7 +64,7 @@ route =
 
 
 type alias Data =
-    { result : String }
+    { result : AmazonPAAPIResponse }
 
 
 type alias EnvVariables =
@@ -85,7 +86,7 @@ getEnvVariables =
         (BackendTask.Env.expect "PA_API_SECRET" |> BackendTask.allowFatal)
 
 
-getAmazonData : EnvVariables -> Time.Posix -> BackendTask FatalError String
+getAmazonData : EnvVariables -> Time.Posix -> BackendTask FatalError AmazonPAAPIResponse
 getAmazonData vars nowTask =
     let
         now =
@@ -101,32 +102,30 @@ getAmazonData vars nowTask =
             \"""" ++ vars.asinKindle ++ "\",\"" ++ vars.asinBook ++ """"
             ],
             "Resources": [
-            "BrowseNodeInfo.BrowseNodes.SalesRank",
-            "BrowseNodeInfo.WebsiteSalesRank",
-            "CustomerReviews.Count",
-            "CustomerReviews.StarRating",
-            "Images.Primary.Large",
-            "ItemInfo.ByLineInfo",
-            "ItemInfo.ContentInfo",
-            "ItemInfo.ContentRating",
-            "ItemInfo.Classifications",
-            "ItemInfo.ExternalIds",
-            "ItemInfo.Features",
-            "ItemInfo.ManufactureInfo",
-            "ItemInfo.ProductInfo",
-            "ItemInfo.TechnicalInfo",
-            "ItemInfo.Title",
-            "ItemInfo.TradeInInfo",
-            "Offers.Listings.Availability.Message",
-            "Offers.Listings.DeliveryInfo.IsAmazonFulfilled",
-            "Offers.Listings.DeliveryInfo.IsFreeShippingEligible",
-            "Offers.Listings.DeliveryInfo.IsPrimeEligible",
-            "Offers.Listings.MerchantInfo",
-            "Offers.Listings.Price",
-            "Offers.Listings.Promotions",
-            "Offers.Summaries.HighestPrice",
-            "Offers.Summaries.LowestPrice",
-            "ParentASIN"
+                "BrowseNodeInfo.BrowseNodes",
+                "BrowseNodeInfo.BrowseNodes.SalesRank",
+                "BrowseNodeInfo.WebsiteSalesRank",
+                "CustomerReviews.Count",
+                "CustomerReviews.StarRating",
+                "Images.Primary.Large",
+                "ItemInfo.ByLineInfo",
+                "ItemInfo.ContentInfo",
+                "ItemInfo.Features",
+                "ItemInfo.ProductInfo",
+                "ItemInfo.TechnicalInfo",
+                "ItemInfo.Title",
+                "ItemInfo.TradeInInfo",
+                "Offers.Listings.Availability.Message",
+                "Offers.Listings.DeliveryInfo.IsAmazonFulfilled",
+                "Offers.Listings.DeliveryInfo.IsFreeShippingEligible",
+                "Offers.Listings.DeliveryInfo.IsPrimeEligible",
+                "Offers.Listings.DeliveryInfo.ShippingCharges",
+                "Offers.Listings.Price",
+                "Offers.Listings.Promotions",
+                "Offers.Listings.SavingBasis",
+                "Offers.Summaries.HighestPrice",
+                "Offers.Summaries.LowestPrice",
+                "Offers.Summaries.OfferCount"
             ],
             "PartnerTag": \"""" ++ vars.tag ++ """",
             "PartnerType": "Associates",
@@ -142,7 +141,8 @@ getAmazonData vars nowTask =
             [ ( "Host", "webservices.amazon.es" )
             , ( "Content-Type", "application/json" ) -- "application/json; charset=UTF-8" )
             , ( "X-Amz-Date", now )
-            , ( "X-Amz-Content-Sha256", jsonPayload |> Crypto.Hash.sha256 )
+
+            --, ( "X-Amz-Content-Sha256", jsonPayload |> Crypto.Hash.sha256 )
             , ( "X-Amz-Target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
 
             --, ( "x-amz-target", "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems" )
@@ -155,12 +155,16 @@ getAmazonData vars nowTask =
             String.join ";" <| List.map (\( key, _ ) -> String.toLower key) headers
 
         canonicalRequest =
-            "POST\n/paapi5/getitems\n"
-                ++ (String.join "\n" <| List.map (\( key, value ) -> String.toLower key ++ ":" ++ value) headers)
-                ++ "\n"
-                ++ signedHeaders
-                ++ "\n"
-                ++ (jsonPayload |> Crypto.Hash.sha256)
+            [ "POST"
+            , """/paapi5/getitems"""
+            , """"""
+            ]
+                ++ List.map (\( key, value ) -> String.toLower key ++ ":" ++ value) headers
+                ++ [ """"""
+                   , signedHeaders
+                   , jsonPayload |> Crypto.Hash.sha256
+                   ]
+                |> String.join "\n"
 
         hashCanonicalRequest =
             canonicalRequest |> Crypto.Hash.sha256
@@ -194,7 +198,9 @@ getAmazonData vars nowTask =
         , retries = Just 1
         , timeoutInMs = Just 3000
         }
-        BackendTask.Http.expectString
+        (BackendTask.Http.expectJson
+            amazonPAAPIResponseDecoder
+        )
         |> BackendTask.onError
             (\error ->
                 case error.recoverable of
@@ -271,7 +277,11 @@ view :
     App Data ActionData RouteParams
     -> Shared.Model
     -> View (PagesMsg Msg)
-view _ _ =
+view app _ =
+    let
+        _ =
+            Debug.log "Data" app.data
+    in
     { title = title
     , body =
         [ Html.div
@@ -295,8 +305,34 @@ view _ _ =
                     [ Html.text "Fundamentos y conceptos básicos sobre el desarrollo web y manual práctico de la especificación de HTML, Javascript y CSS." ]
                 ]
             , Html.p workSansAttributeStyle [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
-            , book3Danimated False
-            , ribbon "Book"
             ]
+            ++ List.map showItem app.data.result.itemsResult.items
+            ++ [ book3Danimated False
+               , ribbon "Book"
+               ]
         ]
     }
+
+
+showItem : AmazonPAAPIResponseItemsResultItems -> Html.Html msg
+showItem item =
+    let
+        offers list =
+            List.map
+                (\offer ->
+                    Html.div []
+                        [ Html.strong [] [ Html.text "Price " ]
+                        , Html.text offer.price.displayAmount
+                        ]
+                )
+                list
+    in
+    Html.div []
+        [ Html.h3 [] [ Html.text item.itemInfo.title.displayValue ]
+        , Html.img
+            [ Attribute.src item.images.primary.large.url, Attribute.width item.images.primary.large.width, Attribute.height item.images.primary.large.height ]
+            []
+        , Html.div []
+            offers
+            item.offers.listings
+        ]
