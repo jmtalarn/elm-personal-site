@@ -13,6 +13,7 @@ import BackendTask.Time
 import Bytes.Encode
 import Components.Book exposing (book3Danimated)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
+import Components.Icons.Home as HomeIcon
 import Components.Ribbon exposing (ribbon)
 import Crypto.HMAC exposing (sha256)
 import Crypto.Hash
@@ -108,6 +109,11 @@ getAmazonData vars nowTask =
                 "CustomerReviews.Count",
                 "CustomerReviews.StarRating",
                 "Images.Primary.Large",
+                "Images.Primary.Medium",
+                "Images.Primary.Small",
+                "Images.Variants.Large",
+                "Images.Variants.Medium",
+                "Images.Variants.Small",
                 "ItemInfo.ByLineInfo",
                 "ItemInfo.ContentInfo",
                 "ItemInfo.Features",
@@ -292,24 +298,58 @@ view app _ =
             , Attribute.style "position" "relative"
             , Attribute.style "max-width" "1024px"
             ]
-            ([ Html.h2
-                [ Attribute.style "margin" "2rem 4rem" ]
-                [ Html.span antonFontAttributeStyle
-                    [ Html.text "Fundamentos web" ]
+            ([ Html.div
+                [ Attribute.style "display" "flex"
+                , Attribute.style "flex-wrap" "wrap"
+                , Attribute.style "position" "relative"
                 ]
-             , Html.h3
-                [ Attribute.style "margin" "2rem 4rem" ]
-                [ Html.span
-                    (antonFontAttributeStyle
-                        ++ [ Attribute.style "font-size" "1.5rem" ]
-                    )
-                    [ Html.text "Fundamentos y conceptos básicos sobre el desarrollo web y manual práctico de la especificación de HTML, Javascript y CSS." ]
+                [ Html.div
+                    [ Attribute.style "flex" "1 0 60%"
+                    , Attribute.style "display" "flex"
+                    , Attribute.style "align-items" "start"
+                    , Attribute.style "flex-direction" "column"
+                    , Attribute.style "justify-content" "center"
+                    ]
+                    [ Html.h2
+                        [ Attribute.style "margin" "2rem 4rem" ]
+                        [ Html.span antonFontAttributeStyle
+                            [ Html.text "Fundamentos web" ]
+                        ]
+                    , Html.h3
+                        [ Attribute.style "margin" "2rem 4rem"
+                        , Attribute.style "color" "cadetblue"
+                        ]
+                        [ Html.span
+                            (antonFontAttributeStyle
+                                ++ [ Attribute.style "font-size" "1.5rem" ]
+                            )
+                            [ Html.text "Fundamentos y conceptos básicos sobre el desarrollo web y manual práctico de la especificación de HTML, Javascript y CSS." ]
+                        ]
+                    ]
+                , Html.div [ Attribute.style "flex" "1 0 40%" ] [ book3Danimated False ]
+                , Html.div
+                    [ Attribute.style "position" "absolute"
+                    , Attribute.style "top" "0"
+                    , Attribute.style "left" "0"
+                    , Attribute.style "width" "100%"
+                    , Attribute.style "height" "90%"
+                    , Attribute.style "z-index" "-1"
+                    , Attribute.style "background-color" "aliceblue"
+                    ]
+                    []
                 ]
-             , Html.p workSansAttributeStyle [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
+             , Html.hr [] []
+             , Html.p
+                (workSansAttributeStyle
+                    ++ [ Attribute.style "max-width" "700px"
+                       , Attribute.style "margin" "4rem auto 6rem auto"
+                       , Attribute.style "text-align" "justify"
+                       ]
+                )
+                [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
              ]
                 ++ List.map showItem app.data.result
-                ++ [ book3Danimated False
-                   , ribbon "Book"
+                ++ [ ribbon "Book"
                    ]
             )
         ]
@@ -318,18 +358,56 @@ view app _ =
 
 showItem : Item -> Html.Html msg
 showItem item =
+    let
+        _ =
+            Debug.log "Item" item
+
+        isKindleUnlimited =
+            List.member True <| List.filterMap (\{ displayName } -> Just (displayName == "Kindle Unlimited")) item.browseNodeInfo.browseNodes
+
+        _ =
+            Debug.log "isKindleUnlimited" isKindleUnlimited
+    in
     Html.div []
         ([ Html.h3 [] [ Html.text item.itemInfo.title.displayValue ]
+
+         --  , Html.img
+         --     [ Attribute.src item.images.primary.large.url, Attribute.width item.images.primary.large.width, Attribute.height item.images.primary.large.height ]
+         --     []
          , Html.img
-            [ Attribute.src item.images.primary.large.url, Attribute.width item.images.primary.large.width, Attribute.height item.images.primary.large.height ]
+            [ Attribute.src item.images.primary.medium.url, Attribute.width item.images.primary.medium.width, Attribute.height item.images.primary.medium.height ]
             []
+
+         --  , Html.img
+         --     [ Attribute.src item.images.primary.small.url, Attribute.width item.images.primary.small.width, Attribute.height item.images.primary.small.height ]
+         --     []
          ]
             ++ List.map
                 (\listing ->
                     Html.div []
-                        [ Html.strong [] [ Html.text "Price " ]
-                        , Html.text listing.price.displayAmount
-                        ]
+                        ([ Html.strong [] [ Html.text "Precio " ]
+                         , Html.text listing.price.displayAmount
+                         ]
+                            ++ (if isKindleUnlimited then
+                                    [ Html.div
+                                        [ Attribute.style "display" "flex"
+                                        , Attribute.style "gap" ".3rem"
+                                        , Attribute.style "align-items" "center"
+                                        ]
+                                        [ Html.text "Consíguelo gratis en "
+                                        , HomeIcon.amazonKindle
+                                            [ Attribute.title "Amazon Kindle"
+                                            , Attribute.style "height" "1.2rem"
+                                            , Attribute.style "width" "auto"
+                                            ]
+                                        , Html.span [ Attribute.style "font-style" "italic" ] [ Html.text "Unlimited" ]
+                                        ]
+                                    ]
+
+                                else
+                                    []
+                               )
+                        )
                 )
                 item.offers.listings
         )

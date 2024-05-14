@@ -47,12 +47,15 @@ type alias WebsiteSalesRank =
 
 
 type alias Images =
-    { primary : Primary
+    { primary : ImagesContainer
+    , variants : Maybe ImagesContainer
     }
 
 
-type alias Primary =
+type alias ImagesContainer =
     { large : Image
+    , medium : Image
+    , small : Image
     }
 
 
@@ -299,12 +302,17 @@ browseNodeDecoder =
 
 imagesDecoder : Decoder Images
 imagesDecoder =
-    Decode.map Images (Decode.field "Primary" primaryDecoder)
+    Decode.map2 Images
+        (Decode.field "Primary" imagesContainerDecoder)
+        (Decode.maybe (Decode.field "Variants" imagesContainerDecoder))
 
 
-primaryDecoder : Decoder Primary
-primaryDecoder =
-    Decode.map Primary (Decode.field "Large" imageDecoder)
+imagesContainerDecoder : Decoder ImagesContainer
+imagesContainerDecoder =
+    Decode.map3 ImagesContainer
+        (Decode.field "Large" imageDecoder)
+        (Decode.field "Medium" imageDecoder)
+        (Decode.field "Small" imageDecoder)
 
 
 imageDecoder : Decoder Image
