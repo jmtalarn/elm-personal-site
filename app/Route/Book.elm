@@ -12,11 +12,11 @@ import BackendTask.Http
 import BackendTask.Time
 import Bytes.Encode
 import Components.Book exposing (book3Danimated)
-import Components.Book.APIData exposing (..)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
 import Components.Ribbon exposing (ribbon)
 import Crypto.HMAC exposing (sha256)
 import Crypto.Hash
+import DataModel.Book exposing (..)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -64,7 +64,7 @@ route =
 
 
 type alias Data =
-    { result : AmazonPAAPIResponse }
+    { result : List Item }
 
 
 type alias EnvVariables =
@@ -86,7 +86,7 @@ getEnvVariables =
         (BackendTask.Env.expect "PA_API_SECRET" |> BackendTask.allowFatal)
 
 
-getAmazonData : EnvVariables -> Time.Posix -> BackendTask FatalError AmazonPAAPIResponse
+getAmazonData : EnvVariables -> Time.Posix -> BackendTask FatalError (List Item)
 getAmazonData vars nowTask =
     let
         now =
@@ -199,7 +199,7 @@ getAmazonData vars nowTask =
         , timeoutInMs = Just 3000
         }
         (BackendTask.Http.expectJson
-            amazonPAAPIResponseDecoder
+            responseDecoder
         )
         |> BackendTask.onError
             (\error ->
@@ -228,6 +228,7 @@ getAmazonData vars nowTask =
                     _ ->
                         BackendTask.fail error |> BackendTask.allowFatal
             )
+        |> BackendTask.map (\response -> response.itemsResult.items)
 
 
 data : BackendTask FatalError Data
@@ -291,12 +292,12 @@ view app _ =
             , Attribute.style "position" "relative"
             , Attribute.style "max-width" "1024px"
             ]
-            [ Html.h2
+            ([ Html.h2
                 [ Attribute.style "margin" "2rem 4rem" ]
                 [ Html.span antonFontAttributeStyle
                     [ Html.text "Fundamentos web" ]
                 ]
-            , Html.h3
+             , Html.h3
                 [ Attribute.style "margin" "2rem 4rem" ]
                 [ Html.span
                     (antonFontAttributeStyle
@@ -304,35 +305,31 @@ view app _ =
                     )
                     [ Html.text "Fundamentos y conceptos básicos sobre el desarrollo web y manual práctico de la especificación de HTML, Javascript y CSS." ]
                 ]
-            , Html.p workSansAttributeStyle [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
-            ]
-            ++ List.map showItem app.data.result.itemsResult.items
-            ++ [ book3Danimated False
-               , ribbon "Book"
-               ]
+             , Html.p workSansAttributeStyle [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
+             ]
+                ++ List.map showItem app.data.result
+                ++ [ book3Danimated False
+                   , ribbon "Book"
+                   ]
+            )
         ]
     }
 
 
-showItem : AmazonPAAPIResponseItemsResultItems -> Html.Html msg
+showItem : Item -> Html.Html msg
 showItem item =
-    let
-        offers list =
-            List.map
-                (\offer ->
-                    Html.div []
-                        [ Html.strong [] [ Html.text "Price " ]
-                        , Html.text offer.price.displayAmount
-                        ]
-                )
-                list
-    in
     Html.div []
-        [ Html.h3 [] [ Html.text item.itemInfo.title.displayValue ]
-        , Html.img
+        ([ Html.h3 [] [ Html.text item.itemInfo.title.displayValue ]
+         , Html.img
             [ Attribute.src item.images.primary.large.url, Attribute.width item.images.primary.large.width, Attribute.height item.images.primary.large.height ]
             []
-        , Html.div []
-            offers
-            item.offers.listings
-        ]
+         ]
+            ++ List.map
+                (\listing ->
+                    Html.div []
+                        [ Html.strong [] [ Html.text "Price " ]
+                        , Html.text listing.price.displayAmount
+                        ]
+                )
+                item.offers.listings
+        )
