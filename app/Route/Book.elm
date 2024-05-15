@@ -18,6 +18,7 @@ import Components.Ribbon exposing (ribbon)
 import Crypto.HMAC exposing (sha256)
 import Crypto.Hash
 import DataModel.Book exposing (..)
+import Elm exposing (just)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -298,7 +299,7 @@ view app _ =
             , Attribute.style "position" "relative"
             , Attribute.style "max-width" "1024px"
             ]
-            ([ Html.div
+            [ Html.div
                 [ Attribute.style "display" "flex"
                 , Attribute.style "flex-wrap" "wrap"
                 , Attribute.style "position" "relative"
@@ -338,8 +339,8 @@ view app _ =
                     ]
                     []
                 ]
-             , Html.hr [] []
-             , Html.p
+            , Html.hr [] []
+            , Html.p
                 (workSansAttributeStyle
                     ++ [ Attribute.style "max-width" "700px"
                        , Attribute.style "margin" "4rem auto 6rem auto"
@@ -347,25 +348,35 @@ view app _ =
                        ]
                 )
                 [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
-             ]
-                ++ List.map showItem app.data.result
-                ++ [ ribbon "Book"
-                   ]
-            )
+            , Html.div []
+                [ Html.h4 []
+                    [ Html.text "Points explained in this book" ]
+                , Html.ul []
+                    [ Html.li [] [ Html.text "Point one" ]
+                    , Html.li [] [ Html.text "Point 2" ]
+                    , Html.li [] [ Html.text "Point III" ]
+                    , Html.li [] [ Html.text "Fourth point" ]
+                    , Html.li [] [ Html.text "Point V" ]
+                    ]
+                ]
+            , Html.div
+                [ Attribute.style "display" "flex"
+                , Attribute.style "flex-wrap" "wrap"
+                , Attribute.style "gap" "1rem"
+                , Attribute.style "justify-content" "center"
+                ]
+                (List.map showItem app.data.result)
+            , ribbon "Book"
+            ]
         ]
     }
 
 
-listing : Bool -> Listing -> Html msg
-listing isKindleUnlimited listingData =
-    let
-        _ =
-            Debug.log "isKindleUnlimited" isKindleUnlimited
-    in
+listing : Listing -> Html msg
+listing listingData =
     Html.div []
         [ Html.strong [] [ Html.text "Precio " ]
         , Html.text listingData.price.displayAmount
-        , kindleUnlimited isKindleUnlimited
         ]
 
 
@@ -373,24 +384,103 @@ showItem : Item -> Html msg
 showItem item =
     let
         _ =
-            Debug.log "ASIN" item.asin
+            Debug.log "Item" item
 
-        _ =
-            Debug.log "Item" item.browseNodeInfo.browseNodes
+        ebookCopy =
+            "Hazte con el libro en su versión digital en la plataforma Kindle de Amazon. Llévate tu copia en e-book a todos lados con tu dispositivo favorito de lectura."
+
+        paperBookCopy =
+            \pages ->
+                "Consigue tu copia física del libro en papel en blanco y negro. " ++ pages ++ " páginas de útil información. Envíado con la garantía de Amazon."
+
+        isEbook =
+            List.member True <| List.map (\{ displayName } -> displayName == "eBooks Kindle en español") item.browseNodeInfo.browseNodes
+
+        isPaperBook =
+            List.member True <| List.map (\{ displayName } -> displayName == "Libros físicos") item.browseNodeInfo.browseNodes
 
         isKindleUnlimited =
             List.member True <| List.map (\{ displayName } -> displayName == "Kindle Unlimited") item.browseNodeInfo.browseNodes
     in
-    Html.div [ Attribute.style "border-color" "2px dotted salmon" ]
-        ([ Html.h4 [] [ Html.text item.itemInfo.title.displayValue ]
-         , Html.img
-            [ Attribute.src item.images.primary.medium.url, Attribute.width item.images.primary.medium.width, Attribute.height item.images.primary.medium.height ]
-            []
-         ]
-            ++ List.map
-                (listing isKindleUnlimited)
-                item.offers.listings
-        )
+    Html.article
+        [ Attribute.style "text-decoration" "none"
+        , Attribute.style "color" "inherit"
+        , Attribute.style "display" "flex"
+        , Attribute.style "flex-direction" "column"
+        , Attribute.style "gap" "1rem"
+        , Attribute.style "margin" "1rem"
+        , Attribute.style "box-shadow" "0px 0px 1px grey"
+        , Attribute.style "border-radius" "5px"
+        , Attribute.style "padding" "1rem"
+        , Attribute.style "flex" "0 1 100%"
+        , Attribute.style "position" "relative"
+        ]
+        [ Html.header
+            [ Attribute.style "display" "flex"
+            , Attribute.style "flex-wrap" "wrap"
+            , Attribute.style "justify-content" "space-between"
+            , Attribute.style "align-items" "center"
+            ]
+            [ Html.h4 [ Attribute.style "margin" "0" ] [ Html.text item.itemInfo.title.displayValue ]
+            , Html.div
+                (workSansAttributeStyle
+                    ++ [ Attribute.style "font-size" "0.8rem"
+                       , Attribute.style "font-weight" "bold"
+                       , Attribute.style "color" "slategrey"
+
+                       --, Attribute.style "text-shadow" "2px 2px 1px orange"
+                       , Attribute.style "border-bottom" "4px solid orange"
+                       ]
+                )
+                [ if isEbook then
+                    Html.text "e-book Versión Kindle"
+
+                  else if isPaperBook then
+                    Html.text "Libro en edición impresa"
+
+                  else
+                    Html.text ""
+                ]
+            ]
+        , Html.div
+            [ Attribute.style "display" "flex"
+            , Attribute.style "align-items" "flex-start"
+            , Attribute.style "flex-direction" "row"
+            , Attribute.style "gap" "1rem"
+            ]
+            [ Html.img
+                [ Attribute.src item.images.primary.medium.url, Attribute.width item.images.primary.medium.width, Attribute.height item.images.primary.medium.height ]
+                []
+            , Html.div []
+                (if isEbook then
+                    [ Html.p [ Attribute.style "margin" "0" ] [ Html.text ebookCopy ]
+                    ]
+
+                 else if isPaperBook then
+                    [ Html.p [ Attribute.style "margin" "0" ] [ Html.text (String.fromFloat item.itemInfo.contentInfo.pagesCount.displayValue |> paperBookCopy) ] ]
+
+                 else
+                    []
+                )
+            ]
+        , Html.div
+            [ Attribute.style "display" "flex"
+            , Attribute.style "gap" "2rem"
+            , Attribute.style "justify-content" "space-between"
+            ]
+            [ Html.div []
+                (List.map
+                    listing
+                    item.offers.listings
+                )
+            , Html.a
+                [ Attribute.href item.detailPageURL
+                , Attribute.title "Clic aquí para más detalles"
+                ]
+                [ Html.text "Más detalles en Amazon" ]
+            ]
+        , kindleUnlimited isKindleUnlimited
+        ]
 
 
 kindleUnlimited : Bool -> Html msg
@@ -400,45 +490,52 @@ kindleUnlimited isKindleUnlimited =
             "https://amzn.to/4bE3osw"
     in
     if isKindleUnlimited then
-        Html.a
-            [ Attribute.style "display" "flex"
-            , Attribute.style "align-items" "center"
-            , Attribute.style "margin" "0.5rem auto"
-            , Attribute.style "justify-content" "center"
-            , Attribute.href kindleUnlimitedLink
-            , Attribute.style "text-decoration" "none"
-            ]
-            [ Html.div
-                [ Attribute.style "display" "flex"
-                , Attribute.style "gap" ".3rem"
-                , Attribute.style "align-items" "center"
-                , Attribute.style "background-color" "slategrey"
-                , Attribute.style "color" "white"
-                , Attribute.style "padding" "1rem 2rem"
-                , Attribute.style "clip-path" "polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%)"
-                ]
-                [ Html.text "Consíguelo por 0 € con "
-                , HomeIcon.amazonKindle
-                    [ Attribute.title "Amazon Kindle"
-                    , Attribute.style "height" "1.2rem"
-                    , Attribute.style "width" "auto"
-                    ]
-                , Html.span [ Attribute.style "font-style" "italic", Attribute.style "font-weight" "bolder" ] [ Html.text "Unlimited" ]
-                ]
-            , Html.div
+        Html.div [ Attribute.style "display" "flex", Attribute.style "margin" "1rem -1rem -1rem -1rem" ]
+            [ Html.a
                 [ Attribute.style "display" "flex"
                 , Attribute.style "align-items" "center"
+                , Attribute.style "flex" "1 0 100%"
+
+                --, Attribute.style "margin" "1rem -1rem -1rem -1rem"
+                --, Attribute.style "justify-content" "center"
+                , Attribute.href kindleUnlimitedLink
+                , Attribute.style "text-decoration" "none"
                 , Attribute.style "background-color" "orange"
                 , Attribute.style "color" "slategrey"
-                , Attribute.style "padding" "1rem 2rem"
-                , Attribute.style "left" "-1.2rem"
-                , Attribute.style "position" "relative"
-                , Attribute.style "z-index" "-1"
-                , Attribute.style "font-weight" "bolder"
-
-                --, Attribute.style "clip-path" "polygon(100% 0, 100% 100%, 0% 100%, 5% 50%, 0% 0%)"
                 ]
-                [ Html.text "Pruébalo 30 días gratis."
+                [ Html.div
+                    [ Attribute.style "display" "flex"
+                    , Attribute.style "gap" ".3rem"
+                    , Attribute.style "align-items" "center"
+                    , Attribute.style "flex-wrap" "wrap"
+                    , Attribute.style "background-color" "slategrey"
+                    , Attribute.style "color" "white"
+                    , Attribute.style "padding" "1rem 2rem"
+                    , Attribute.style "clip-path" "polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%)"
+                    ]
+                    [ Html.text "Consíguelo por 0 € con "
+                    , HomeIcon.amazonKindle
+                        [ Attribute.title "Amazon Kindle"
+                        , Attribute.style "height" "1.2rem"
+                        , Attribute.style "width" "auto"
+                        ]
+                    , Html.span [ Attribute.style "font-style" "italic", Attribute.style "font-weight" "bolder" ] [ Html.text "Unlimited" ]
+                    ]
+                , Html.div
+                    [ Attribute.style "display" "flex"
+                    , Attribute.style "align-items" "center"
+                    , Attribute.style "padding" "1rem 2rem"
+
+                    --, Attribute.style "left" "-1.2rem"
+                    --, Attribute.style "position" "relative"
+                    --, Attribute.style "z-index" "-1"
+                    , Attribute.style "font-weight" "bolder"
+                    , Attribute.style "color" "slategrey"
+
+                    --, Attribute.style "clip-path" "polygon(100% 0, 100% 100%, 0% 100%, 5% 50%, 0% 0%)"
+                    ]
+                    [ Html.text "Pruébalo 30 días gratis."
+                    ]
                 ]
             ]
 
