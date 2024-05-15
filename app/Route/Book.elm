@@ -21,7 +21,7 @@ import DataModel.Book exposing (..)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
-import Html
+import Html exposing (Html)
 import Html.Attributes as Attribute
 import Iso8601
 import LanguageTag
@@ -356,58 +356,91 @@ view app _ =
     }
 
 
-showItem : Item -> Html.Html msg
-showItem item =
+listing : Bool -> Listing -> Html msg
+listing isKindleUnlimited listingData =
     let
-        _ =
-            Debug.log "Item" item
-
-        isKindleUnlimited =
-            List.member True <| List.filterMap (\{ displayName } -> Just (displayName == "Kindle Unlimited")) item.browseNodeInfo.browseNodes
-
         _ =
             Debug.log "isKindleUnlimited" isKindleUnlimited
     in
     Html.div []
-        ([ Html.h3 [] [ Html.text item.itemInfo.title.displayValue ]
+        [ Html.strong [] [ Html.text "Precio " ]
+        , Html.text listingData.price.displayAmount
+        , kindleUnlimited isKindleUnlimited
+        ]
 
-         --  , Html.img
-         --     [ Attribute.src item.images.primary.large.url, Attribute.width item.images.primary.large.width, Attribute.height item.images.primary.large.height ]
-         --     []
+
+showItem : Item -> Html msg
+showItem item =
+    let
+        _ =
+            Debug.log "ASIN" item.asin
+
+        _ =
+            Debug.log "Item" item.browseNodeInfo.browseNodes
+
+        isKindleUnlimited =
+            List.member True <| List.map (\{ displayName } -> displayName == "Kindle Unlimited") item.browseNodeInfo.browseNodes
+    in
+    Html.div [ Attribute.style "border-color" "2px dotted salmon" ]
+        ([ Html.h4 [] [ Html.text item.itemInfo.title.displayValue ]
          , Html.img
             [ Attribute.src item.images.primary.medium.url, Attribute.width item.images.primary.medium.width, Attribute.height item.images.primary.medium.height ]
             []
-
-         --  , Html.img
-         --     [ Attribute.src item.images.primary.small.url, Attribute.width item.images.primary.small.width, Attribute.height item.images.primary.small.height ]
-         --     []
          ]
             ++ List.map
-                (\listing ->
-                    Html.div []
-                        ([ Html.strong [] [ Html.text "Precio " ]
-                         , Html.text listing.price.displayAmount
-                         ]
-                            ++ (if isKindleUnlimited then
-                                    [ Html.div
-                                        [ Attribute.style "display" "flex"
-                                        , Attribute.style "gap" ".3rem"
-                                        , Attribute.style "align-items" "center"
-                                        ]
-                                        [ Html.text "Consíguelo gratis en "
-                                        , HomeIcon.amazonKindle
-                                            [ Attribute.title "Amazon Kindle"
-                                            , Attribute.style "height" "1.2rem"
-                                            , Attribute.style "width" "auto"
-                                            ]
-                                        , Html.span [ Attribute.style "font-style" "italic" ] [ Html.text "Unlimited" ]
-                                        ]
-                                    ]
-
-                                else
-                                    []
-                               )
-                        )
-                )
+                (listing isKindleUnlimited)
                 item.offers.listings
         )
+
+
+kindleUnlimited : Bool -> Html msg
+kindleUnlimited isKindleUnlimited =
+    let
+        kindleUnlimitedLink =
+            "https://amzn.to/4bE3osw"
+    in
+    if isKindleUnlimited then
+        Html.a
+            [ Attribute.style "display" "flex"
+            , Attribute.style "align-items" "center"
+            , Attribute.style "margin" "0.5rem auto"
+            , Attribute.style "justify-content" "center"
+            , Attribute.href kindleUnlimitedLink
+            , Attribute.style "text-decoration" "none"
+            ]
+            [ Html.div
+                [ Attribute.style "display" "flex"
+                , Attribute.style "gap" ".3rem"
+                , Attribute.style "align-items" "center"
+                , Attribute.style "background-color" "slategrey"
+                , Attribute.style "color" "white"
+                , Attribute.style "padding" "1rem 2rem"
+                , Attribute.style "clip-path" "polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%)"
+                ]
+                [ Html.text "Consíguelo por 0 € con "
+                , HomeIcon.amazonKindle
+                    [ Attribute.title "Amazon Kindle"
+                    , Attribute.style "height" "1.2rem"
+                    , Attribute.style "width" "auto"
+                    ]
+                , Html.span [ Attribute.style "font-style" "italic", Attribute.style "font-weight" "bolder" ] [ Html.text "Unlimited" ]
+                ]
+            , Html.div
+                [ Attribute.style "display" "flex"
+                , Attribute.style "align-items" "center"
+                , Attribute.style "background-color" "orange"
+                , Attribute.style "color" "slategrey"
+                , Attribute.style "padding" "1rem 2rem"
+                , Attribute.style "left" "-1.2rem"
+                , Attribute.style "position" "relative"
+                , Attribute.style "z-index" "-1"
+                , Attribute.style "font-weight" "bolder"
+
+                --, Attribute.style "clip-path" "polygon(100% 0, 100% 100%, 0% 100%, 5% 50%, 0% 0%)"
+                ]
+                [ Html.text "Pruébalo 30 días gratis."
+                ]
+            ]
+
+    else
+        Html.text ""
