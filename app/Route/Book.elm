@@ -364,6 +364,7 @@ view app _ =
                 , Attribute.style "flex-wrap" "wrap"
                 , Attribute.style "gap" "1rem"
                 , Attribute.style "justify-content" "center"
+                , Attribute.style "width" "100%"
                 ]
                 (List.map showItem app.data.result)
             , ribbon "Book"
@@ -412,7 +413,8 @@ showItem item =
         , Attribute.style "box-shadow" "0px 0px 1px grey"
         , Attribute.style "border-radius" "5px"
         , Attribute.style "padding" "1rem"
-        , Attribute.style "flex" "0 1 100%"
+        , Attribute.style "flex" "1"
+        , Attribute.style "min-width" "min(100%,20rem)"
         , Attribute.style "position" "relative"
         ]
         [ Html.header
