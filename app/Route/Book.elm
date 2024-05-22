@@ -348,17 +348,7 @@ view app _ =
                        ]
                 )
                 [ Html.text """Este libro es una guía introductoria a una serie de conceptos, técnicas y herramientas de los conceptos más básicos del desarrollo web. Viajaremos desde los conceptos y siglas más teóricos para introducirnos posteriormente en los aspectos más técnicos de los tres pilares del desarrollo web: HTML, Javascript y CSS.""" ]
-            , Html.div []
-                [ Html.h4 []
-                    [ Html.text "Points explained in this book" ]
-                , Html.ul []
-                    [ Html.li [] [ Html.text "Point one" ]
-                    , Html.li [] [ Html.text "Point 2" ]
-                    , Html.li [] [ Html.text "Point III" ]
-                    , Html.li [] [ Html.text "Fourth point" ]
-                    , Html.li [] [ Html.text "Point V" ]
-                    ]
-                ]
+            , featurePoints
             , Html.div
                 [ Attribute.style "display" "flex"
                 , Attribute.style "flex-wrap" "wrap"
@@ -371,6 +361,45 @@ view app _ =
             ]
         ]
     }
+
+
+
+-- Siglas y definiciones
+--     HTML HTTP request URL XML API REST JSON Hypertexto e Hypermedia
+-- HTML
+--     Breve historia
+--     Estructura de un documento HTML
+--     Etiquetas semánticas,  campos en formularios, botones, tablas y otras Etiquetas
+-- JAVASCRIPT
+--     Breve historia
+--     Variables y tipos, métodos y funciones
+--     Expresiones regulares
+--     Librerias internas
+--     Estructuras de control y bucles
+--     Manipulación del DOM
+--     Eventos
+--     Builtin HTML5 API
+--     Ajax y fetch
+-- CSS
+--     Hojas de estilo
+--     Modelo de caja
+--     Elementos de bloque y en línea
+--     Posicionamiento, alineación, flexbox y grid
+
+
+featurePoints : Html msg
+featurePoints =
+    Html.div []
+        [ Html.h4 []
+            [ Html.text "Points explained in this book" ]
+        , Html.ul []
+            [ Html.li [] [ Html.text "Point one" ]
+            , Html.li [] [ Html.text "Point 2" ]
+            , Html.li [] [ Html.text "Point III" ]
+            , Html.li [] [ Html.text "Fourth point" ]
+            , Html.li [] [ Html.text "Point V" ]
+            ]
+        ]
 
 
 listing : Listing -> Html msg
