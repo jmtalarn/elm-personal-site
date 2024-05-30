@@ -14,6 +14,7 @@ import Bytes.Encode
 import Components.Book exposing (book3Danimated)
 import Components.Home exposing (antonFontAttributeStyle, workSansAttributeStyle)
 import Components.Icons.Home as HomeIcon
+import Components.Icons.Icon as Icon
 import Components.Ribbon exposing (ribbon)
 import Crypto.HMAC exposing (sha256)
 import Crypto.Hash
@@ -31,6 +32,7 @@ import LanguageTag.Language
 import Pages
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
+import Phosphor
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import String.Extra
@@ -440,6 +442,7 @@ view app _ =
                 [ Attribute.style "display" "flex"
                 , Attribute.style "flex-wrap" "wrap"
                 , Attribute.style "position" "relative"
+                , Attribute.style "margin" "-1rem -1rem -3rem -1rem"
                 ]
                 [ Html.div
                     [ Attribute.style "flex" "1 0 60%"
@@ -458,8 +461,8 @@ view app _ =
                         , Attribute.style "color" "cadetblue"
                         ]
                         [ Html.span
-                            (antonFontAttributeStyle
-                                ++ [ Attribute.style "font-size" "1.5rem" ]
+                            (workSansAttributeStyle
+                                ++ [ Attribute.style "font-weight" "400", Attribute.style "font-size" "1.5rem" ]
                             )
                             [ Html.text "Fundamentos y conceptos básicos sobre el desarrollo web y manual práctico de la especificación de HTML, Javascript y CSS." ]
                         ]
@@ -476,7 +479,6 @@ view app _ =
                     ]
                     []
                 ]
-            , Html.hr [] []
             , Html.p
                 (workSansAttributeStyle
                     ++ [ Attribute.style "max-width" "700px"
@@ -500,42 +502,66 @@ view app _ =
     }
 
 
+painPointStyle : List (Html.Attribute msg)
 painPointStyle =
-    [ Attribute.style "border-radius" "15px"
-    , Attribute.style "height" "100%"
-    , Attribute.style "box-shadow" "0 4px 8px 4px rgba(0, 0, 0, 0.2)"
+    [ Attribute.style "height" "100%"
+
+    --, Attribute.style "border-radius" "15px"
+    , Attribute.style "box-shadow" "0 3px 6px 3px rgba(0, 0, 0, 0.2)"
     , Attribute.style "max-width" "100%"
 
     --, Attribute.style "min-width" "15rem"
     ]
 
 
-painPointContentStyle =
-    workSansAttributeStyle ++ [ Attribute.style "font-size" "1rem", Attribute.style "padding" "1rem" ]
+painPointArticleStyle : List (Html.Attribute msg)
+painPointArticleStyle =
+    workSansAttributeStyle ++ [ Attribute.style "font-size" "0.8rem" ]
 
 
+painPointHeaderStyle : String -> List (Html.Attribute msg)
+painPointHeaderStyle backgroundColor =
+    [ Attribute.style "border-bottom" "1px solid lightgrey"
+    , Attribute.style "padding" "0.2rem 1rem"
+    , Attribute.style "background-color" backgroundColor
+    ]
+
+
+painPointTitleStyle : List (Html.Attribute msg)
 painPointTitleStyle =
-    antonFontAttributeStyle ++ [ Attribute.style "font-size" "1.2rem", Attribute.style "margin" "0" ]
+    workSansAttributeStyle
+        ++ [ Attribute.style "font-size" "1rem"
+           , Attribute.style "font-weight" "bold"
+           , Attribute.style "margin" "0"
+           ]
 
 
+painPointContentStyle : List (Html.Attribute msg)
+painPointContentStyle =
+    [ Attribute.style "padding" "1rem 1rem 1rem 2rem" ]
+
+
+painPointDefinitions : Html msg
 painPointDefinitions =
-    Html.article painPointContentStyle
-        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "Conceptos y definiciones" ] ]
-        , Html.p [ Attribute.style "margin" "1rem" ] [ Html.text "HTML HTTP request URL XML API REST JSON Hypertexto e Hypermedia" ]
+    Html.article painPointArticleStyle
+        [ Html.header (painPointHeaderStyle "Gainsboro") [ Html.h4 painPointTitleStyle [ Html.text "Conceptos y definiciones" ] ]
+        , Html.p painPointContentStyle [ Html.text "HTML HTTP request URL XML API REST JSON Hypertexto e Hypermedia" ]
         ]
 
 
+painPointHTML : Html msg
 painPointHTML =
-    Html.article painPointContentStyle
-        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "HTML" ] ]
-        , Html.ul [] [ Html.li [] [ Html.text "Breve historia" ], Html.li [] [ Html.text "Estructura de un documento HTML" ], Html.li [] [ Html.text "Etiquetas semánticas,  campos en formularios, botones, tablas y otras Etiquetas" ] ]
+    Html.article painPointArticleStyle
+        [ Html.header (painPointHeaderStyle "NavajoWhite") [ Html.h4 (painPointTitleStyle ++ [ Attribute.style "color" "darkOrange" ]) [ Icon.duotone Phosphor.fileHtml (Just [ Attribute.style "position" "relative", Attribute.style "top" "5px", Attribute.style "margin-right" "1rem" ]), Html.text "HTML" ] ]
+        , Html.ul painPointContentStyle [ Html.li [] [ Html.text "Breve historia" ], Html.li [] [ Html.text "Estructura de un documento HTML" ], Html.li [] [ Html.text "Etiquetas semánticas,  campos en formularios, botones, tablas y otras Etiquetas" ] ]
         ]
 
 
+painPointJavascript : Html msg
 painPointJavascript =
-    Html.article painPointContentStyle
-        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "Javascript" ] ]
-        , Html.ul []
+    Html.article painPointArticleStyle
+        [ Html.header (painPointHeaderStyle "LightYellow") [ Html.h4 (painPointTitleStyle ++ [ Attribute.style "color" "gold" ]) [ Icon.duotone Phosphor.fileJs (Just [ Attribute.style "position" "relative", Attribute.style "top" "5px", Attribute.style "margin-right" "1rem" ]), Html.text "Javascript" ] ]
+        , Html.ul painPointContentStyle
             [ Html.li []
                 [ Html.text "Breve historia" ]
             , Html.li [] [ Html.text "Variables y tipos, métodos y funciones" ]
@@ -550,10 +576,11 @@ painPointJavascript =
         ]
 
 
+painPointCSS : Html msg
 painPointCSS =
-    Html.article painPointContentStyle
-        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "CSS" ] ]
-        , Html.ul []
+    Html.article painPointArticleStyle
+        [ Html.header (painPointHeaderStyle "Azure") [ Html.h4 (painPointTitleStyle ++ [ Attribute.style "color" "cornflowerblue" ]) [ Icon.duotone Phosphor.fileCss (Just [ Attribute.style "position" "relative", Attribute.style "top" "5px", Attribute.style "margin-right" "1rem" ]), Html.text "CSS" ] ]
+        , Html.ul painPointContentStyle
             [ Html.li []
                 [ Html.text "Hojas de estilo" ]
             , Html.li [] [ Html.text "Modelo de caja" ]
@@ -572,9 +599,9 @@ featurePoints =
             [ Attribute.style "list-style-type" "none"
             , Attribute.style "padding" "0"
             , Attribute.style "display" "grid"
-            , Attribute.style "grid-template-columns" "repeat(auto-fit, minmax(20rem, 1fr))"
+            , Attribute.style "grid-template-columns" "repeat(auto-fit, minmax(15rem, 1fr))"
             , Attribute.style "gap" "2rem"
-            , Attribute.style "max-width" "90%"
+            , Attribute.style "max-width" "75%"
             , Attribute.style "margin" "0 auto"
             ]
             [ Html.li painPointStyle [ painPointDefinitions ]
