@@ -25,6 +25,7 @@ import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Iso8601
+import Json.Decode as Decode
 import LanguageTag
 import LanguageTag.Language
 import Pages
@@ -194,8 +195,140 @@ getAmazonData vars nowTask =
                    , ( "Content-Length", String.fromInt <| Bytes.Encode.getStringWidth jsonPayload )
                    ]
 
-        _ =
-            Debug.log "Headers" headersAndExtraHeaders
+        failBackData : Response
+        failBackData =
+            { itemsResult =
+                { items =
+                    [ { asin = "B08NF34XL5"
+                      , browseNodeInfo =
+                            { browseNodes = [ { displayName = "Libros físicos", contextFreeName = "", id = "", isRoot = False, salesRank = Nothing } ]
+                            , websiteSalesRank = { salesRank = 0 }
+                            }
+                      , detailPageURL = "https://amzn.to/45kf16h"
+                      , images =
+                            { primary =
+                                { large = { height = 0, width = 0, url = "" }
+                                , medium = { height = 342, width = 311, url = "https://m.media-amazon.com/images/I/61H4gKZwdIL._SY466_.jpg" }
+                                , small = { height = 0, width = 0, url = "" }
+                                }
+                            , variants = Nothing
+                            }
+                      , itemInfo =
+                            { byLineInfo =
+                                { contributors = []
+                                , manufacturer = Nothing
+                                }
+                            , contentInfo =
+                                { edition = Nothing
+                                , languages = { displayValues = [], label = "", locale = "" }
+                                , pagesCount =
+                                    { displayValue = 149.0
+                                    , label = ""
+                                    , locale = "es"
+                                    , unit = Nothing
+                                    }
+                                , publicationDate = { displayValue = "", label = "", locale = "es" }
+                                }
+                            , productInfo =
+                                { isAdultProduct =
+                                    { displayValue = False
+                                    , label = ""
+                                    , locale = ""
+                                    }
+                                , releaseDate = Nothing
+                                , itemDimensions = Nothing
+                                }
+                            , technicalInfo = Nothing
+                            , title = { displayValue = "Fundamentos web", label = "", locale = "es" }
+                            }
+                      , offers =
+                            { listings =
+                                [ { availability = { message = "" }
+                                  , deliveryInfo =
+                                        { isAmazonFulfilled = True
+                                        , isFreeShippingEligible = True
+                                        , isPrimeEligible = True
+                                        }
+                                  , id = ""
+                                  , price =
+                                        { amount = 9.0
+                                        , currency = "€"
+                                        , displayAmount = "9.0 €"
+                                        }
+                                  , violatesMAP = False
+                                  }
+                                ]
+                            , summaries = []
+                            }
+                      }
+                    , { asin = "B08N5S5BHD"
+                      , browseNodeInfo =
+                            { browseNodes =
+                                [ { displayName = "eBooks Kindle en español", contextFreeName = "", id = "", isRoot = False, salesRank = Nothing }
+                                , { displayName = "Kindle Unlimited", contextFreeName = "", id = "", isRoot = False, salesRank = Nothing }
+                                ]
+                            , websiteSalesRank = { salesRank = 0 }
+                            }
+                      , detailPageURL = "https://amzn.to/3WZnfhJ"
+                      , images =
+                            { primary =
+                                { large = { height = 0, width = 0, url = "" }
+                                , medium = { height = 342, width = 214, url = "https://m.media-amazon.com/images/I/71fMoOTr7sL._SY342_.jpg" }
+                                , small = { height = 0, width = 0, url = "" }
+                                }
+                            , variants = Nothing
+                            }
+                      , itemInfo =
+                            { byLineInfo =
+                                { contributors = []
+                                , manufacturer = Nothing
+                                }
+                            , contentInfo =
+                                { edition = Nothing
+                                , languages = { displayValues = [], label = "", locale = "" }
+                                , pagesCount =
+                                    { displayValue = 132.0
+                                    , label = ""
+                                    , locale = "es"
+                                    , unit = Nothing
+                                    }
+                                , publicationDate = { displayValue = "", label = "", locale = "es" }
+                                }
+                            , productInfo =
+                                { isAdultProduct =
+                                    { displayValue = False
+                                    , label = ""
+                                    , locale = ""
+                                    }
+                                , releaseDate = Nothing
+                                , itemDimensions = Nothing
+                                }
+                            , technicalInfo = Nothing
+                            , title = { displayValue = "Fundamentos web", label = "", locale = "es" }
+                            }
+                      , offers =
+                            { listings =
+                                [ { availability = { message = "" }
+                                  , deliveryInfo =
+                                        { isAmazonFulfilled = True
+                                        , isFreeShippingEligible = True
+                                        , isPrimeEligible = True
+                                        }
+                                  , id = ""
+                                  , price =
+                                        { amount = 5.0
+                                        , currency = "€"
+                                        , displayAmount = "5.0 €"
+                                        }
+                                  , violatesMAP = False
+                                  }
+                                ]
+                            , summaries = []
+                            }
+                      }
+                    ]
+                }
+            }
     in
     BackendTask.Http.request
         { url = "https://webservices.amazon.es/paapi5/getitems"
@@ -230,7 +363,11 @@ getAmazonData vars nowTask =
                         -- else
                         --     -- we're only handling these expected error cases. In the case of an HTTP timeout,
                         --     -- we'll let the error propagate as a FatalError
-                        BackendTask.fail error |> BackendTask.allowFatal
+                        if metadata.statusCode == 429 then
+                            BackendTask.succeed failBackData
+
+                        else
+                            BackendTask.fail error |> BackendTask.allowFatal
 
                     _ ->
                         BackendTask.fail error |> BackendTask.allowFatal
@@ -363,41 +500,87 @@ view app _ =
     }
 
 
+painPointStyle =
+    [ Attribute.style "border-radius" "15px"
+    , Attribute.style "height" "100%"
+    , Attribute.style "box-shadow" "0 4px 8px 4px rgba(0, 0, 0, 0.2)"
+    , Attribute.style "max-width" "100%"
 
--- Siglas y definiciones
---     HTML HTTP request URL XML API REST JSON Hypertexto e Hypermedia
--- HTML
---     Breve historia
---     Estructura de un documento HTML
---     Etiquetas semánticas,  campos en formularios, botones, tablas y otras Etiquetas
--- JAVASCRIPT
---     Breve historia
---     Variables y tipos, métodos y funciones
---     Expresiones regulares
---     Librerias internas
---     Estructuras de control y bucles
---     Manipulación del DOM
---     Eventos
---     Builtin HTML5 API
---     Ajax y fetch
--- CSS
---     Hojas de estilo
---     Modelo de caja
---     Elementos de bloque y en línea
---     Posicionamiento, alineación, flexbox y grid
+    --, Attribute.style "min-width" "15rem"
+    ]
+
+
+painPointContentStyle =
+    workSansAttributeStyle ++ [ Attribute.style "font-size" "1rem", Attribute.style "padding" "1rem" ]
+
+
+painPointTitleStyle =
+    antonFontAttributeStyle ++ [ Attribute.style "font-size" "1.2rem", Attribute.style "margin" "0" ]
+
+
+painPointDefinitions =
+    Html.article painPointContentStyle
+        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "Conceptos y definiciones" ] ]
+        , Html.p [ Attribute.style "margin" "1rem" ] [ Html.text "HTML HTTP request URL XML API REST JSON Hypertexto e Hypermedia" ]
+        ]
+
+
+painPointHTML =
+    Html.article painPointContentStyle
+        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "HTML" ] ]
+        , Html.ul [] [ Html.li [] [ Html.text "Breve historia" ], Html.li [] [ Html.text "Estructura de un documento HTML" ], Html.li [] [ Html.text "Etiquetas semánticas,  campos en formularios, botones, tablas y otras Etiquetas" ] ]
+        ]
+
+
+painPointJavascript =
+    Html.article painPointContentStyle
+        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "Javascript" ] ]
+        , Html.ul []
+            [ Html.li []
+                [ Html.text "Breve historia" ]
+            , Html.li [] [ Html.text "Variables y tipos, métodos y funciones" ]
+            , Html.li [] [ Html.text "Expresiones regulares" ]
+            , Html.li [] [ Html.text "Librerias internas" ]
+            , Html.li [] [ Html.text "Estructuras de control y bucles" ]
+            , Html.li [] [ Html.text "Manipulación del DOM" ]
+            , Html.li [] [ Html.text "Eventos" ]
+            , Html.li [] [ Html.text "Builtin HTML5 API" ]
+            , Html.li [] [ Html.text "Ajax y fetch" ]
+            ]
+        ]
+
+
+painPointCSS =
+    Html.article painPointContentStyle
+        [ Html.header [] [ Html.h4 painPointTitleStyle [ Html.text "CSS" ] ]
+        , Html.ul []
+            [ Html.li []
+                [ Html.text "Hojas de estilo" ]
+            , Html.li [] [ Html.text "Modelo de caja" ]
+            , Html.li [] [ Html.text "Elementos de bloque y en línea" ]
+            , Html.li [] [ Html.text "Posicionamiento, alineación, flexbox y grid" ]
+            ]
+        ]
 
 
 featurePoints : Html msg
 featurePoints =
-    Html.div []
+    Html.div [ Attribute.style "margin-bottom" "4rem" ]
         [ Html.h4 []
             [ Html.text "Points explained in this book" ]
-        , Html.ul []
-            [ Html.li [] [ Html.text "Point one" ]
-            , Html.li [] [ Html.text "Point 2" ]
-            , Html.li [] [ Html.text "Point III" ]
-            , Html.li [] [ Html.text "Fourth point" ]
-            , Html.li [] [ Html.text "Point V" ]
+        , Html.ul
+            [ Attribute.style "list-style-type" "none"
+            , Attribute.style "padding" "0"
+            , Attribute.style "display" "grid"
+            , Attribute.style "grid-template-columns" "repeat(auto-fit, minmax(20rem, 1fr))"
+            , Attribute.style "gap" "2rem"
+            , Attribute.style "max-width" "90%"
+            , Attribute.style "margin" "0 auto"
+            ]
+            [ Html.li painPointStyle [ painPointDefinitions ]
+            , Html.li painPointStyle [ painPointHTML ]
+            , Html.li painPointStyle [ painPointJavascript ]
+            , Html.li painPointStyle [ painPointCSS ]
             ]
         ]
 
