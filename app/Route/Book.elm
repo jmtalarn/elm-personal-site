@@ -594,7 +594,7 @@ featurePoints : Html msg
 featurePoints =
     Html.div [ Attribute.style "margin-bottom" "4rem" ]
         [ Html.h4 []
-            [ Html.text "Points explained in this book" ]
+            [ Html.text "Conceptos clave" ]
         , Html.ul
             [ Attribute.style "list-style-type" "none"
             , Attribute.style "padding" "0"
