@@ -249,6 +249,11 @@ dialog menuClickedMsg =
                         |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "CV" ]
                     , Html.p regularDialogFont [ Html.text "Explore my CV to learn about my background, experience, education, certifications, and projects." ]
                     ]
+                , Html.li [ Attribute.style "font-size" "2rem", Attribute.style "margin-top" "3rem" ]
+                    [ Route.Book
+                        |> Route.link (Html.Events.onClick menuClickedMsg :: whiteLinksStyle) [ Html.text "Book" ]
+                    , Html.p regularDialogFont [ Html.text "Review 'Fundamentos Web' on Amazon – your go-to guide for mastering the essentials of web development." ]
+                    ]
                 ]
             , Html.button
                 [ Attribute.style "background" "none"
