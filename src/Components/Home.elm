@@ -181,6 +181,10 @@ book =
                 []
                 [ Html.text "Uncover my book"
                 ]
+            , Html.p [ Attribute.style "text-align" "justify" ]
+                [ Route.Book
+                    |> Route.link [] [ Html.text "Book overview" ]
+                ]
             , Html.p [ Attribute.style "text-align" "justify" ] [ Html.text "Review 'Fundamentos Web' on Amazon – your go-to guide for mastering the essentials of web development. This book provides clear definitions and explanations of key concepts in web foundations, making it an indispensable resource for both beginners and experienced developers alike. Get ready to enhance your understanding of CSS, HTML, and JavaScript as you embark on the journey into the exciting world of web development" ]
             , Html.a
                 [ Attribute.href "https://amzn.to/2UdkQyz"
