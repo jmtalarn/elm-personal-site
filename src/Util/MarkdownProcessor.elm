@@ -1,6 +1,7 @@
 module Util.MarkdownProcessor exposing (getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
 
 import Components.Icons.Icon as Icon
+import Components.Icons.TechIcon as TechIcon
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
 import Html exposing (Html)
@@ -125,6 +126,9 @@ processHtml =
         , Markdown.Html.tag "icon" Icon.markdownIcon
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "text"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "tech-icon" TechIcon.icon
+            |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
         ]
 
@@ -407,5 +411,8 @@ processHtmlToHtmlCode =
         , Markdown.Html.tag "icon" (\icon text style _ -> "<div class=\"" ++ icon ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\">" ++ Maybe.withDefault "" text ++ "<div>")
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "text"
+            |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "tech-icon" (\icon style _ -> "<div class=\"" ++ icon ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\">" ++ "<div>")
+            |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
         ]

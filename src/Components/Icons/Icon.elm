@@ -36,6 +36,8 @@ markdownIcon icon text style _ =
                 , ( "sync", Phosphor.arrowsClockwise )
                 , ( "trash", Phosphor.trash )
                 , ( "bug", Phosphor.bugBeetle )
+                , ( "link", Phosphor.link )
+                , ( "code", Phosphor.code )
                 ]
 
         unknown =
