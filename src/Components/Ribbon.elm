@@ -25,6 +25,7 @@ renderRibbon text reverse =
          , Attribute.style "position" "absolute"
          , Attribute.style "top" "-10px"
          , Attribute.style "z-index" "1"
+         , Attribute.style "clip-path" "polygon(100% 0, 100% 20%, 19% 100%, 0 100%, 0 0)"
          ]
             ++ (if reverse then
                     [ Attribute.style "right" "-0.6rem"
