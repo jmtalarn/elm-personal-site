@@ -51,7 +51,7 @@
 -   [x] 404 page missing fonts
 -   [x] CV on top, ribbon covers last eye for aside projects to be clickable
 -   [x] CV eye icon min width
--   [ ] Menu horizontal scroll for text on small screen.
+-   [x] Menu horizontal scroll for text on small screen.
 -   [x] Add a margin to bottom.
 -   [ ] Code pen component
 -   [ ] Preview link component

@@ -97,6 +97,7 @@ antonFontAttributeStyle =
     , Attribute.style "font-style" "normal"
     , Attribute.style "font-size" "2rem"
     , Attribute.style "line-height" "2rem"
+    , Attribute.style "word-break" "break-word"
     ]
 
 
@@ -134,6 +135,7 @@ siteTitle style =
                         [ Attribute.style "font-size" "3rem"
                         , Attribute.style "color" "dimgray"
                         , Attribute.style "fill" "url(#gradient)"
+                        , Attribute.style "min-width" "3rem"
                         ]
                     )
                 , Html.span antonFontAttributeStyle [ Html.text "jmtalarn.com" ]
