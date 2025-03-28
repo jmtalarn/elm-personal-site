@@ -144,9 +144,6 @@ getAmazonData vars nowTask =
             }
         """ |> String.Extra.clean
 
-        _ =
-            Debug.log "JSON" jsonPayload
-
         headers =
             [ ( "Host", "webservices.amazon.es" )
             , ( "Content-Type", "application/json" ) -- "application/json; charset=UTF-8" )
@@ -347,24 +344,6 @@ getAmazonData vars nowTask =
             (\error ->
                 case error.recoverable of
                     BackendTask.Http.BadStatus metadata string ->
-                        let
-                            _ =
-                                Debug.log "statusCode" metadata.statusCode
-
-                            _ =
-                                Debug.log "statusText" metadata.statusText
-
-                            _ =
-                                Debug.log "metadata" metadata
-
-                            _ =
-                                Debug.log "string" string
-                        in
-                        -- if metadata.statusCode == 401 || metadata.statusCode == 403 || metadata.statusCode == 404 then
-                        --     BackendTask.succeed "Either this repo doesn't exist or you don't have access to it."
-                        -- else
-                        --     -- we're only handling these expected error cases. In the case of an HTTP timeout,
-                        --     -- we'll let the error propagate as a FatalError
                         if metadata.statusCode == 429 then
                             BackendTask.succeed failBackData
 
@@ -425,10 +404,6 @@ view :
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app _ =
-    let
-        _ =
-            Debug.log "Data" app.data
-    in
     { title = title
     , body =
         [ Html.div
@@ -623,9 +598,6 @@ listing listingData =
 showItem : Item -> Html msg
 showItem item =
     let
-        _ =
-            Debug.log "Item" item
-
         ebookCopy =
             "Hazte con el libro en su versión digital en la plataforma Kindle de Amazon. Llévate tu copia en e-book a todos lados con tu dispositivo favorito de lectura."
 
