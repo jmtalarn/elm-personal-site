@@ -34,12 +34,20 @@ body =
                 [ Html.text "Try one of these links. I would guess I had content in there"
                 , Html.ul []
                     [ Html.li []
+                        [ Route.Index
+                            |> Route.link [] [ Html.text "Home page" ]
+                        ]
+                    , Html.li []
                         [ Route.Blog__Page__ { page = Nothing }
-                            |> Route.link [] [ Html.text "Web dev notes" ]
+                            |> Route.link [] [ Html.text "Blog - Web dev notes" ]
                         ]
                     , Html.li []
                         [ Route.Cv
                             |> Route.link [] [ Html.text "CV" ]
+                        ]
+                    , Html.li []
+                        [ Route.Book
+                            |> Route.link [] [ Html.text "Book" ]
                         ]
                     ]
                 ]

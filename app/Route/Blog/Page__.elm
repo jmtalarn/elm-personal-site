@@ -164,7 +164,7 @@ antonFontAttributeStyle =
 
 workSansAttributeStyle : List (Html.Attribute msg)
 workSansAttributeStyle =
-    [ Attribute.style "font-family" "\"Work Sans\", sans-serif"
+    [ Attribute.style "font-family" "'Work Sans', sans-serif"
     , Attribute.style "font-optical-sizing" "auto"
     , Attribute.style "font-weight" "300"
     , Attribute.style "font-style" "normal"

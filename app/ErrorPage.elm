@@ -71,7 +71,7 @@ view error model =
                 "Page Not Found"
 
             InternalError string ->
-                "Unexpected Error"
+                "Unexpected Error" ++ string
     }
 
 
