@@ -32,7 +32,7 @@
     -   [x] This is me
     -   [x] Book
     -   [x] Copy
-    -   [ ] Interesting things
+    -   [x] Interesting things
     -   [x] Rotate Companies and skills
     -   [x] Automatically rotate companies and skills
         -   [x] To cancel current Sleep
@@ -49,9 +49,9 @@
     -   [x] Big images on one-source-of-truth-for-all-Redux-javascript-components
 -   [x] 404 page missing menu
 -   [x] 404 page missing fonts
--   [ ] CV on top, ribbon covers last eye for aside projects to be clickable
--   [ ] CV eye icon min width
+-   [x] CV on top, ribbon covers last eye for aside projects to be clickable
+-   [x] CV eye icon min width
 -   [ ] Menu horizontal scroll for text on small screen.
--   [ ] Add a margin to bottom.
+-   [x] Add a margin to bottom.
 -   [ ] Code pen component
 -   [ ] Preview link component

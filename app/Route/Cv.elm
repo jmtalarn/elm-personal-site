@@ -307,7 +307,7 @@ sectionLinks showSections =
         showEye condition msg =
             if condition then
                 Icon.duotone Phosphor.eye
-                    (Just [ Html.Events.onClick msg ])
+                    (Just [ Html.Events.onClick msg, Attribute.style "min-width" "1.4rem" ])
 
             else
                 Icon.duotone Phosphor.eyeClosed
