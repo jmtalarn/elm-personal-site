@@ -21,10 +21,11 @@ export default async function run({
 			/<script defer src="\/elm\..{8}\.js" type="text\/javascript"><\/script>/,
 			""
 		)
-		.replace(
-			/<script type="module" crossorigin src="\/assets\/index-.{8}\.js"><\/script>/,
-			""
-		);
+		// .replace(
+		// 	/<script type="module" crossorigin src="\/assets\/index-.{8}\.js"><\/script>/,
+		// 	""
+		// )
+		;
 	fs.writeFileSync(_404Path, fixedHtml, "utf-8");
 
 

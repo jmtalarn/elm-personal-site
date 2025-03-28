@@ -92,7 +92,7 @@ whiteLinksStyle =
 
 antonFontAttributeStyle : List (Html.Attribute msg)
 antonFontAttributeStyle =
-    [ Attribute.style "font-family" "\"Anton\", sans-serif"
+    [ Attribute.style "font-family" "'Anton', sans-serif"
     , Attribute.style "font-weight" "400"
     , Attribute.style "font-style" "normal"
     , Attribute.style "font-size" "2rem"
