@@ -2,6 +2,7 @@ module Util.MarkdownProcessor exposing (getAbstract, markdownToPlainHtml, markdo
 
 import Components.Icons.Icon as Icon
 import Components.Icons.TechIcon as TechIcon
+import Components.LinkPreview as LinkPreview
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
 import Html exposing (Html)
@@ -130,6 +131,8 @@ processHtml =
         , Markdown.Html.tag "tech-icon" TechIcon.icon
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "link-preview" LinkPreview.render
+            |> Markdown.Html.withAttribute "url"
         ]
 
 
@@ -141,6 +144,32 @@ customHtmlRenderer =
         , codeBlock = codeBlock
         , html = processHtml
     }
+
+
+
+-- gatherLinks : List Block -> List String
+-- gatherLinks blocks =
+--     List.filterMap
+--         (\block ->
+--             case block of
+--                 Block.HtmlBlock htmlBlock ->
+--                   let
+--                     _ = Debug.log "htmlBlock" htmlBlock
+--                   in
+--                   case htmlBlock of
+--                       Block.HtmlElement "link-preview" rest children ->
+--                           let
+--                               _ = Debug.log "LINK PREVIEW" rest
+--                           in
+--                           Just "A LINK"
+--                       _ ->
+--                          Nothing
+--                 _ ->
+--                     Nothing
+--         )
+--         blocks
+-- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 htmlBlock: HtmlElement "link-preview" [{ name = "url", value = "www.hola.com" }] [Paragraph [Text "Hola!"]]
+-- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 LINK PREVIEW: [{ name = "url", value = "www.hola.com" }]
 
 
 markdownToView : String -> List (Html msg)
@@ -415,4 +444,6 @@ processHtmlToHtmlCode =
         , Markdown.Html.tag "tech-icon" (\icon style _ -> "<div class=\"" ++ icon ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\">" ++ "<div>")
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "link-preview" (\url children -> "<a class=\"link-preview\" href=\"" ++ url ++ "\">" ++ children ++ "</a>")
+            |> Markdown.Html.withAttribute "url"
         ]
