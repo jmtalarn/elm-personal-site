@@ -3,6 +3,7 @@ module Route.Blog.Post.Post_ exposing (ActionData, Data, Model, Msg, route)
 import BackendTask exposing (BackendTask)
 import BackendTask.Http
 import Components.Blog.PostHeader as PostHeader
+import Components.LinkPreview as LinkPreview
 import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
@@ -60,7 +61,7 @@ blogPost2RouteParams { slug } =
 
 type alias Data =
     { blogPost : BlogPost
-    , cardLinks : List ( String, List ( String, String ) )
+    , cardLinks : LinkPreview.CardLinks
     }
 
 
@@ -207,7 +208,7 @@ view app sharedModel =
             , Attribute.style "position" "relative"
             ]
             [ PostHeader.show title cover tags category date
-            , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView body)
+            , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView app.data.cardLinks body)
             , ribbonReverse "Blog post"
             ]
         ]

@@ -5,6 +5,7 @@ import Components.Icons.TechIcon as TechIcon
 import Components.LinkPreview as LinkPreview
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
+import Dict
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Markdown.Block exposing (Block)
@@ -14,8 +15,8 @@ import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
 import Util.HTMLRender exposing (..)
 
 
-processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
-processHtml =
+processHtml : LinkPreview.CardLinks -> Markdown.Html.Renderer (List (Html msg) -> Html msg)
+processHtml cardLinks =
     Markdown.Html.oneOf
         [ Markdown.Html.tag "div"
             showDiv
@@ -131,18 +132,19 @@ processHtml =
         , Markdown.Html.tag "tech-icon" TechIcon.icon
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "link-preview" LinkPreview.render
+        , Markdown.Html.tag "link-preview"
+            (LinkPreview.render cardLinks)
             |> Markdown.Html.withAttribute "url"
         ]
 
 
-customHtmlRenderer : Renderer (Html msg)
-customHtmlRenderer =
+customHtmlRenderer : LinkPreview.CardLinks -> Renderer (Html msg)
+customHtmlRenderer cardLinks =
     { defaultHtmlRenderer
         | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing Nothing src []
         , blockQuote = \content -> showBlockquote Nothing content
         , codeBlock = codeBlock
-        , html = processHtml
+        , html = processHtml cardLinks
     }
 
 
@@ -190,15 +192,15 @@ gatherLinks markdown =
 -- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 LINK PREVIEW: [{ name = "url", value = "www.hola.com" }]
 
 
-markdownToView : String -> List (Html msg)
-markdownToView markdownString =
+markdownToView : LinkPreview.CardLinks -> String -> List (Html msg)
+markdownToView cardLinks markdownString =
     markdownString
         |> Markdown.Parser.parse
         |> Result.mapError (\error -> error |> List.map Markdown.Parser.deadEndToString |> String.join "\n")
         |> Result.andThen
             (\blocks ->
                 Markdown.Renderer.render
-                    customHtmlRenderer
+                    (customHtmlRenderer cardLinks)
                     blocks
             )
         |> (\result ->

@@ -29,20 +29,30 @@ findAll predicate nodes =
 
 extractMetaTags : String -> List ( String, String )
 extractMetaTags html =
-    case runDocument html of
+    let
+        documentResult =
+            runDocument Html.Parser.allCharRefs html
+    in
+    case documentResult of
         Ok document ->
             let
                 nodes =
-                    Tuple.second document.document
+                    [ document.root ]
             in
             nodes
                 |> findAll isHeadTag
                 |> List.concatMap extractMetaFromHead
 
-        Err error ->
+        Err [] ->
+            []
+
+        Err (first :: _) ->
             let
                 _ =
-                    Debug.log "extractMetaTags error" error
+                    Debug.log "extractMetaTags error" first
+
+                _ =
+                    Debug.log "deadendProblem" first.problem
             in
             []
 
