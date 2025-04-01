@@ -120,7 +120,15 @@ The project is structured with modular React components, making it easy to maint
 -   Storybook
 -   Vite
 
-### URLS
+### URLS
 
 -   [https://jmtalarn.github.io/dd-ab-savegame/](https://jmtalarn.github.io/dd-ab-savegame/)
 -   [https://github.com/jmtalarn/dd-ab-savegame](https://github.com/jmtalarn/dd-ab-savegame)
+
+<link-preview url="https://www.123cards.com/"></link-preview>
+
+<link-preview url="https://www.uber.com/"></link-preview>
+
+<link-preview url="https://react.dev/"></link-preview>
+
+<link-preview url="https://www.jmtalarn.com/"></link-preview>

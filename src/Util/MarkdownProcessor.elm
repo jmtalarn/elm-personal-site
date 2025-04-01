@@ -1,4 +1,4 @@
-module Util.MarkdownProcessor exposing (getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
+module Util.MarkdownProcessor exposing (gatherLinks, getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
 
 import Components.Icons.Icon as Icon
 import Components.Icons.TechIcon as TechIcon
@@ -7,7 +7,7 @@ import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
 import Html exposing (Html)
 import Html.Attributes as Attribute
-import Markdown.Block
+import Markdown.Block exposing (Block)
 import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
@@ -146,28 +146,46 @@ customHtmlRenderer =
     }
 
 
+gatherLinks : String -> List String
+gatherLinks markdown =
+    let
+        blocks =
+            markdown
+                |> Markdown.Parser.parse
+                |> Result.mapError (\error -> error |> List.map Markdown.Parser.deadEndToString |> String.join "\n")
+                |> (\result ->
+                        case result of
+                            Ok content ->
+                                content
 
--- gatherLinks : List Block -> List String
--- gatherLinks blocks =
---     List.filterMap
---         (\block ->
---             case block of
---                 Block.HtmlBlock htmlBlock ->
---                   let
---                     _ = Debug.log "htmlBlock" htmlBlock
---                   in
---                   case htmlBlock of
---                       Block.HtmlElement "link-preview" rest children ->
---                           let
---                               _ = Debug.log "LINK PREVIEW" rest
---                           in
---                           Just "A LINK"
---                       _ ->
---                          Nothing
---                 _ ->
---                     Nothing
---         )
---         blocks
+                            Err _ ->
+                                []
+                   )
+    in
+    blocks
+        |> Markdown.Block.foldl
+            (\block list ->
+                case block of
+                    Markdown.Block.HtmlBlock htmlBlock ->
+                        case htmlBlock of
+                            Markdown.Block.HtmlElement "link-preview" (attr :: _) children ->
+                                case attr.name of
+                                    "url" ->
+                                        attr.value :: list
+
+                                    _ ->
+                                        list
+
+                            _ ->
+                                list
+
+                    _ ->
+                        list
+            )
+            []
+
+
+
 -- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 htmlBlock: HtmlElement "link-preview" [{ name = "url", value = "www.hola.com" }] [Paragraph [Text "Hola!"]]
 -- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 LINK PREVIEW: [{ name = "url", value = "www.hola.com" }]
 
