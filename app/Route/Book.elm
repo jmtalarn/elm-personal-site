@@ -19,17 +19,14 @@ import Components.Ribbon exposing (ribbon)
 import Crypto.HMAC exposing (sha256)
 import Crypto.Hash
 import DataModel.Book exposing (..)
-import Elm exposing (just)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
 import Iso8601
-import Json.Decode as Decode
 import LanguageTag
 import LanguageTag.Language
-import Pages
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Phosphor

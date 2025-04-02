@@ -418,7 +418,7 @@ role selectedSkills { startDate, endDate, name, skills, description_md } =
                     ]
                 ]
             ]
-        , Html.p [ Attribute.style "text-align" "justify" ] (markdownToView description_md)
+        , Html.p [ Attribute.style "text-align" "justify" ] (markdownToView [] description_md)
         , Html.footer
             [ Attribute.class "skills"
             , Attribute.style "display" "flex"
@@ -529,9 +529,9 @@ personalInfoSection pi =
         , Attribute.id personalInfoSectionId
         ]
         [ Html.h2 [] [ Html.text pi.title ]
-        , Html.p [] (markdownToView pi.description_md)
+        , Html.p [] (markdownToView [] pi.description_md)
         , Html.h4 [] [ Html.text "What I would looking for ? " ]
-        , Html.p [] (markdownToView pi.desiredPosition)
+        , Html.p [] (markdownToView [] pi.desiredPosition)
         ]
 
 
@@ -585,6 +585,7 @@ educationItem selectedSkills { category, name, description_md, date, institution
                         ]
                     ]
                     :: markdownToView
+                        []
                         (case description_md of
                             Just text ->
                                 text
@@ -842,7 +843,7 @@ asideProject selectedSkills thing =
             Html.li
                 (itemStyle skills)
                 [ header name url
-                , Html.p [] (markdownToView description_md)
+                , Html.p [] (markdownToView [] description_md)
                 , Html.div [ Attribute.style "font-size" "0.8rem" ]
                     [ Html.text (Date.format "MMMM y" startDate)
                     , Html.text " ~ "
@@ -880,7 +881,7 @@ asideProject selectedSkills thing =
                             Nothing ->
                                 []
                        )
-                    ++ [ Html.p [] (markdownToView description_md)
+                    ++ [ Html.p [] (markdownToView [] description_md)
                        , Html.div [ Attribute.style "font-size" "0.8rem" ]
                             [ Html.text (Date.format "MMMM y" date)
                             ]

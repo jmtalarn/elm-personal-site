@@ -1,17 +1,20 @@
 module Route.Blog.Post.Post_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.Http
 import Components.Blog.PostHeader as PostHeader
+import Components.LinkCard as LinkCard
 import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
 import DateOrDateTime
-import Dict
+import Dict exposing (Dict)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attribute
+import Html.Parser exposing (Node)
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
@@ -19,6 +22,7 @@ import Shared
 import Time
 import UrlPath
 import Util.MarkdownProcessor as MarkdownProcessor exposing (getAbstract, markdownToText)
+import Util.MetaTagParser exposing (extractMetaTags)
 import View exposing (View)
 
 
@@ -57,6 +61,7 @@ blogPost2RouteParams { slug } =
 
 type alias Data =
     { blogPost : BlogPost
+    , cardLinks : LinkCard.CardLinks
     }
 
 
@@ -78,8 +83,42 @@ data { post } =
                             Nothing ->
                                 BlogPost "" "" "" "" [] [] (Date.fromCalendarDate 2000 Time.Jan 1)
                     )
+
+        getLinkData : String -> BackendTask FatalError (List ( String, String ))
+        getLinkData url =
+            BackendTask.Http.request
+                { url = url
+                , method = "GET"
+                , retries = Just 1
+                , timeoutInMs = Just 3000
+                , headers = [ ( "accept", "text/html" ) ]
+                , body = BackendTask.Http.emptyBody
+                }
+                BackendTask.Http.expectString
+                |> BackendTask.map
+                    extractMetaTags
+                |> BackendTask.onError
+                    (\error ->
+                        BackendTask.succeed []
+                    )
+                |> BackendTask.allowFatal
+
+        cardLinks =
+            blogPostFound
+                |> BackendTask.map .body
+                |> BackendTask.map MarkdownProcessor.gatherLinks
+                |> BackendTask.andThen
+                    (\links ->
+                        links
+                            |> List.map
+                                (\url ->
+                                    getLinkData url
+                                        |> BackendTask.map (\content -> ( url, content ))
+                                )
+                            |> BackendTask.combine
+                    )
     in
-    BackendTask.map Data blogPostFound
+    BackendTask.map2 Data blogPostFound cardLinks
 
 
 head :
@@ -143,7 +182,7 @@ view :
     App Data ActionData RouteParams
     -> Shared.Model
     -> View (PagesMsg Msg)
-view app sharedModel =
+view app _ =
     let
         { title, cover, tags, category, body, date } =
             app.data.blogPost
@@ -159,7 +198,7 @@ view app sharedModel =
             , Attribute.style "position" "relative"
             ]
             [ PostHeader.show title cover tags category date
-            , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView body)
+            , Html.article [ Attribute.class "blog-post" ] (MarkdownProcessor.markdownToView app.data.cardLinks body)
             , ribbonReverse "Blog post"
             ]
         ]

@@ -1,20 +1,22 @@
-module Util.MarkdownProcessor exposing (getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
+module Util.MarkdownProcessor exposing (gatherLinks, getAbstract, markdownToPlainHtml, markdownToText, markdownToView)
 
 import Components.Icons.Icon as Icon
 import Components.Icons.TechIcon as TechIcon
+import Components.LinkCard as LinkCard
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
+import Dict
 import Html exposing (Html)
 import Html.Attributes as Attribute
-import Markdown.Block
+import Markdown.Block exposing (Block)
 import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
 import Util.HTMLRender exposing (..)
 
 
-processHtml : Markdown.Html.Renderer (List (Html msg) -> Html msg)
-processHtml =
+processHtml : LinkCard.CardLinks -> Markdown.Html.Renderer (List (Html msg) -> Html msg)
+processHtml cardLinks =
     Markdown.Html.oneOf
         [ Markdown.Html.tag "div"
             showDiv
@@ -130,28 +132,91 @@ processHtml =
         , Markdown.Html.tag "tech-icon" TechIcon.icon
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "link-card"
+            (\imagePosition url ->
+                let
+                    pos =
+                        case imagePosition of
+                            Just "top" ->
+                                LinkCard.Top
+
+                            Just "left" ->
+                                LinkCard.Left
+
+                            Just "right" ->
+                                LinkCard.Right
+
+                            Just _ ->
+                                LinkCard.Top
+
+                            Nothing ->
+                                LinkCard.Top
+                in
+                LinkCard.render cardLinks pos url
+            )
+            |> Markdown.Html.withOptionalAttribute "image-position"
+            |> Markdown.Html.withAttribute "url"
         ]
 
 
-customHtmlRenderer : Renderer (Html msg)
-customHtmlRenderer =
+customHtmlRenderer : LinkCard.CardLinks -> Renderer (Html msg)
+customHtmlRenderer cardLinks =
     { defaultHtmlRenderer
         | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing Nothing src []
         , blockQuote = \content -> showBlockquote Nothing content
         , codeBlock = codeBlock
-        , html = processHtml
+        , html = processHtml cardLinks
     }
 
 
-markdownToView : String -> List (Html msg)
-markdownToView markdownString =
+gatherLinks : String -> List String
+gatherLinks markdown =
+    let
+        blocks =
+            markdown
+                |> Markdown.Parser.parse
+                |> Result.mapError (\error -> error |> List.map Markdown.Parser.deadEndToString |> String.join "\n")
+                |> (\result ->
+                        case result of
+                            Ok content ->
+                                content
+
+                            Err _ ->
+                                []
+                   )
+    in
+    blocks
+        |> Markdown.Block.foldl
+            (\block list ->
+                case block of
+                    Markdown.Block.HtmlBlock htmlBlock ->
+                        case htmlBlock of
+                            Markdown.Block.HtmlElement "link-card" (attr :: _) children ->
+                                case attr.name of
+                                    "url" ->
+                                        attr.value :: list
+
+                                    _ ->
+                                        list
+
+                            _ ->
+                                list
+
+                    _ ->
+                        list
+            )
+            []
+
+
+markdownToView : LinkCard.CardLinks -> String -> List (Html msg)
+markdownToView cardLinks markdownString =
     markdownString
         |> Markdown.Parser.parse
         |> Result.mapError (\error -> error |> List.map Markdown.Parser.deadEndToString |> String.join "\n")
         |> Result.andThen
             (\blocks ->
                 Markdown.Renderer.render
-                    customHtmlRenderer
+                    (customHtmlRenderer cardLinks)
                     blocks
             )
         |> (\result ->
@@ -415,4 +480,6 @@ processHtmlToHtmlCode =
         , Markdown.Html.tag "tech-icon" (\icon style _ -> "<div class=\"" ++ icon ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\">" ++ "<div>")
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
+        , Markdown.Html.tag "link-card" (\url children -> "<a class=\"link-card\" href=\"" ++ url ++ "\">" ++ children ++ "</a>")
+            |> Markdown.Html.withAttribute "url"
         ]

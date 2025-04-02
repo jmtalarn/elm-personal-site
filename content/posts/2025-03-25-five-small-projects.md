@@ -21,7 +21,7 @@ author: jmtalarn
 
 Here there are few projects I've been working recently, mostly for my own amusement. In some of them I used Vite, Typescript and React to build small Progressive Web applications with local-first approach. The other ones are about coding in Elm, which is one of my favourite programming languages.<!--more-->
 
-I've been doing also other personal stuff talking about coding, but I consider these as finished, or live projects, so it makes more sense to put on this small announce.
+I've been doing also other personal coding stuff, but I consider these as finished, or live projects, so it makes more sense to put on this small announce.
 
 # <tech-icon icon="ts" style="width: 2rem; height: 2rem; margin-right: .5rem; margin-top: 6rem; display: inline;"></tech-icon> kids-reward-system jmtalarn/kids-reward-system
 
@@ -32,6 +32,11 @@ A reward system to help children build habits is a great way to make learning an
 The `kids-reward-system` project is implemented as a Progressive Web Application (PWA) using React and TypeScript. It leverages local storage to persist data directly on the user's device, ensuring a local-first approach that works seamlessly offline. The application is designed to be modular and reusable, with components built and tested in isolation using Storybook. Vite is used as the build tool, providing a fast and efficient development experience.
 
 The core functionality revolves around managing rewards and tracking progress for children. The app includes features such as adding tasks, assigning rewards, and monitoring completion. React's state management is used to handle the dynamic updates, while TypeScript ensures type safety throughout the codebase. The project is deployed on Netlify, making it easily accessible and shareable via the provided URL.
+
+### Links
+
+<link-card url="https://kids-reward-system.netlify.app/" image-position="left"></link-card>
+<link-card url="https://github.com/jmtalarn/kids-reward-system" image-position="left"></link-card>
 
 ### Technologies and tools
 
@@ -46,10 +51,10 @@ The `elm-personal-site` project is a personal website and blog built using Elm a
 
 The project emphasizes simplicity and maintainability, with Elm's strong type system ensuring robust and error-free code. The use of Elm-pages enables seamless routing and dynamic content rendering, while the integration with Netlify provides an easy deployment pipeline. The site also includes custom components for navigation, post previews, and other UI elements, all implemented in Elm for a consistent and performant user experience.
 
-### URL
+### Links
 
--   [https://www.jmtalarn.com/](https://www.jmtalarn.com/)
--   [https://github.com/jmtalarn/elm-personal-site](https://github.com/jmtalarn/elm-personal-site)
+<link-card url="https://www.jmtalarn.com/" image-position="left"></link-card>
+<link-card url="https://github.com/jmtalarn/elm-personal-site" image-position="left"></link-card>
 
 ### Technologies and tools
 
@@ -72,6 +77,11 @@ The `shared-casting` project is a web application built using Elm, designed to f
 
 To handle API communication, the project uses Netlify Functions, which provide a lightweight backend layer written in Node.js. These serverless functions act as a bridge between the frontend and the TMDB API, securely managing API keys and requests. The app processes user input to query the API for two selected titles, retrieves their cast lists, and computes the intersection to display shared cast members. The combination of Elm for the frontend and Netlify Functions for backend logic ensures a seamless and efficient user experience.
 
+### Links
+
+<link-card url="https://shared-casting.netlify.app/" image-position="left"></link-card>
+<link-card url="https://github.com/jmtalarn/shared-casting" image-position="left"></link-card>
+
 ### Technologies and tools
 
 -   JavaScript
@@ -89,10 +99,10 @@ The `30-days-of-elm` project is a learning initiative designed to explore the El
 
 The implementation leverages Elm's strong type system and functional programming paradigm to create a robust and error-free learning experience. The exercises are organized into modules, with each module focusing on a specific topic such as Elm architecture, commands, subscriptions, or custom types. The app includes a clean and minimalistic user interface, ensuring that users can focus on the learning material without distractions. The source code is open-source and available on GitHub, encouraging collaboration and contributions from the Elm community.
 
-### URL
+### Links
 
--   [https://30-days-of-elm.netlify.app/](https://30-days-of-elm.netlify.app/)
--   [https://github.com/jmtalarn/30-days-of-elm](https://github.com/jmtalarn/30-days-of-elm)
+<link-card url="https://30-days-of-elm.netlify.app" image-position="left">30 days of Elm</link-card>
+<link-card url="https://github.com/jmtalarn/30-days-of-elm" image-position="left"></link-card>
 
 ### Technologies and tools
 
@@ -120,7 +130,7 @@ The project is structured with modular React components, making it easy to maint
 -   Storybook
 -   Vite
 
-### URLS
+### Links
 
--   [https://jmtalarn.github.io/dd-ab-savegame/](https://jmtalarn.github.io/dd-ab-savegame/)
--   [https://github.com/jmtalarn/dd-ab-savegame](https://github.com/jmtalarn/dd-ab-savegame)
+<link-card url="https://jmtalarn.github.io/dd-ab-savegame/" image-position="left"></link-card>
+<link-card url="https://github.com/jmtalarn/dd-ab-savegame" image-position="left"></link-card>
