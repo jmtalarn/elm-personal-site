@@ -2,7 +2,7 @@ module Util.MarkdownProcessor exposing (gatherLinks, getAbstract, markdownToPlai
 
 import Components.Icons.Icon as Icon
 import Components.Icons.TechIcon as TechIcon
-import Components.LinkPreview as LinkPreview
+import Components.LinkCard as LinkCard
 import Components.TwitterTweet exposing (twitterTweet)
 import Components.WarningBox exposing (warningBox)
 import Dict
@@ -15,7 +15,7 @@ import Markdown.Renderer exposing (Renderer, defaultHtmlRenderer)
 import Util.HTMLRender exposing (..)
 
 
-processHtml : LinkPreview.CardLinks -> Markdown.Html.Renderer (List (Html msg) -> Html msg)
+processHtml : LinkCard.CardLinks -> Markdown.Html.Renderer (List (Html msg) -> Html msg)
 processHtml cardLinks =
     Markdown.Html.oneOf
         [ Markdown.Html.tag "div"
@@ -132,13 +132,34 @@ processHtml cardLinks =
         , Markdown.Html.tag "tech-icon" TechIcon.icon
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "link-preview"
-            (LinkPreview.render cardLinks)
+        , Markdown.Html.tag "link-card"
+            (\imagePosition url ->
+                let
+                    pos =
+                        case imagePosition of
+                            Just "top" ->
+                                LinkCard.Top
+
+                            Just "left" ->
+                                LinkCard.Left
+
+                            Just "right" ->
+                                LinkCard.Right
+
+                            Just _ ->
+                                LinkCard.Top
+
+                            Nothing ->
+                                LinkCard.Top
+                in
+                LinkCard.render cardLinks pos url
+            )
+            |> Markdown.Html.withOptionalAttribute "image-position"
             |> Markdown.Html.withAttribute "url"
         ]
 
 
-customHtmlRenderer : LinkPreview.CardLinks -> Renderer (Html msg)
+customHtmlRenderer : LinkCard.CardLinks -> Renderer (Html msg)
 customHtmlRenderer cardLinks =
     { defaultHtmlRenderer
         | image = \{ alt, src, title } -> showImage (Just alt) title Nothing Nothing Nothing src []
@@ -170,7 +191,7 @@ gatherLinks markdown =
                 case block of
                     Markdown.Block.HtmlBlock htmlBlock ->
                         case htmlBlock of
-                            Markdown.Block.HtmlElement "link-preview" (attr :: _) children ->
+                            Markdown.Block.HtmlElement "link-card" (attr :: _) children ->
                                 case attr.name of
                                     "url" ->
                                         attr.value :: list
@@ -187,12 +208,7 @@ gatherLinks markdown =
             []
 
 
-
--- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 htmlBlock: HtmlElement "link-preview" [{ name = "url", value = "www.hola.com" }] [Paragraph [Text "Hola!"]]
--- 7d2f4b56-3c17-42ad-941b-b0c5d8503880:20 LINK PREVIEW: [{ name = "url", value = "www.hola.com" }]
-
-
-markdownToView : LinkPreview.CardLinks -> String -> List (Html msg)
+markdownToView : LinkCard.CardLinks -> String -> List (Html msg)
 markdownToView cardLinks markdownString =
     markdownString
         |> Markdown.Parser.parse
@@ -464,6 +480,6 @@ processHtmlToHtmlCode =
         , Markdown.Html.tag "tech-icon" (\icon style _ -> "<div class=\"" ++ icon ++ "\" style=\"" ++ Maybe.withDefault "" style ++ "\">" ++ "<div>")
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
-        , Markdown.Html.tag "link-preview" (\url children -> "<a class=\"link-preview\" href=\"" ++ url ++ "\">" ++ children ++ "</a>")
+        , Markdown.Html.tag "link-card" (\url children -> "<a class=\"link-card\" href=\"" ++ url ++ "\">" ++ children ++ "</a>")
             |> Markdown.Html.withAttribute "url"
         ]

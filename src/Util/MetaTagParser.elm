@@ -1,5 +1,6 @@
 module Util.MetaTagParser exposing (extractMetaTags)
 
+import Css exposing (content)
 import Dict exposing (Dict)
 import Html.Parser exposing (Node(..), runDocument)
 
@@ -31,29 +32,27 @@ extractMetaTags : String -> List ( String, String )
 extractMetaTags html =
     let
         documentResult =
-            runDocument Html.Parser.allCharRefs html
+            String.trim html |> runDocument Html.Parser.allCharRefs
     in
     case documentResult of
         Ok document ->
             let
                 nodes =
                     [ document.root ]
+
+                headNodes =
+                    nodes
+                        |> findAll isHeadTag
+
+                titles =
+                    headNodes |> List.filterMap extractTitleFromHead |> List.map (\a -> ( "title", a ))
+
+                metaTags =
+                    headNodes |> List.concatMap extractMetaFromHead
             in
-            nodes
-                |> findAll isHeadTag
-                |> List.concatMap extractMetaFromHead
+            titles ++ metaTags
 
-        Err [] ->
-            []
-
-        Err (first :: _) ->
-            let
-                _ =
-                    Debug.log "extractMetaTags error" first
-
-                _ =
-                    Debug.log "deadendProblem" first.problem
-            in
+        Err _ ->
             []
 
 
@@ -75,6 +74,31 @@ isHeadTag node =
 -- Extract <meta> tags from a <head> node
 
 
+extractTitleFromHead : Node -> Maybe String
+extractTitleFromHead node =
+    case node of
+        Element "head" _ children ->
+            children
+                |> List.filterMap
+                    (\child ->
+                        case child of
+                            Element "title" _ titleChildren ->
+                                case titleChildren of
+                                    [ Text content ] ->
+                                        Just content
+
+                                    _ ->
+                                        Nothing
+
+                            _ ->
+                                Nothing
+                    )
+                |> List.head
+
+        _ ->
+            Nothing
+
+
 extractMetaFromHead : Node -> List ( String, String )
 extractMetaFromHead node =
     case node of
@@ -87,23 +111,22 @@ extractMetaFromHead node =
                             attributes =
                                 extractAttributes meta
                         in
-                        Dict.member "property" attributes
-                            && List.member (Dict.get "property" attributes |> Maybe.withDefault (Dict.get "name" attributes |> Maybe.withDefault ""))
-                                [ "og:title"
-                                , "og:description"
-                                , "og:image"
-                                , "og:url"
-                                , "og:type"
-                                , "twitter:card"
-                                , "twitter:title"
-                                , "twitter:description"
-                                , "twitter:image"
-                                , "twitter:site"
-                                , "article:author"
-                                , "article:published_time"
-                                , "og:video"
-                                , "description"
-                                ]
+                        List.member (Dict.get "property" attributes |> Maybe.withDefault (Dict.get "name" attributes |> Maybe.withDefault ""))
+                            [ "og:title"
+                            , "og:description"
+                            , "og:image"
+                            , "og:url"
+                            , "og:type"
+                            , "twitter:card"
+                            , "twitter:title"
+                            , "twitter:description"
+                            , "twitter:image"
+                            , "twitter:site"
+                            , "article:author"
+                            , "article:published_time"
+                            , "og:video"
+                            , "description"
+                            ]
                     )
                 |> List.filterMap
                     (\meta ->

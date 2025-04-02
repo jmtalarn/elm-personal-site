@@ -3,7 +3,7 @@ module Route.Blog.Post.Post_ exposing (ActionData, Data, Model, Msg, route)
 import BackendTask exposing (BackendTask)
 import BackendTask.Http
 import Components.Blog.PostHeader as PostHeader
-import Components.LinkPreview as LinkPreview
+import Components.LinkCard as LinkCard
 import Components.Ribbon exposing (..)
 import DataModel.BlogPosts exposing (..)
 import Date
@@ -61,7 +61,7 @@ blogPost2RouteParams { slug } =
 
 type alias Data =
     { blogPost : BlogPost
-    , cardLinks : LinkPreview.CardLinks
+    , cardLinks : LinkCard.CardLinks
     }
 
 
@@ -99,13 +99,6 @@ data { post } =
                     extractMetaTags
                 |> BackendTask.onError
                     (\error ->
-                        let
-                            _ =
-                                Debug.log "URL is " url
-
-                            _ =
-                                Debug.log "error" error
-                        in
                         BackendTask.succeed []
                     )
                 |> BackendTask.allowFatal
@@ -189,13 +182,10 @@ view :
     App Data ActionData RouteParams
     -> Shared.Model
     -> View (PagesMsg Msg)
-view app sharedModel =
+view app _ =
     let
         { title, cover, tags, category, body, date } =
             app.data.blogPost
-
-        _ =
-            Debug.log "CardLinks" app.data.cardLinks
     in
     { title = app.data.blogPost.title ++ " 🗒️ web dev notes"
     , body =
