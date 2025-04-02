@@ -54,4 +54,4 @@
 -   [x] Menu horizontal scroll for text on small screen.
 -   [x] Add a margin to bottom.
 -   [ ] Code pen component
--   [ ] Preview link component
+-   [x] Preview link component
