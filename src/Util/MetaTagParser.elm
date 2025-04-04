@@ -47,10 +47,13 @@ extractMetaTags html =
                 titles =
                     headNodes |> List.filterMap extractTitleFromHead |> List.map (\a -> ( "title", a ))
 
+                icons =
+                    headNodes |> List.concatMap extractIconFromHead
+
                 metaTags =
                     headNodes |> List.concatMap extractMetaFromHead
             in
-            titles ++ metaTags
+            titles ++ icons ++ metaTags
 
         Err _ ->
             []
@@ -74,6 +77,58 @@ isHeadTag node =
 -- Extract <meta> tags from a <head> node
 
 
+extractIconFromHead : Node -> List ( String, String )
+extractIconFromHead node =
+    case node of
+        Element "head" _ children ->
+            children
+                |> List.filter isIconLinkTag
+                |> List.filterMap
+                    (\link ->
+                        let
+                            attributes =
+                                extractAttributes link
+
+                            rel =
+                                Dict.get "rel" attributes
+
+                            href =
+                                Dict.get "href" attributes
+                        in
+                        -- if String.endsWith ".ico" <| Maybe.withDefault ".ico" href then
+                        --     Nothing
+                        -- else
+                        case ( rel, href ) of
+                            ( Just relValue, Just hrefValue ) ->
+                                Just ( relValue, String.trim hrefValue )
+
+                            _ ->
+                                Nothing
+                    )
+
+        _ ->
+            []
+
+
+
+-- Check if a node is a <link> tag with rel attribute as "icon", "apple-touch-icon", or "mask-icon"
+
+
+isIconLinkTag : Node -> Bool
+isIconLinkTag node =
+    case node of
+        Element "link" attributes _ ->
+            case Dict.get "rel" (Dict.fromList attributes) of
+                Just relValue ->
+                    List.member relValue [ "icon", "apple-touch-icon", "mask-icon", "shortcut icon" ]
+
+                Nothing ->
+                    False
+
+        _ ->
+            False
+
+
 extractTitleFromHead : Node -> Maybe String
 extractTitleFromHead node =
     case node of
@@ -85,7 +140,7 @@ extractTitleFromHead node =
                             Element "title" _ titleChildren ->
                                 case titleChildren of
                                     [ Text content ] ->
-                                        Just content
+                                        Just (String.trim content)
 
                                     _ ->
                                         Nothing
@@ -141,12 +196,7 @@ extractMetaFromHead node =
                             content =
                                 Dict.get "content" attributes
                         in
-                        case content of
-                            Just value ->
-                                Just ( key, value )
-
-                            Nothing ->
-                                Nothing
+                        Maybe.map (\value -> ( key, String.trim value )) content
                     )
 
         _ ->
