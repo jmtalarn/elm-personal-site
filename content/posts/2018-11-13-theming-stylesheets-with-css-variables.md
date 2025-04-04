@@ -30,9 +30,12 @@ They can be very useful to avoid CSS repetition, with a better performance in ru
 Maybe you used or saw the use of variables in preprocessors like [Sass](https://sass-lang.com/) or [Less](http://lesscss.org/) but there are some differences in the use.
 Unlike the way the variables are set and used in preprocessors which are only available in compilation time you can use the CSS custom properties during 'execution' time so the browser can update the things displayed accordingly the changes.
 
-[Sass](https://sass-lang.com/)
-[Less](http://lesscss.org/)
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr); gap: 1rem;">
 
+<link-card url="https://sass-lang.com/" image-position="left" style="height: 100%;"></link-card>
+<link-card url="http://lesscss.org/" image-position="left"  style="height: 100%;"></link-card>
+
+</div>
 The CSS custom properties are currently defined as a candidate recommendation in the W3C.org
 
 [W3C Custom properties](https://www.w3.org/TR/css-variables/)

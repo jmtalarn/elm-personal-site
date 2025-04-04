@@ -26,9 +26,24 @@ getFirst list =
         |> List.head
 
 
-render : CardLinks -> ImagePosition -> String -> List (Html msg) -> Html msg
-render cardLinks imagePosition url children =
+render : CardLinks -> ImagePosition -> String -> List (Html.Attribute msg) -> List (Html msg) -> Html msg
+render cardLinks imagePosition url attributes children =
     let
+        baseUrl =
+            String.split "?" url
+                |> List.head
+                |> Maybe.withDefault ""
+                |> (\base ->
+                        if String.endsWith "/" base then
+                            String.dropRight 1 base
+
+                        else
+                            base
+                   )
+
+        isGitHubIo =
+            String.contains "github.io" baseUrl
+
         dictCardLinks =
             Dict.fromList cardLinks
 
@@ -60,14 +75,40 @@ render cardLinks imagePosition url children =
             , url = getFirst [ Dict.get "og:url" dictMetaTags, Just url ] --Dict.get "twitter:site" dictMetaTags,
             , type_ = Dict.get "og:type" dictMetaTags
             , description = getFirst [ Dict.get "og:description" dictMetaTags, Dict.get "twitter:description" dictMetaTags, Dict.get "description" dictMetaTags ]
-            , image = getFirst [ Dict.get "og:image" dictMetaTags, Dict.get "twitter:image" dictMetaTags ]
+            , image =
+                getFirst
+                    ([ Dict.get "og:image" dictMetaTags, Dict.get "twitter:image" dictMetaTags ]
+                        ++ ([ Dict.get "apple-touch-icon" dictMetaTags, Dict.get "icon" dictMetaTags, Dict.get "mask-icon" dictMetaTags, Dict.get "shortcut icon" dictMetaTags ]
+                                |> List.map
+                                    (Maybe.map
+                                        (\img ->
+                                            let
+                                                img_ =
+                                                    if isGitHubIo then
+                                                        String.split "/" img
+                                                            |> List.drop 2
+                                                            |> String.join "/"
+                                                            |> String.append "/"
+
+                                                    else
+                                                        img
+                                            in
+                                            if String.startsWith "/" img_ then
+                                                baseUrl ++ img_
+
+                                            else
+                                                baseUrl ++ "/" ++ img_
+                                        )
+                                    )
+                           )
+                    )
             , author = Dict.get "article:author" dictMetaTags
             , publishedTime = Dict.get "article:published_time" dictMetaTags
             , video = Dict.get "og:video" dictMetaTags
             }
     in
     if Dict.isEmpty dictMetaTags then
-        Html.a [ Attribute.href url ]
+        Html.a (Attribute.href url :: attributes)
             (if List.isEmpty children then
                 [ Html.text url ]
 
@@ -97,9 +138,9 @@ render cardLinks imagePosition url children =
                     """
                 ]
             , Html.div
-                [ Attribute.style "border-radius" "15px"
-                , Attribute.style "display" "flex"
-                , Attribute.style "flex-direction"
+                ([ Attribute.style "border-radius" "15px"
+                 , Attribute.style "display" "flex"
+                 , Attribute.style "flex-direction"
                     (case imagePosition of
                         Top ->
                             "column"
@@ -110,11 +151,13 @@ render cardLinks imagePosition url children =
                         Right ->
                             "row-reverse"
                     )
-                , Attribute.style "justifyContent" "center"
-                , Attribute.style "width" "100%"
-                , Attribute.style "flex" "1 0 100%"
-                , Attribute.class "card"
-                ]
+                 , Attribute.style "justifyContent" "space-between"
+                 , Attribute.style "width" "100%"
+                 , Attribute.style "flex" "1 0 100%"
+                 , Attribute.class "card"
+                 ]
+                    ++ attributes
+                )
                 (List.filterMap
                     identity
                     [ tags.image

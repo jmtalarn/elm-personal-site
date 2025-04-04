@@ -133,8 +133,11 @@ processHtml cardLinks =
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "style"
         , Markdown.Html.tag "link-card"
-            (\imagePosition url ->
+            (\imagePosition url style ->
                 let
+                    styleAttributes =
+                        processStyleAttribute (Maybe.withDefault "" style)
+
                     pos =
                         case imagePosition of
                             Just "top" ->
@@ -152,10 +155,11 @@ processHtml cardLinks =
                             Nothing ->
                                 LinkCard.Top
                 in
-                LinkCard.render cardLinks pos url
+                LinkCard.render cardLinks pos url styleAttributes
             )
             |> Markdown.Html.withOptionalAttribute "image-position"
             |> Markdown.Html.withAttribute "url"
+            |> Markdown.Html.withOptionalAttribute "style"
         ]
 
 
