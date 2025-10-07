@@ -401,3 +401,7 @@ A few `console.info` calls aren’t enough. Add a light event log (share created
 ## Try it, install it, share it
 
 Horari is small on purpose. Install it to your home screen, plan a week in 60 seconds, and share with one tap when needed — while keeping your family’s data on your devices by default.
+
+<link-card url="https://horari-pwa.netlify.app/" image-position="left"></link-card>
+
+<link-card url="https://github.com/jmtalarn/school-timetable" image-position="left"></link-card>
