@@ -128,6 +128,7 @@ processHtml cardLinks =
         , Markdown.Html.tag "icon" Icon.markdownIcon
             |> Markdown.Html.withAttribute "icon"
             |> Markdown.Html.withOptionalAttribute "text"
+            |> Markdown.Html.withOptionalAttribute "weight"
             |> Markdown.Html.withOptionalAttribute "style"
         , Markdown.Html.tag "tech-icon" TechIcon.icon
             |> Markdown.Html.withAttribute "icon"

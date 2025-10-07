@@ -184,7 +184,7 @@ render cardLinks imagePosition url attributes children =
                                                 ]
                                          )
                                             ++ [ Attribute.style "background"
-                                                    ("url(" ++ img ++ ") center center/cover no-repeat")
+                                                    ("url(" ++ img ++ ") center center/contain no-repeat")
                                                ]
                                         )
                                         []

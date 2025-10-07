@@ -77,7 +77,7 @@ How to trick it when the component is already mounted ?
 This is the lifecycle of a React component and the methods you can override in your component. Each one of the methods is descriptive enough to know when it is executed, even that they are also listed in execution order.
 
 <h4>
-<icon icon="nut" text="1. Mounting" style="color: MediumSeaGreen;"></icon>
+<icon icon="nut" text="1. Mounting" style="color: MediumSeaGreen;" weight="light"></icon>
 </h4>
 A component is created and inserted into the DOM
 1. `constructor()`
@@ -86,7 +86,7 @@ A component is created and inserted into the DOM
 4. `componentDidMount()`
 
 <h4>
-<icon icon="sync" text="2. Updating" style="color: Orange;"> </icon> 
+<icon icon="sync" text="2. Updating" style="color: Orange;" weight="light"> </icon> 
 </h4> 
 The state of the component was changed
 1. `componentWillReceiveProps()`
@@ -96,13 +96,13 @@ The state of the component was changed
 5. `componentDidUpdate()`
 
 <h4>
-<icon icon="trash" text="3. Unmounting" style="color: Tomato;"></icon>
+<icon icon="trash" text="3. Unmounting" style="color: Tomato;" weight="light"></icon>
 </h4>
 The component is removed from the DOM
 1. `componentWillUnmount()`
 
 <h4>
-<icon icon="bug" text="4. Error Handling" style="color: IndianRed;"></icon> 
+<icon icon="bug" text="4. Error Handling" style="color: IndianRed;" weight="light"></icon> 
 </h4>
 An error occurred during rendering
 1. `componentDidCatch()`

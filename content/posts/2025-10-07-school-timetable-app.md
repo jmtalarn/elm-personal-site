@@ -4,7 +4,7 @@ date: "2025-10-07T10:26:45"
 type: post
 slug: school-timetable-app
 cover: /images/featured/school-timetable.png
-category: ["Web development"]
+category: ["Web development", "App development"]
 tags: ["web", "typescript", "react", "vite", "local-first", "pwa"]
 author: jmtalarn
 ---
@@ -402,6 +402,6 @@ A few `console.info` calls aren’t enough. Add a light event log (share created
 
 Horari is small on purpose. Install it to your home screen, plan a week in 60 seconds, and share with one tap when needed — while keeping your family’s data on your devices by default.
 
-<link-card url="https://horari-pwa.netlify.app/" image-position="left"></link-card>
+<link-card url="https://horari-pwa.netlify.app/" image-position="top" style="width: 350px; margin: 0 auto;"></link-card>
 
 <link-card url="https://github.com/jmtalarn/school-timetable" image-position="left"></link-card>

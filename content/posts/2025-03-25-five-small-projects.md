@@ -4,7 +4,7 @@ date: "2025-03-25T23:05:01"
 type: post
 slug: five-recent-small-projects
 cover: /images/featured/small-projects-i-worked.jpg
-category: ["Web development"]
+category: ["Web development", "App development"]
 tags:
     [
         "web",

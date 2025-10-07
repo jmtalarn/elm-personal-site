@@ -27,8 +27,33 @@ duotone icon additionalStyle =
     icon Duotone |> Phosphor.toHtml (Attribute.style "font-size" "1.4rem" :: Maybe.withDefault [] additionalStyle)
 
 
-markdownIcon : String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
-markdownIcon icon text style _ =
+iconWeightMap : String -> IconWeight
+iconWeightMap weight =
+    case String.toLower <| String.trim weight of
+        "thin" ->
+            Thin
+
+        "light" ->
+            Light
+
+        "regular" ->
+            Regular
+
+        "bold" ->
+            Bold
+
+        "fill" ->
+            Fill
+
+        "duotone" ->
+            Duotone
+
+        _ ->
+            Regular
+
+
+markdownIcon : String -> Maybe String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
+markdownIcon icon text iconWeightAttr style _ =
     let
         dict =
             Dict.fromList
@@ -38,7 +63,15 @@ markdownIcon icon text style _ =
                 , ( "bug", Phosphor.bugBeetle )
                 , ( "link", Phosphor.link )
                 , ( "code", Phosphor.code )
+                , ( "x-logo", Phosphor.xLogo )
+                , ( "google-chrome-logo", Phosphor.googleChromeLogo )
+                , ( "butterfly", Phosphor.butterfly )
+                , ( "github-logo", Phosphor.githubLogo )
+                , ( "youtube-logo", Phosphor.youtubeLogo )
                 ]
+
+        iconWeight =
+            iconWeightMap <| Maybe.withDefault "" iconWeightAttr
 
         unknown =
             Phosphor.sealQuestion
@@ -51,6 +84,6 @@ markdownIcon icon text style _ =
         , Attribute.style "align-items" "center"
         , Attribute.style "gap" "0.4rem"
         ]
-        [ (Maybe.withDefault unknown <| Dict.get icon dict) Light |> Phosphor.toHtml (Attribute.style "font-size" "1.4rem" :: styleAttributes)
+        [ (Maybe.withDefault unknown <| Dict.get icon dict) iconWeight |> Phosphor.toHtml (Attribute.style "font-size" "1.4rem" :: styleAttributes)
         , Html.text (Maybe.withDefault "" text)
         ]
