@@ -338,17 +338,8 @@ getAmazonData vars nowTask =
             responseDecoder
         )
         |> BackendTask.onError
-            (\error ->
-                case error.recoverable of
-                    BackendTask.Http.BadStatus metadata string ->
-                        if metadata.statusCode == 429 then
-                            BackendTask.succeed failBackData
-
-                        else
-                            BackendTask.fail error |> BackendTask.allowFatal
-
-                    _ ->
-                        BackendTask.fail error |> BackendTask.allowFatal
+            (\_ ->
+                BackendTask.succeed failBackData
             )
         |> BackendTask.map (\response -> response.itemsResult.items)
 
