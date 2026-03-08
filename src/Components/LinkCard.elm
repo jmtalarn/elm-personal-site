@@ -213,7 +213,7 @@ render cardLinks imagePosition url attributes children =
                                                         , Attribute.style "color" "slategrey"
                                                         , Attribute.style "text-transform" "uppercase"
                                                         , Attribute.style "display" "flex"
-                                                        , Attribute.style "aling-items" "center"
+                                                        , Attribute.style "align-items" "center"
                                                         , Attribute.style "justify-content" "space-between"
                                                         ]
                                                         [ Html.span []
