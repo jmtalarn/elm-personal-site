@@ -118,7 +118,7 @@ siteTitle style =
         ([ Attribute.style "margin" "0"
          , Attribute.style "display" "inline-block"
          ]
-            ++ gradientColorEffect
+            -- ++ gradientColorEffect
             ++ style
         )
         [ Route.Index
